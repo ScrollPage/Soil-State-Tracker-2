@@ -3,9 +3,9 @@ from django.urls import path
 from .views import DetectorViewSet
 
 detector_list = DetectorViewSet.as_view({
-    'get': list
+    'get': 'free_detectors'
 })
 
 urlpatterns = [
-    path('detector/', detector_list, name='detector')
+    path('detectors/', detector_list, name='free-detectors')
 ]

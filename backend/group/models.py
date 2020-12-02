@@ -5,7 +5,12 @@ from client.models import Client
 class Cluster(models.Model):
     '''Группа датчиков'''
     name = models.CharField('Название', max_length=30)
-    user = models.ForeignKey(Client, verbose_name='Владелец кластера', on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        Client, 
+        verbose_name='Владелец кластера', 
+        on_delete=models.CASCADE,
+        related_name='clusters'
+    )
 
     def __str__(self):
         return f'Группа пользователя {self.user}'

@@ -22,6 +22,7 @@ class ClientActivity(GenericViewSet):
         key = serializer.data.get('token')
         token = get_object_or_404(Token, key=key)
         user = token.user
-        user.update(is_active=True)
+        user.is_active = True
+        user.save()
         token.delete()
         return Response(status=status.HTTP_200_OK)
