@@ -6,11 +6,9 @@ import { modalHide } from "@/store/actions/modal";
 import { StyledBackDrop, StyledRootModal } from "./styles";
 
 import DeleteCompanyModal from "./DeleteCompanyModal";
-import ChangeCompanyModal from "./ChangeCompanyModal";
 
 const MODAL_COMPONENTS = {
-  'DELETE_COMPANY_MODAL': DeleteCompanyModal,
-  'CHANGE_COMPANY_MODAL': ChangeCompanyModal,
+  DELETE_COMPANY_MODAL: DeleteCompanyModal,
 };
 
 const RootModal: React.FC = () => {

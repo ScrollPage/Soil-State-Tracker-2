@@ -26,8 +26,7 @@ const AccountActivation = ({ token }: IAccountActivation) => {
         <title>Активация аккаунта</title>
       </Head>
       <h1>
-        Вы успешно подтвердили аккаунт&nbsp;
-        <CheckOutlined />
+        Активация аккаунта <CheckOutlined />
       </h1>
     </SAccountActivation>
   );

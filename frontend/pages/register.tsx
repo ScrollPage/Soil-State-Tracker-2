@@ -37,7 +37,7 @@ export default Register;
 export const getServerSideProps: GetServerSideProps<IRegister> = async (
   ctx
 ) => {
-  // ensureRedirectToData(ctx);
+  ensureRedirectToData(ctx);
   return {
     props: {},
   };

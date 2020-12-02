@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { logout } from "@/store/actions/auth";
 import { IProtection } from "@/types/protection";
+import { useUser } from "@/hooks/useUser";
 
 interface IHeader {
   setMenuOpen: Dispatch<SetStateAction<boolean>>;
@@ -19,7 +20,7 @@ const Header = ({ setMenuOpen, protection }: IHeader) => {
   const { push } = useRouter();
   const dispatch = useDispatch();
 
-  const { isAuth } = protection;
+  const { isAuth } = useUser();
 
   const goToRegisterHandler = () => {
     push({ pathname: "/register" }, undefined, {
@@ -28,7 +29,7 @@ const Header = ({ setMenuOpen, protection }: IHeader) => {
   };
 
   const logoutHandler = () => {
-    dispatch(logout());
+    dispatch(logout(true));
   };
 
   return (
@@ -42,7 +43,13 @@ const Header = ({ setMenuOpen, protection }: IHeader) => {
             <HeaderMenu protection={protection} />
           </SItem>
           <SItem>
-            {!isAuth ? (
+            {isAuth ? (
+              <SItemBtn>
+                <SButton shape="round" onClick={logoutHandler}>
+                  Выйти
+                </SButton>
+              </SItemBtn>
+            ) : (
               <>
                 <SItemBtn>
                   <SItemLink href={"/login"}>
@@ -55,12 +62,6 @@ const Header = ({ setMenuOpen, protection }: IHeader) => {
                   </SButton>
                 </SItemBtn>
               </>
-            ) : (
-              <SItemBtn>
-                <SButton shape="round" onClick={logoutHandler}>
-                  Выйти
-                </SButton>
-              </SItemBtn>
             )}
           </SItem>
           <SItem>
