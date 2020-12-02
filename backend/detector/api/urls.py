@@ -7,5 +7,5 @@ detector_list = DetectorViewSet.as_view({
 })
 
 urlpatterns = [
-    path('detectors/', detector_list, name='free-detectors')
+    path('detector/', detector_list, name='free-detectors')
 ]
