@@ -11,13 +11,14 @@ class Detector(models.Model):
         verbose_name='Группа',
         null=True,
         on_delete=models.SET_NULL,
+        related_name='cluster_detectors'
     )
     user = models.ForeignKey(
         Client, 
         verbose_name='Подчиненный-владелец', 
         null=True,
         on_delete=models.SET_NULL, 
-        related_name='my_detectors'
+        related_name='detectors'
     )
 
     def __str__(self):
