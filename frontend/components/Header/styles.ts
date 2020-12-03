@@ -29,6 +29,8 @@ export const SItem = styled.div`
 `;
 
 export const SHeader = styled.div`
+  position: fixed;
+  z-index: 4;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
   background-color: #fff;
   /* display: block; */

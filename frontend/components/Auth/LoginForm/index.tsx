@@ -28,10 +28,11 @@ const LoginForm = () => {
           password: "",
         }}
         validationSchema={validationSchema}
-        onSubmit={async (values, actions) => {
-          actions.setSubmitting(true);
+        onSubmit={async (values, { setSubmitting, resetForm }) => {
+          setSubmitting(true);
           await dispatch(authLogin(values.email, values.password));
-          actions.setSubmitting(false);
+          setSubmitting(false);
+          resetForm();
         }}
       >
         {(props: FormikProps<FormValues>) => (
