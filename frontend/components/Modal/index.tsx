@@ -5,11 +5,9 @@ import { getModalName, getModalProps } from "@/store/selectors";
 import { modalHide } from "@/store/actions/modal";
 import { StyledBackDrop, StyledRootModal } from "./styles";
 
-import DeleteCompanyModal from "./DeleteCompanyModal";
 import DetectorDataModal from "./DetectorDataModal";
 
 const MODAL_COMPONENTS = {
-  DELETE_COMPANY_MODAL: DeleteCompanyModal,
   DETECTOR_DATA_MODAL: DetectorDataModal,
 };
 

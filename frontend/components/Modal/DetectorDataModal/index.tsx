@@ -9,6 +9,7 @@ import useSWR from "swr";
 import ErrorMessage from "@/components/UI/ErrorMessage";
 import LoadingSpinner from "@/components/UI/LoadingSpinner";
 import EmptyMessage from "@/components/UI/EmptyMessage";
+import { Chart } from "@/components/Chart";
 
 export interface IDetectorDataModalProps {
   id: number;
@@ -23,14 +24,13 @@ const DetectorDataModal: React.FC<IDetectorDataModal> = ({ id, setClose }) => {
 
   return (
     <SDetectorDataModal>
+      <SDetectorDataModalTitle>Информация о датчике</SDetectorDataModalTitle>
       {error && <ErrorMessage message="Ошибка вывода информации о датчике" />}
       {!data && !error && <LoadingSpinner />}
       {data?.length === 0 && (
         <EmptyMessage message="Нет информации по датчику" />
       )}
-
-      <SDetectorDataModalTitle>Информация о датчике</SDetectorDataModalTitle>
-      <h1>{id}</h1>
+      {data && <Chart detectorData={data} />}
     </SDetectorDataModal>
   );
 };

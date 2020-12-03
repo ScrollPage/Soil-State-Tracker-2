@@ -9,7 +9,7 @@ export const SDetectorDataModal = styled.div`
 export const SDetectorDataModalBody = styled.div`
 `;
 
-export const SDetectorDataModalTitle = styled.h3`
+export const SDetectorDataModalTitle = styled.h2`
   margin-bottom: 20px;
 `;
 
