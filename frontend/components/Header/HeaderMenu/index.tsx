@@ -25,7 +25,7 @@ const navItems: INavitem[] = [
   {
     isAuth: true,
     isAdmin: true,
-    path: "/manage",
+    path: "/control",
     name: "Управление",
   },
   {

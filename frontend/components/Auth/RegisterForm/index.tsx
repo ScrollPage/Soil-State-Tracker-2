@@ -53,7 +53,6 @@ const RegisterForm = () => {
         validationSchema={validationSchema}
         onSubmit={async (values, { setSubmitting, resetForm }) => {
           setSubmitting(true);
-          console.log(values);
           await dispatch(
             authSignup(
               values.email,

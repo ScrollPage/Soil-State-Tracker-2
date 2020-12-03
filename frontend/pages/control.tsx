@@ -5,7 +5,11 @@ import { GetServerSideProps } from "next";
 import React from "react";
 import styled from "styled-components";
 import { ICluster } from "@/types/cluster";
-import useSWR from "swr";
+import { ControlTransfer } from "@/components/Control/ControlTransfer";
+import { ControlCluster } from "@/components/Control/ControlCluster";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import { ControlForm } from "@/components/Control/ControlForm";
 
 interface IControl {
   detectors: IDetector[] | null;
@@ -13,31 +17,17 @@ interface IControl {
 }
 
 const Control = ({ detectors, clusters }: IControl) => {
-  const { data: detectorData, error: detecotorError } = useSWR(
-    "/api/detector/",
-    {
-      initialData: detectors,
-    }
-  );
-
-  const { data: clusterData, error: clusterError } = useSWR("/api/cluster/", {
-    initialData: clusters,
-  });
-
   return (
     <SControl>
-      <SControlDetectors>
-        {detecotorError && <h1>Ошибка</h1>}
-        {!detectorData && <h1>Загрузка...</h1>}
-        {detectorData?.length === 0 && <h1>У вас нет детекторов</h1>}
-        {detectorData && <h1>{JSON.stringify(detectorData, null, 2)}</h1>}
-      </SControlDetectors>
-      <SControlClusters>
-        {clusterError && <h1>Ошибка</h1>}
-        {!clusterData && <h1>Загрузка...</h1>}
-        {clusterData?.length === 0 && <h1>У вас нет детекторов</h1>}
-        {clusterData && <h1>{JSON.stringify(clusterData, null, 2)}</h1>}
-      </SControlClusters>
+      <DndProvider backend={HTML5Backend}>
+        <SControlDetectors>
+          <ControlTransfer detectors={detectors} />
+        </SControlDetectors>
+        <SControlClusters>
+          <ControlCluster clusters={clusters} />
+          <ControlForm />
+        </SControlClusters>
+      </DndProvider>
     </SControl>
   );
 };
@@ -77,8 +67,14 @@ export const getServerSideProps: GetServerSideProps<IControl> = async (ctx) => {
 
 const SControl = styled.div`
   display: flex;
+  padding: 20px 0;
 `;
 
-const SControlDetectors = styled.div``;
+const SControlDetectors = styled.div`
+  flex: 1;
+  margin-right: 10px;
+`;
 
-const SControlClusters = styled.div``;
+const SControlClusters = styled.div`
+  flex: 1;
+`;
