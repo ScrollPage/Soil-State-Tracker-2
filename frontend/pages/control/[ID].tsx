@@ -35,7 +35,7 @@ export default function ClusterPage({ clusterId }: IClusterPage) {
     return `/api/cluster/${clusterId}/?page=${pageIndex + 1}`;
   };
 
-  const maxSize = 3;
+  const maxSize = 2;
 
   const { data, size, setSize, error } = useSWRInfinite<IDetector[]>(getKey);
 
@@ -50,7 +50,7 @@ export default function ClusterPage({ clusterId }: IClusterPage) {
       <Head>
         <title>Группа</title>
       </Head>
-      <SClusterPageTitle>Кластер 1</SClusterPageTitle>
+      <SClusterPageTitle>{data?.[0]?.[0]?.cluster}</SClusterPageTitle>
       <SClusterContainer>
         {error && <ErrorMessage message="Ошибка вывода датчиков" />}
         {!data && !error && <LoadingSpinner />}

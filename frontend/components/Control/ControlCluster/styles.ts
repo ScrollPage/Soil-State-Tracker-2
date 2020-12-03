@@ -5,4 +5,6 @@ export const SControlCluster = styled.div`
   border-radius: 5px;
   padding: 10px 10px 0 10px;
   margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
 `
