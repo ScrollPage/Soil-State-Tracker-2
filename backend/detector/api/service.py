@@ -1,9 +1,9 @@
 from rest_framework.viewsets import GenericViewSet
 from rest_framework.mixins import ListModelMixin
 
-from backend.service import PermissionSerializerMixin
+from backend.service import SerializerMixin
 
-class PSListViewSet(PermissionSerializerMixin,
+class PSListViewSet(SerializerMixin,
                     GenericViewSet,
                     ListModelMixin
                 ):
