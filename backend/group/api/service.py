@@ -1,5 +1,7 @@
 from rest_framework.viewsets import GenericViewSet
 from rest_framework.mixins import ListModelMixin, CreateModelMixin
+from rest_framework.pagination import PageNumberPagination
+from rest_framework.response import Response
 
 from backend.service import PermissionSerializerMixin
 
@@ -13,3 +15,10 @@ class PSListCreateViewSet(PermissionSerializerMixin,
     Методы: list create
     '''
     pass
+
+class PaginationData(PageNumberPagination):
+    page_size = 20
+    max_page_size = 1000
+
+    def get_paginated_response(self, data):
+        return Response(data)

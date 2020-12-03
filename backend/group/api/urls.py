@@ -8,7 +8,8 @@ cluster = ClusterViewSet.as_view({
 })
 
 detectors_add = ClusterViewSet.as_view({
-    'post': 'add_detector'
+    'post': 'add_detector',
+    'get': 'cluster_detectors',
 })
 
 detectors_remove = ClusterViewSet.as_view({
@@ -17,6 +18,6 @@ detectors_remove = ClusterViewSet.as_view({
 
 urlpatterns = [
     path('cluster/', cluster, name='cluster-list'),
-    path('cluster/<int:pk>/add/', detectors_add, name='add-detector'),
+    path('cluster/<int:pk>/', detectors_add, name='add-detector'),
     path('cluster/remove/', detectors_remove, name='remove-detector')
 ]

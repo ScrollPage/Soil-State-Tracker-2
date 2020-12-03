@@ -13,5 +13,5 @@ class ClusterSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'num_detectors', 'cluster_detectors']
 
 class ClusterDetectorSerializer(serializers.Serializer):
-    '''Сериализация списка идентификаторов'''
+    '''Сериализация списка датчиков'''
     detectors = serializers.ListField()
