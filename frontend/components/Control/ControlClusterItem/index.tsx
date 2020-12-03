@@ -3,7 +3,9 @@ import { changeCluster } from "@/store/actions/cluster";
 import { ICluster } from "@/types/cluster";
 import { IDetector } from "@/types/detector";
 import { ItemTypes } from "@/utils.ts/items";
-import React, { DragEvent } from "react";
+import { Tooltip } from "antd";
+import Link from "next/link";
+import React from "react";
 import { useDrop } from "react-dnd";
 import { useDispatch } from "react-redux";
 import { ControlItem } from "../ControlItem";
@@ -53,7 +55,16 @@ export const ControlClusterItem: React.FC<ICluster> = ({
 
   return (
     <SControlClusterItem ref={drop} isOver={isOver} canDrop={canDrop}>
-      <SControlClusterItemTitle>{name}</SControlClusterItemTitle>
+      <Tooltip
+        title={`Перейти к мониторингу датчиков группы ${name}`}
+        color={"blue"}
+      >
+        <SControlClusterItemTitle>
+          <Link href="/control/[ID]" as={`/control/${id}`}>
+            <a>{name}</a>
+          </Link>
+        </SControlClusterItemTitle>
+      </Tooltip>
       <SControlClusterItemBody>
         {renderControlItems(detectors, id)}
       </SControlClusterItemBody>

@@ -75,6 +75,7 @@ const Layout: React.FC<ILayout> = ({ children, protection }) => {
         duration: 0.6,
         x: "0px",
         ease: "power3.inOut",
+        transform: "none",
       });
     }
   }, [menuOpen]);
