@@ -19,10 +19,13 @@ class ClientActivity(GenericViewSet):
     def activate(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
+
         key = serializer.data.get('token')
         token = get_object_or_404(Token, key=key)
+        token.delete()
+        
         user = token.user
         user.is_active = True
         user.save()
-        token.delete()
+
         return Response(status=status.HTTP_200_OK)

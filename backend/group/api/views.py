@@ -12,16 +12,13 @@ class ClusterViewSet(PSListCreateViewSet):
     '''
     Список кластеров
     '''
-    serializer_class = ClusterDetectorSerializer
+    serializer_class = ClusterSerializer
     serializer_class_by_action = {
-        'list': ClusterSerializer,
-        'create': ClusterSerializer,
+        'add_detector': ClusterDetectorSerializer,
+        'remove_detector': ClusterDetectorSerializer,
         'cluster_detectors': DetectorSerializer
     }
     permission_classes = [permissions.IsAuthenticated]
-    permission_classes_by_action = {
-        'create': [permissions.AllowAny]
-    }
     pagination_class = PaginationData
 
     def get_queryset(self):

@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.postgres.indexes import BrinIndex
 
 from client.models import Client
 from group.models import Cluster
@@ -49,3 +50,4 @@ class DetectorData(models.Model):
     class Meta:
         verbose_name = 'Данные датчика'
         verbose_name_plural = 'Данные датчиков'
+        indexes = [BrinIndex(fields=['timestamp'])]

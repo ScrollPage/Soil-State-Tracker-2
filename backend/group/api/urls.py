@@ -10,6 +10,8 @@ cluster = ClusterViewSet.as_view({
 detectors_add = ClusterViewSet.as_view({
     'post': 'add_detector',
     'get': 'cluster_detectors',
+    'put': 'update',
+    'patch': 'partial_update',
 })
 
 detectors_remove = ClusterViewSet.as_view({

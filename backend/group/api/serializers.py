@@ -11,6 +11,7 @@ class ClusterSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cluster
         fields = ['id', 'name', 'num_detectors', 'cluster_detectors']
+        read_only_fields = ['id']
 
 class ClusterDetectorSerializer(serializers.Serializer):
     '''Сериализация списка датчиков'''
