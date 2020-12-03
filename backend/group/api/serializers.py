@@ -10,7 +10,7 @@ class ClusterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Cluster
-        fields = ['name', 'num_detectors', 'cluster_detectors']
+        fields = ['id', 'name', 'num_detectors', 'cluster_detectors']
 
 class ClusterDetectorSerializer(serializers.Serializer):
     '''Сериализация списка идентификаторов'''
