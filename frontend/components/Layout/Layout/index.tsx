@@ -67,15 +67,18 @@ const Layout: React.FC<ILayout> = ({ children, protection }) => {
     if (menuOpen) {
       gsap.to(layout.current, {
         duration: 0.8,
-        x: "-280px",
+        css: {
+          transform: "translateX(-280px)",
+        },
         ease: "power3.inOut",
       });
     } else {
       gsap.to(layout.current, {
         duration: 0.6,
-        x: "0px",
+        css: {
+          transform: "translateX(0px)",
+        },
         ease: "power3.inOut",
-        transform: "none",
       });
     }
   }, [menuOpen]);

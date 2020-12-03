@@ -15,7 +15,7 @@ export const changeCluster = (from: number, to: number, id: number): ThunkType =
   if (to === 0) {
     url = '/api/cluster/remove/'
   } else {
-    url = `/api/cluster/${to}/add/`
+    url = `/api/cluster/${to}/`
   }
   const token = Cookie.get('token');
   await instance(token)
