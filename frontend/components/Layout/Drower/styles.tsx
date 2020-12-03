@@ -4,7 +4,8 @@ import { SItemBtn } from "@/components/Header/styles";
 export const SDrower = styled.div`
   position: fixed;
   top: 0;
-  right: -280px;
+  right: 0;
+  transform: translateX(100%);
   height: 100vh;
   width: 280px;
   padding: 40px;

@@ -38,7 +38,7 @@ const Drower: React.FC<IDrower> = ({ setMenuOpen, menuOpen, protection }) => {
       gsap.to(drower.current, {
         duration: 0.8,
         css: {
-          right: "0px",
+          transform: "translateX(0%)",
         },
         ease: "power3.inOut",
       });
@@ -46,7 +46,7 @@ const Drower: React.FC<IDrower> = ({ setMenuOpen, menuOpen, protection }) => {
       gsap.to(drower.current, {
         duration: 0.6,
         css: {
-          right: "-280px",
+          transform: "translateX(100%)",
         },
         ease: "power3.inOut",
       });
@@ -61,7 +61,7 @@ const Drower: React.FC<IDrower> = ({ setMenuOpen, menuOpen, protection }) => {
   };
 
   const logoutHandler = () => {
-    dispatch(logout());
+    dispatch(logout(true));
     setMenuOpen(false);
   };
 

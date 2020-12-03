@@ -68,11 +68,19 @@ export const getServerSideProps: GetServerSideProps<IControl> = async (ctx) => {
 const SControl = styled.div`
   display: flex;
   padding: 20px 0;
+  flex-direction: row;
+  @media (max-width: 767.98px) {
+    flex-direction: column;
+  }
 `;
 
 const SControlDetectors = styled.div`
   flex: 1;
   margin-right: 10px;
+  @media (max-width: 767.98px) {
+    margin-right: 0px;
+    margin-bottom: 10px;
+  }
 `;
 
 const SControlClusters = styled.div`

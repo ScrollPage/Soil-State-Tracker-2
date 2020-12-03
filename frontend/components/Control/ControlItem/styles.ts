@@ -8,8 +8,8 @@ export const SControlItem = styled.div<{ isDragging: boolean }>`
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 10px;
-  cursor: pointer;
   margin-bottom: 10px;
+  cursor: pointer;
   &:hover {
     background-color: rgba(0, 0, 0, 0.05)
   }
