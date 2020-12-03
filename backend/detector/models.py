@@ -22,7 +22,7 @@ class Detector(models.Model):
     )
 
     def __str__(self):
-        return f'detector {self.id} that belongs to {self.user}'
+        return f'датчик {self.id}, принадлежащий {self.user}'
 
     class Meta:
         verbose_name = 'Датчик'
@@ -35,7 +35,6 @@ class DetectorData(models.Model):
         on_delete=models.DO_NOTHING, 
         related_name='data'
     )
-    timestamp = models.DateTimeField('Время проведения анализа', auto_now_add=True)
     first_temp = models.DecimalField('Первая температура', max_digits=4, decimal_places=2)
     second_temp = models.DecimalField('Вторая температура', max_digits=4, decimal_places=2)
     third_temp = models.DecimalField('Третья температура', max_digits=4, decimal_places=2)
@@ -45,7 +44,7 @@ class DetectorData(models.Model):
     timestamp = models.DateTimeField('Дата сбора данных', auto_now_add=True)
 
     def __str__(self):
-        return f'report at {self.timestamp} from {self.detector}'
+        return f'Отчет в {self.timestamp} от {self.detector}'
 
     class Meta:
         verbose_name = 'Данные датчика'

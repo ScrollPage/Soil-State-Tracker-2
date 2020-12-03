@@ -41,7 +41,6 @@ class ClusterViewSet(PSListCreateViewSet):
     def remove_detector(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        cluster = self.get_object()
-        detectors = cluster.cluster_detectors.filter(id__in=serializer.data['detectors'])
+        detectors = request.user.detectors.filter(id__in=serializer.data['detectors'])
         detectors.update(cluster=None)
         return Response(status=status.HTTP_200_OK)

@@ -46,7 +46,6 @@ class PermissionMixin:
 class SerializerMixin:
     '''Класс сериализатора в зависимости от action'''
     def get_serializer_class(self):
-        print(self.action)
         try:
             return self.serializer_class_by_action[self.action]
         except KeyError:
