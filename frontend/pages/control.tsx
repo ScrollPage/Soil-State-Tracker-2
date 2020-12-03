@@ -9,6 +9,7 @@ import { ControlTransfer } from "@/components/Control/ControlTransfer";
 import { ControlCluster } from "@/components/Control/ControlCluster";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import { ControlForm } from "@/components/Control/ControlForm";
 
 interface IControl {
   detectors: IDetector[] | null;
@@ -24,6 +25,7 @@ const Control = ({ detectors, clusters }: IControl) => {
         </SControlDetectors>
         <SControlClusters>
           <ControlCluster clusters={clusters} />
+          <ControlForm />
         </SControlClusters>
       </DndProvider>
     </SControl>

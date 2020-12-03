@@ -21,15 +21,16 @@ export const ControlCluster: React.FC<IControlCluster> = ({ clusters }) => {
   if (!clusterData) return <LoadingSpinner />;
 
   if (clusterData?.length === 0)
-    return <EmptyMessage message="У вас нет групп " />;
+    return <EmptyMessage message="У вас нет групп!" />;
 
   return (
     <SControlCluster>
       {clusterData.map((cluster) => (
         <ControlClusterItem
           key={`controlClusterItem__key__${cluster.name}`}
-          title={cluster.name}
-          detectors={cluster.cluster_detectors}
+          name={cluster.name}
+          cluster_detectors={cluster.cluster_detectors}
+          id={cluster.id}
         />
       ))}
     </SControlCluster>

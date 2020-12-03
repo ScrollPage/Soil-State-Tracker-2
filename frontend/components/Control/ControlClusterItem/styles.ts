@@ -10,9 +10,10 @@ export const SControlClusterItemBody = styled.div`
 `
 
 export const SControlClusterItem = styled.div<{ isOver: boolean, canDrop: boolean }>`
-  opacity: ${({ isOver }) => isOver ? 0.5 : 1};
-  background-color: ${({ canDrop }) => canDrop ? "green" : "#fff"};
+  background-color: ${({ canDrop, isOver }) => isOver ? "green" : canDrop ? "yellow" : "#fff"};
   padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
 `;
 
 

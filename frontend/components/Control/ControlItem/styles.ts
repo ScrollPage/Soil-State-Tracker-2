@@ -10,6 +10,9 @@ export const SControlItem = styled.div<{ isDragging: boolean }>`
   padding: 10px;
   cursor: pointer;
   margin-bottom: 10px;
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.05)
+  }
 `;
 
 export const SControlItemText = styled.div`
@@ -22,7 +25,6 @@ export const SControlItemText = styled.div`
     display: inline-block;
     font-weight: 600;
   }
-
 `
 
 

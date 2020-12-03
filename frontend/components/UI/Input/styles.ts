@@ -5,7 +5,7 @@ export const SInput = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 30px;
-  width: 100%;
+  /* width: 100%; */
 `;
 
 export const SInputTag = styled.input <{ isShowError?: boolean, width?: string }> `

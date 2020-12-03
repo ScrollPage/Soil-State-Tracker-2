@@ -4,10 +4,16 @@ import React from "react";
 import { useDrag } from "react-dnd";
 import { SControlItem, SControlItemText } from "./styles";
 
-export const ControlItem: React.FC<IDetector> = ({ id, x, y }) => {
+export const ControlItem: React.FC<IDetector & { clusterId: number }> = ({
+  clusterId,
+  id,
+  x,
+  y,
+}) => {
   const [{ isDragging }, drag] = useDrag({
     item: {
       type: ItemTypes.Item,
+      from: clusterId,
       id,
     },
     collect: (monitor) => ({
