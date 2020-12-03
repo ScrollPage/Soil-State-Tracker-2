@@ -80,12 +80,10 @@ MyApp.getInitialProps = async (AppContext: AppContext) => {
     : {};
   const isAuth = cookies(ctx)?.token ? true : false;
   const isStaff = cookies(ctx)?.isStaff === "true" ? true : false;
-  const isWorker = cookies(ctx)?.isWorker === "true" ? true : false;
 
   const protection: IProtection = {
     isAuth,
     isStaff,
-    isWorker,
   };
 
   return {

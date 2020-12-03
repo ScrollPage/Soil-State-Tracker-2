@@ -25,13 +25,6 @@ const navItems: INavitem[] = [
   {
     isAuth: true,
     isAdmin: true,
-    isWorker: true,
-    path: "/data",
-    name: "Данные",
-  },
-  {
-    isAuth: true,
-    isAdmin: true,
     path: "/manage",
     name: "Управление",
   },
@@ -49,8 +42,7 @@ export const renderLinks = (
   setMenuOpen?: Dispatch<SetStateAction<boolean>>
 ) => {
   const router = useRouter();
-  const { isAuth, isStaff, isWorker } = protection;
-  const isAdmin = !isStaff && !isWorker;
+  const { isAuth, isStaff } = protection;
 
   const menuOpenHadler = () => {
     if (isDrower && setMenuOpen) {

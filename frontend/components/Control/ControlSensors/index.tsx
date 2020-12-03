@@ -1,4 +1,3 @@
-import { ICompany } from "@/types/company";
 import React, { SetStateAction, useState } from "react";
 import {
   SControlSensors,

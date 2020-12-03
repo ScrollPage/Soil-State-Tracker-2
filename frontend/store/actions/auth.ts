@@ -18,7 +18,8 @@ export const authSignup = (
       password,
     })
     .then(() => {
-      dispatch(show('Вы успешно создали аккаунт!', 'success'));
+      Router.push({ pathname: '/login' }, undefined, { shallow: true });
+      dispatch(show('Вы успешно создали аккаунт! Подтвердите почту и войдите', 'success'));
     })
     .catch(() => {
       dispatch(show('Пользователь с такими данными уже существует!', 'warning'));
@@ -83,9 +84,8 @@ export const authInfo = (): ThunkType => async dispatch => {
     });
 };
 
-export const logout = (): ThunkType => () => {
-  const notRedurect = ['/login', '/register', '/about', '/']
-  if (!notRedurect.includes(Router.pathname)) {
+export const logout = (isRedirect: boolean): ThunkType => () => {
+  if (isRedirect) {
     Router.push({ pathname: '/' }, undefined, { shallow: true });
   }
   Cookie.remove('token');
@@ -99,19 +99,19 @@ export const logout = (): ThunkType => () => {
 };
 
 export const checkAuthTimeout = (expirationTime: number): ThunkType => dispatch =>
-  setTimeout(() => dispatch(logout()), expirationTime);
+  setTimeout(() => dispatch(logout(false)), expirationTime);
 
 export const authCheckState = (): ThunkType => dispatch => {
   const token = Cookie.get('token');
 
   if (token === undefined) {
-    dispatch(logout());
+    dispatch(logout(false));
   } else {
     const date: any = Cookie.get('expirationDate');
     const expirationDate = new Date(date);
 
     if (expirationDate <= new Date()) {
-      dispatch(logout());
+      dispatch(logout(false));
     } else {
       dispatch(checkAuthTimeout(expirationDate.getTime() - new Date().getTime()));
     }

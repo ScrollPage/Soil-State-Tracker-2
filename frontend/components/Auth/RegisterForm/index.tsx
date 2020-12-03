@@ -31,8 +31,8 @@ const validationSchema = object().shape({
 
 interface FormValues {
   email: string;
-  firstname: string;
-  lastname: string;
+  firstName: string;
+  lastName: string;
   password: string;
   confirmPassword: string;
 }
@@ -45,23 +45,23 @@ const RegisterForm = () => {
       <Formik
         initialValues={{
           email: "",
-          firstname: "",
-          lastname: "",
+          firstName: "",
+          lastName: "",
           password: "",
           confirmPassword: "",
         }}
         validationSchema={validationSchema}
         onSubmit={async (values, { setSubmitting, resetForm }) => {
           setSubmitting(true);
+          console.log(values);
           await dispatch(
             authSignup(
               values.email,
-              values.firstname,
-              values.lastname,
+              values.firstName,
+              values.lastName,
               values.password
             )
           );
-          console.log(values);
           setSubmitting(false);
           resetForm();
         }}
@@ -69,8 +69,8 @@ const RegisterForm = () => {
         {(props: FormikProps<FormValues>) => (
           <Form>
             <Input type="text" name="email" placeholder="Enter your E-mail" />
-            <Input type="text" name="firstname" placeholder="Введите имя" />
-            <Input type="text" name="lastname" placeholder="Введите фамилию" />
+            <Input type="text" name="firstName" placeholder="Введите имя" />
+            <Input type="text" name="lastName" placeholder="Введите фамилию" />
             <Input
               type="password"
               name="password"
@@ -78,10 +78,14 @@ const RegisterForm = () => {
             />
             <Input
               type="password"
-              name="password"
+              name="confirmPassword"
               placeholder="Повторите пароль"
             />
-            <SButton htmlType="submit" width={"300px"}>
+            <SButton
+              htmlType="submit"
+              width={"300px"}
+              disabled={props.isSubmitting}
+            >
               Создать аккаунт
             </SButton>
           </Form>
