@@ -41,7 +41,8 @@ class ClusterViewSet(PSListCreateViewSet):
     @action(detail=False, methods=['post'])
     def cluster_detectors(self, request, *args, **kwargs):
         cluster = self.get_object()
-        queryset = cluster.cluster_detectors.all()
+        queryset = cluster.cluster_detectors.all() \
+            .select_related('cluster')
 
         page = self.paginate_queryset(queryset)
         if page is not None:

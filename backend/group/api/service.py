@@ -3,9 +3,9 @@ from rest_framework.mixins import ListModelMixin, CreateModelMixin, UpdateModelM
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 
-from backend.service import PermissionMixin
+from backend.service import SerializerMixin
 
-class PSListCreateViewSet(PermissionMixin,
+class PSListCreateViewSet(SerializerMixin,
                           GenericViewSet,
                           ListModelMixin,
                           UpdateModelMixin,
