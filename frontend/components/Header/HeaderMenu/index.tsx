@@ -7,33 +7,23 @@ import { SHeaderMenu, SNavLink } from "./styles";
 interface INavitem {
   path: string;
   name: string;
-  isAuth?: boolean;
-  isStaff?: boolean;
-  isWorker?: boolean;
-  isAdmin?: boolean;
 }
 
-const navItems: INavitem[] = [
-  {
-    path: "/",
-    name: "Главная",
-  },
-  {
-    path: "/about",
-    name: "О продукте",
-  },
-  {
-    isAuth: true,
-    isAdmin: true,
-    path: "/control",
-    name: "Управление",
-  },
-  {
-    isAuth: true,
-    isStaff: true,
-    path: "/support",
-    name: "Поддержка",
-  },
+const globalNavItems: INavitem[] = [
+  { path: "/", name: "Главная" },
+  { path: "/about", name: "О продукте" },
+];
+
+const authNavItems: INavitem[] = [
+  { path: "/", name: "Главная" },
+  { path: "/about", name: "О продукте" },
+  { path: "/control", name: "Управление" },
+];
+
+const staffNavItems: INavitem[] = [
+  { path: "/", name: "Главная" },
+  { path: "/about", name: "О продукте" },
+  { path: "/support", name: "Поддержка" },
 ];
 
 export const renderLinks = (
@@ -50,24 +40,27 @@ export const renderLinks = (
     }
   };
 
-  const filterLinks = (item: INavitem) => {
-    let isShow = isAuth || !item.isAuth;
-    return isShow;
-  };
+  let navItems = globalNavItems;
 
-  return navItems
-    .filter((item) => filterLinks(item))
-    .map((item, index) => (
-      <Link key={`navlink__key__${item.path}__${index}`} href={item.path}>
-        <SNavLink
-          isDrower={isDrower}
-          active={router.pathname === item.path}
-          onClick={menuOpenHadler}
-        >
-          {item.name}
-        </SNavLink>
-      </Link>
-    ));
+  if (isStaff) {
+    navItems = staffNavItems;
+  }
+
+  if (isAuth) {
+    navItems = authNavItems;
+  }
+
+  return navItems.map((item, index) => (
+    <Link key={`navlink__key__${item.path}__${index}`} href={item.path}>
+      <SNavLink
+        isDrower={isDrower}
+        active={router.pathname === item.path}
+        onClick={menuOpenHadler}
+      >
+        {item.name}
+      </SNavLink>
+    </Link>
+  ));
 };
 
 interface IHeaderMenu {
