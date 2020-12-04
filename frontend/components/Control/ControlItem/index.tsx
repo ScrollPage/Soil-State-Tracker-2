@@ -22,19 +22,21 @@ export const ControlItem: React.FC<IDetector & { clusterId: number }> = ({
   });
 
   return (
-    <SControlItem ref={drag} isDragging={isDragging}>
-      <SControlItemText>
-        <span>id:</span>&nbsp;
-        {id}
-      </SControlItemText>
-      <SControlItemText>
-        <span>x:</span>&nbsp;
-        {x}
-      </SControlItemText>
-      <SControlItemText>
-        <span>y:</span>&nbsp;
-        {y}
-      </SControlItemText>
-    </SControlItem>
+    <>
+      <SControlItem ref={drag} isDragging={isDragging}>
+        <SControlItemText>
+          <span>id:</span>&nbsp;
+          {id}
+        </SControlItemText>
+        <SControlItemText>
+          <span>x:</span>&nbsp;
+          {x}
+        </SControlItemText>
+        <SControlItemText>
+          <span>y:</span>&nbsp;
+          {y}
+        </SControlItemText>
+      </SControlItem>
+    </>
   );
 };

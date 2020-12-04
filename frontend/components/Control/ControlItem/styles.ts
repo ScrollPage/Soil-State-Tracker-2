@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
-export const SControlItem = styled.div<{ isDragging: boolean }>`
-  opacity: ${({ isDragging }) => isDragging ? 0.5 : 1};
+export const SControlItem = styled.div<{ isDragging?: boolean }>`
+  opacity: ${({ isDragging }) => isDragging ? 0 : 1};
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -9,7 +9,8 @@ export const SControlItem = styled.div<{ isDragging: boolean }>`
   border-radius: 5px;
   padding: 10px;
   margin-bottom: 10px;
-  cursor: pointer;
+  cursor: move;
+  background-color: #fff;
   &:hover {
     background-color: rgba(0, 0, 0, 0.05)
   }
