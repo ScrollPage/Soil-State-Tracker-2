@@ -38,13 +38,12 @@ def slice_data_by_timestamp(queryset):
     )
     min_timestamp = timestamp_aggregation['min_timestamp']
     max_timestamp = timestamp_aggregation['max_timestamp']
-    while min_timestamp <= max_timestamp - timedelta(days=i):
-        i += 1
+    while min_timestamp + timedelta(days=i) <= max_timestamp:
         date_sliced_queryset = DetectorData.objects.filter(
             detector__in=queryset,
-            timestamp__lte=time-timedelta(days=i), 
-            timestamp__gt=time-timedelta(days=i+1)
+            timestamp=min_timestamp+timedelta(days=i)
         )
+        i += 1
         res.append(date_sliced_queryset)
         
     return res

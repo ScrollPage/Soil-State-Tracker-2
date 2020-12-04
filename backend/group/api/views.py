@@ -3,6 +3,8 @@ from rest_framework.response import Response
 from rest_framework.decorators import action
 from django.db.models import Count, Prefetch, Avg
 
+from cacheops import cached_as
+
 from .serializers import ClusterSerializer, ClusterDetectorSerializer
 from .service import (
     PSListCreateViewSet, 
