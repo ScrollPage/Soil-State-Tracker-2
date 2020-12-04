@@ -1,6 +1,7 @@
 from django.core.management.base import BaseCommand
 
 from random import uniform
+from datetime import datetime, timedelta
 
 from detector.models import Detector, DetectorData
 
@@ -9,6 +10,7 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument('amount_data', type=int)
+        parser.add_argument('extra_date', type=int)
 
     def handle(self, *args, **options):
         for detector in Detector.objects.all():
@@ -21,4 +23,5 @@ class Command(BaseCommand):
                     humidity=round(uniform(0, 20), 2),
                     lightning=round(uniform(0, 20), 2),
                     pH=round(uniform(0, 20), 2),
+                    timestamp=datetime.now().date()+timedelta(days=options.get('extra_date', 0))
                 )
