@@ -5,7 +5,7 @@ type ModalShowType<T> = {
   modalProps: T
 }
 
-export type ModalNameType = 'DELETE_COMPANY_MODAL' | null;
+export type ModalNameType = 'DETECTOR_DATA_MODAL' | null;
 
 export function modalShow<T>(modalName: ModalNameType, modalProps: T): ModalShowType<T> {
   return { type: 'MODAL_SHOW', modalName, modalProps } as const

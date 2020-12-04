@@ -10,6 +10,7 @@ export interface IDetectorData {
 }
 
 export interface IDetector {
+  cluster: string;
   id: number;
   x: number;
   y: number;
