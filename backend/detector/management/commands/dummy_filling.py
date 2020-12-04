@@ -15,7 +15,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         for detector in Detector.objects.all():
             for _ in range(options.get('amount_data', 0)):
-                DetectorData.objects.create(
+                d = DetectorData.objects.create(
                     detector=detector,
                     first_temp=round(uniform(0, 20), 2),
                     second_temp=round(uniform(0, 20), 2),
@@ -23,5 +23,7 @@ class Command(BaseCommand):
                     humidity=round(uniform(0, 20), 2),
                     lightning=round(uniform(0, 20), 2),
                     pH=round(uniform(0, 20), 2),
-                    timestamp=datetime.now().date()+timedelta(days=options.get('extra_date', 0))
                 )
+                if options.get('extra_date', 0):
+                    d.timestamp=datetime.now().date()+timedelta(days=options.get('extra_date', 0))
+                    d.save()
