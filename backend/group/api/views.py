@@ -4,8 +4,13 @@ from rest_framework.decorators import action
 from django.db.models import Count, Prefetch, Avg
 
 from .serializers import ClusterSerializer, ClusterDetectorSerializer
-from .service import PSListCreateViewSet, PaginationData
-from detector.api.serializers import DetectorSerializer
+from .service import (
+    PSListCreateViewSet, 
+    PaginationData, 
+    slice_data_by_timestamp,
+    queryset_mean,
+)
+from detector.api.serializers import DetectorSerializer, DetectorDataSerializer
 from group.models import Cluster
 from detector.models import DetectorData
 
@@ -17,7 +22,8 @@ class ClusterViewSet(PSListCreateViewSet):
     serializer_class_by_action = {
         'add_detector': ClusterDetectorSerializer,
         'remove_detector': ClusterDetectorSerializer,
-        'cluster_detectors': DetectorSerializer
+        'cluster_detectors': DetectorSerializer,
+        'get_mean_data': DetectorDataSerializer,
     }
     permission_classes = [permissions.IsAuthenticated]
     pagination_class = PaginationData
@@ -32,14 +38,20 @@ class ClusterViewSet(PSListCreateViewSet):
     @action(detail=False, methods=['get'])
     def get_mean_data(self, request, *args, **kwargs):
         cluster = self.get_object()
-        detectors = cluster.detectors.all() \
+        detectors = cluster.cluster_detectors.all() \
             .prefetch_related(
                 Prefetch(
                     'data',
-                    queryset=Detector.objects.filter(detector__in=detectors) \
+                    queryset=DetectorData.objects.all() \
                         .defer('detector')
                 )
             )
+
+        sliced_data = slice_data_by_timestamp(detectors)
+        resulting_queryset = queryset_mean(sliced_data)
+        serializer = self.get_serializer(resulting_queryset, many=True)
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
+        
 
     @action(detail=False, methods=['post'])
     def add_detector(self, request, *args, **kwargs):
