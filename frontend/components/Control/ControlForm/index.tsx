@@ -43,7 +43,7 @@ export const ControlForm = () => {
               name="name"
               placeholder="Введите название группы"
             />
-            <SButton htmlType="submit" width={"300px"}>
+            <SButton type="submit" width={"300px"}>
               Подтвердить
             </SButton>
           </Form>

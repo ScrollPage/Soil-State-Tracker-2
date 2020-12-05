@@ -1,16 +1,16 @@
 import ErrorMessage from "@/components/UI/ErrorMessage";
 import LoadingSpinner from "@/components/UI/LoadingSpinner";
 import { IDetector } from "@/types/detector";
-import React from "react";
+import React, { memo } from "react";
 import useSWR from "swr";
-import { ControlClusterItem } from "../ControlClusterItem";
+import ControlClusterItem from "../ControlClusterItem";
 import { STransfer } from "./styles";
 
 interface IControlTransfer {
   detectors: IDetector[] | null;
 }
 
-export const ControlTransfer: React.FC<IControlTransfer> = ({ detectors }) => {
+const ControlTransfer: React.FC<IControlTransfer> = ({ detectors }) => {
   const { data: detectorData, error: detecotorError } = useSWR(
     "/api/detector/",
     {
@@ -33,3 +33,5 @@ export const ControlTransfer: React.FC<IControlTransfer> = ({ detectors }) => {
     </STransfer>
   );
 };
+
+export default memo(ControlTransfer);

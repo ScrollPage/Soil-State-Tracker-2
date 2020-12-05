@@ -2,16 +2,16 @@ import EmptyMessage from "@/components/UI/EmptyMessage";
 import ErrorMessage from "@/components/UI/ErrorMessage";
 import LoadingSpinner from "@/components/UI/LoadingSpinner";
 import { ICluster } from "@/types/cluster";
-import React from "react";
+import React, { memo } from "react";
 import useSWR from "swr";
-import { ControlClusterItem } from "../ControlClusterItem";
+import ControlClusterItem from "../ControlClusterItem";
 import { SControlCluster } from "./styles";
 
 interface IControlCluster {
   clusters: ICluster[] | null;
 }
 
-export const ControlCluster: React.FC<IControlCluster> = ({ clusters }) => {
+const ControlCluster: React.FC<IControlCluster> = ({ clusters }) => {
   const { data: clusterData, error: clusterError } = useSWR("/api/cluster/", {
     initialData: clusters,
   });
@@ -36,3 +36,5 @@ export const ControlCluster: React.FC<IControlCluster> = ({ clusters }) => {
     </SControlCluster>
   );
 };
+
+export default memo(ControlCluster);

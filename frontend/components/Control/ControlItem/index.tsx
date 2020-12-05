@@ -1,10 +1,10 @@
 import { IDetector } from "@/types/detector";
 import { ItemTypes } from "@/utils.ts/items";
-import React from "react";
+import React, { memo } from "react";
 import { useDrag } from "react-dnd";
 import { SControlItem, SControlItemText } from "./styles";
 
-export const ControlItem: React.FC<IDetector & { clusterId: number }> = ({
+const ControlItem: React.FC<IDetector & { clusterId: number }> = ({
   clusterId,
   id,
   x,
@@ -40,3 +40,5 @@ export const ControlItem: React.FC<IDetector & { clusterId: number }> = ({
     </>
   );
 };
+
+export default memo(ControlItem);
