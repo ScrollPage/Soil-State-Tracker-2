@@ -22,7 +22,7 @@ const ChatInput: React.FC<IChatInput> = ({
           <Input onChange={(e) => messageChange(e)} value={message} />
         </div>
         <div>
-          <SButton htmlType="submit" height={"31.6"}>
+          <SButton type="submit" height={"31.6"}>
             <SendOutlined />
           </SButton>
         </div>

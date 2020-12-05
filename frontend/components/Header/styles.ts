@@ -29,16 +29,15 @@ export const SItem = styled.div`
 `;
 
 export const SHeader = styled.div`
+  background-color: ${({ theme }) => theme.blue};
   position: fixed;
   z-index: 4;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
-  background-color: #fff;
-  /* display: block; */
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 60px;
+  height: 120px;
   ${UserSelectNone};
   ${SItem} {
       &:last-child {

@@ -30,7 +30,8 @@ const SHome = styled.div`
   height: 100%;
   width: 100%;
   h1 {
-    font-weight: 800;
+    font-family: "Play";
+    font-weight: bold;
     font-size: 36px;
   }
 `;

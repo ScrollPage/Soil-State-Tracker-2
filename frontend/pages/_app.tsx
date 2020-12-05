@@ -149,4 +149,37 @@ const GlobalStyle = createGlobalStyle`
   #nprogress .bar {
     background: #000 !important;
   }
+
+  @font-face {
+	  font-family: 'Play';
+	  src: url('fonts/Play-Regular.eot');
+	  src: local('☺'), url('fonts/Play-Regular.woff') format('woff'), url('fonts/Play-Regular.ttf') format('truetype'), url('fonts/Play-Regular.svg') format('svg');
+	  font-weight: normal;
+	  font-style: normal;
+  }
+
+  @font-face {
+	  font-family: 'Play';
+	  src: url('fonts/Play-Bold.eot');
+	  src: local('☺'), url('fonts/Play-Bold.woff') format('woff'), url('fonts/Play-Bold.ttf') format('truetype'), url('fonts/Play-Bold.svg') format('svg');
+	  font-weight: 700;
+	  font-style: normal;
+  }
+
+  @font-face {
+  	font-family: 'Montserrat';
+  	src: url('fonts/Montserrat-Regular.eot');
+  	src: local('☺'), url('fonts/Montserrat-Regular.woff') format('woff'), url('fonts/Montserrat-Regular.ttf') format('truetype'), url('fonts/Montserrat-Regular.svg') format('svg');
+  	font-weight: normal;
+  	font-style: normal;
+  }
+
+  @font-face {
+	  font-family: 'Montserrat';
+	  src: url('fonts/Montserrat-Bold.eot');
+	  src: local('☺'), url('fonts/Montserrat-Bold.woff') format('woff'), url('fonts/Montserrat-Bold.ttf') format('truetype'), url('fonts/Montserrat-Bold.svg') format('svg');
+	  font-weight: 700;
+	  font-style: normal;
+  }
+
 `;
