@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 from datetime import timedelta
+import pusher
+
 from . import local
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -26,7 +28,6 @@ SECRET_KEY = '#ptm!vz5bcz*cc^q0u0&yt$_lsvt5*p3z@&r8z-6@fk-h+)xf$'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
 ALLOWED_HOSTS = []
 
 
@@ -221,21 +222,23 @@ DJOSER = {
 }
 
 # Pusher
-import pusher
-
 pusher_client = pusher.Pusher(
-    app_id='1107234',
-    key='cd195d4bd07dc0db154b',
-    secret='0f6da17343f42481b9d3',
-    cluster='eu',
+    app_id=local.PUSHER_APP_ID,
+    key=local.PUSHER_KEY,
+    secret=local.PUSHER_SECRET,
+    cluster=local.PUSHER_CLUSTER,
     ssl=True
 )
 
+#REDIS related settings
+REDIS_HOST = '127.0.0.1'
+REDIS_PORT = 6379
+
 # Cacheops
 CACHEOPS_REDIS = {
-    'host': '127.0.0.1', # redis-server is on same machine
-    'port': 6379,        # default redis port
-    'db': 1,             # SELECT non-default redis database
+    'host': REDIS_HOST, # redis-server is on same machine
+    'port': REDIS_PORT,        # default redis port
+    'db': 2,             # SELECT non-default redis database
 }
 
 CACHEOPS_DEFAULTS = {
@@ -248,3 +251,12 @@ CACHEOPS = {
     'chat.message': {'ops': 'all'},
     'chat.chat': {'ops': 'all'}
 }
+
+# Celery
+CELERY_REDIS_DB = '1'
+CELERY_BROKER_URL = f'redis://{REDIS_HOST}:{REDIS_PORT}/{CELERY_REDIS_DB}'
+CELERY_BROKER_TRANSPORT_OPTIONS = {'visiblity_timeout': 3600}
+CELERY_RESULT_BACKEND = f'redis://{REDIS_HOST}:{REDIS_PORT}/{CELERY_REDIS_DB}'
+CELERY_ACCEPT_CONTENT = ['json', 'applicaion/json', 'applicaion/text']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERILIZER = 'json'

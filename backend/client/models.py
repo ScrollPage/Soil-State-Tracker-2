@@ -1,16 +1,16 @@
 from rest_framework.authtoken.models import Token
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from django.core.mail import send_mail
 from django.db import models
 from django.contrib.auth.models import (
     AbstractBaseUser, 
     BaseUserManager, 
     PermissionsMixin
 )
-from django.conf import settings
 
 from random import randint
+
+from .tasks import send_activation_email
 
 class ClientManager(BaseUserManager):
     '''Мэнэджер кастомного пользователя'''
@@ -74,10 +74,4 @@ def send_conf_mail(sender, instance=None, created=False, **kwargs):
     if created:
         if not instance.is_superuser:
             token = Token.objects.create(user=instance)
-            send_mail(
-                'Подтверждение регистрации',
-                f'Перейдите по ссылке, чтобы завершить регистрацию: {settings.REACT_DOMAIN}/account-activation?token={token.key}',
-                settings.EMAIL_HOST_USER, 
-                [instance.email],
-                fail_silently=False
-            )
+            send_activation_email.delay(instance.email, token.key)
