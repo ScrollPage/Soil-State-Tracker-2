@@ -1,4 +1,3 @@
-import Container from "@/components/UI/Container";
 import Header from "@/components/Header";
 import React, { useRef, useState, useEffect } from "react";
 import Drower from "../Drower";
@@ -100,9 +99,7 @@ const Layout: React.FC<ILayout> = ({ children, protection }) => {
     <>
       <SLayout ref={layout}>
         <Header protection={protection} setMenuOpen={setMenuOpen} />
-        <SMain>
-          <Container>{children}</Container>
-        </SMain>
+        <SMain>{children}</SMain>
       </SLayout>
       <Drower
         protection={protection}

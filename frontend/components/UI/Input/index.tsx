@@ -1,7 +1,8 @@
 import { useField } from "formik";
+import Image from "next/image";
 import React from "react";
 import { InputHTMLAttributes } from "react";
-import { SInput, SInputTag, SInputError } from "./styles";
+import { SInput, SInputTag, SInputError, SInputImg } from "./styles";
 
 type InputProps = InputHTMLAttributes<HTMLInputElement> & {
   name: string;
@@ -13,6 +14,9 @@ const Input: React.FC<InputProps> = (props) => {
   const isShowError = meta.touched && !!meta.error;
   return (
     <SInput>
+      <SInputImg>
+        <Image height={20} width={20} src="/input/email.svg" />
+      </SInputImg>
       <SInputTag
         {...field}
         {...props}

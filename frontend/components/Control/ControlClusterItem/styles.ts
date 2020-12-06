@@ -1,9 +1,5 @@
 import styled from 'styled-components';
 
-export const SControlClusterItemTitle = styled.h2`
-  text-align: center;
-`
-
 export const SControlClusterItemBody = styled.div`
   display: flex;
   flex-direction: column;

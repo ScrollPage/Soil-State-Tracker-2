@@ -5,30 +5,31 @@ import React from "react";
 import styled from "styled-components";
 import { GetServerSideProps } from "next";
 import { ensureRedirectToData } from "@/utils.ts/ensure";
+import Container from "@/components/UI/Container";
 
 interface ILogin {}
 
 const Login = ({}: ILogin) => {
   return (
-    <SLogin>
+    <Wrapper>
       <Head>
         <title>Вход</title>
       </Head>
-      <SLoginInner>
-        <SLoginLeft>
-          <SLoginTitle>Вход</SLoginTitle>
-          <SLoginSubTitle>
-            У вас нет аккаунта? &nbsp;
+      <Container>
+        <Inner>
+          <Title>Войти в аккаунт</Title>
+          <Main>
+            <LoginForm />
+          </Main>
+          <Subtitle>Нет аккаунта?</Subtitle>
+          <Bottom>
             <Link href="/register">
-              <a>Зарегистрируйтесь</a>
+              <a>Регистрация</a>
             </Link>
-          </SLoginSubTitle>
-        </SLoginLeft>
-        <SLoginMain>
-          <LoginForm />
-        </SLoginMain>
-      </SLoginInner>
-    </SLogin>
+          </Bottom>
+        </Inner>
+      </Container>
+    </Wrapper>
   );
 };
 
@@ -41,39 +42,47 @@ export const getServerSideProps: GetServerSideProps<ILogin> = async (ctx) => {
   };
 };
 
-const SLogin = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+const Wrapper = styled.div`
   height: 100%;
-  width: 100%;
+  background: url(login/login_bgc.png) left bottom no-repeat;
+  background-size: 100%;
+  padding-top: 115px;
 `;
 
-const SLoginInner = styled.div`
+const Inner = styled.div`
   width: 100%;
   display: flex;
-  justify-content: space-around;
-  flex-direction: row;
-  @media (max-width: 767.98px) {
-    flex-direction: column;
-    align-items: center;
-  }
+  align-items: center;
+  flex-direction: column;
 `;
-const SLoginTitle = styled.h1`
-  font-weight: 800;
-  font-size: 36px;
-  @media (max-width: 767.98px) {
-    font-size: 26px;
-  }
+
+const Title = styled.h1`
+  font-family: "Play";
+  font-weight: normal;
+  font-size: 48px;
+  line-height: 56px;
+  color: ${({ theme }) => theme.white};
+  margin-bottom: 84px;
 `;
-const SLoginSubTitle = styled.span`
-  display: flex;
-  @media (max-width: 767.98px) {
-    margin-bottom: 30px;
-    font-size: 15px;
-  }
+const Subtitle = styled.span`
+  margin-top: 20px;
+  font-family: "Play";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 21px;
+  text-align: center;
+  color: #ffffff;
 `;
-const SLoginMain = styled.span``;
-const SLoginLeft = styled.span`
-  font-size: 20px;
+
+const Main = styled.span``;
+
+const Bottom = styled.span`
+  font-family: "Play";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 21px;
+  text-align: center;
+  color: #ffffff;
 `;

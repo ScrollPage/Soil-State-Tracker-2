@@ -80,11 +80,7 @@ const RegisterForm = () => {
               name="confirmPassword"
               placeholder="Повторите пароль"
             />
-            <SButton
-              htmlType="submit"
-              width={"300px"}
-              disabled={props.isSubmitting}
-            >
+            <SButton myType="white" type="submit" disabled={props.isSubmitting}>
               Создать аккаунт
             </SButton>
           </Form>

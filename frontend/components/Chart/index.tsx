@@ -39,7 +39,7 @@ export const Chart: React.FC<IChart> = ({ detectorData }) => {
       </SChartSelect>
       <Line
         data={{
-          labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+          labels: detectorData.map((item) => item.timestamp),
           datasets: [
             {
               label: param.label,

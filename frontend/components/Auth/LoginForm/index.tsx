@@ -39,8 +39,8 @@ const LoginForm = () => {
           <Form>
             <Input type="text" name="email" placeholder="E-mail" />
             <Input type="password" name="password" placeholder="Пароль" />
-            <SButton htmlType="submit" width={"300px"}>
-              Войти
+            <SButton myType="white" type="submit">
+              Продолжить
             </SButton>
           </Form>
         )}

@@ -5,7 +5,7 @@ import nprogress from "nprogress/nprogress.css";
 import { SWRConfig } from "swr";
 import Router from "next/router";
 import NProgress from "nprogress";
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle, ThemeProvider } from "styled-components";
 import { normalize } from "styled-normalize";
 import { createWrapper } from "next-redux-wrapper";
 import { Provider } from "react-redux";
@@ -61,11 +61,13 @@ const MyApp = ({ Component, pageProps, protection }: IMyApp) => {
           }}
         >
           <Provider store={store}>
-            <Alert />
-            <RootModal />
-            <Layout protection={protection}>
-              <Component {...pageProps} />
-            </Layout>
+            <ThemeProvider theme={theme}>
+              <Alert />
+              <RootModal />
+              <Layout protection={protection}>
+                <Component {...pageProps} />
+              </Layout>
+            </ThemeProvider>
           </Provider>
         </SWRConfig>
       </>
@@ -96,6 +98,14 @@ const makestore = () => store;
 const wrapper = createWrapper(makestore);
 
 export default wrapper.withRedux(MyApp);
+
+const theme = {
+  blue: "#2F3F53",
+  green: "#60CFBF",
+  red: "#CF6060",
+  yellow: "#CFBD60",
+  white: "#FFF",
+};
 
 const GlobalStyle = createGlobalStyle`
   ${normalize}
@@ -139,4 +149,37 @@ const GlobalStyle = createGlobalStyle`
   #nprogress .bar {
     background: #000 !important;
   }
+
+  @font-face {
+	  font-family: 'Play';
+	  src: url('fonts/Play-Regular.eot');
+	  src: local('☺'), url('fonts/Play-Regular.woff') format('woff'), url('fonts/Play-Regular.ttf') format('truetype'), url('fonts/Play-Regular.svg') format('svg');
+	  font-weight: normal;
+	  font-style: normal;
+  }
+
+  @font-face {
+	  font-family: 'Play';
+	  src: url('fonts/Play-Bold.eot');
+	  src: local('☺'), url('fonts/Play-Bold.woff') format('woff'), url('fonts/Play-Bold.ttf') format('truetype'), url('fonts/Play-Bold.svg') format('svg');
+	  font-weight: 700;
+	  font-style: normal;
+  }
+
+  @font-face {
+  	font-family: 'Montserrat';
+  	src: url('fonts/Montserrat-Regular.eot');
+  	src: local('☺'), url('fonts/Montserrat-Regular.woff') format('woff'), url('fonts/Montserrat-Regular.ttf') format('truetype'), url('fonts/Montserrat-Regular.svg') format('svg');
+  	font-weight: normal;
+  	font-style: normal;
+  }
+
+  @font-face {
+	  font-family: 'Montserrat';
+	  src: url('fonts/Montserrat-Bold.eot');
+	  src: local('☺'), url('fonts/Montserrat-Bold.woff') format('woff'), url('fonts/Montserrat-Bold.ttf') format('truetype'), url('fonts/Montserrat-Bold.svg') format('svg');
+	  font-weight: 700;
+	  font-style: normal;
+  }
+
 `;

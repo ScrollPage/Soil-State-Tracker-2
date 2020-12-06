@@ -1,39 +1,38 @@
 import styled, { css } from 'styled-components';
-import { Button } from 'antd';
 
-export const SButton = styled(Button) <{ width?: string, iswhite?: string, isred?: string, height?: string }>`
-  width: ${({ width }) => width || '100%'};
-  height: ${({ height }) => height || 'auto'};
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  ${({ iswhite }) => iswhite === 'true' && css`
-    background-color: #fff;
-    color: #000;
-    &:hover, :focus {
-      background-color: #000;
-      color: #fff;
-      border: 1px solid #d9d9d9;
-  }
-  `};
-  ${({ isred }) => isred === 'true' && css`
-    background-color: red;
-    color: #000;
-    &:hover, :focus {
-      background-color: red;
-      color: #000;
-      border: 1px solid #d9d9d9;
-  }
-  `};
-  ${({ isred, iswhite }) => !isred && !iswhite && css`
-    background-color: #000;
+export const SButton = styled.button<{ myType: "white" | "blue" }>`
+  width: 350px;
+  height: 60px;
+  box-sizing: border-box;
+  outline: none;
+  cursor: pointer;
+
+  ${({ myType }) => myType === 'white' && css`
+    background-color: transparent;
+    border: 1px solid #fff;
+    border-radius: 20px;
+    font-family: "Play";
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 21px;
     color: #fff;
-    &:hover, :focus {
+    &:hover {
       background-color: #fff;
       color: #000;
-      border: 1px solid #d9d9d9;
     }
-  `}
+  `};
+
+  ${({ myType }) => myType === 'blue' && css`
+    border-radius: 10px;
+    font-family: Play;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 22px;
+    line-height: 25px;
+    color: #fff;
+  `};
+
   transition: all 0.3s ease -in -out;
 `;
 
