@@ -59,11 +59,14 @@ class Client(AbstractBaseUser, PermissionsMixin):
     objects = ClientManager()
 
     def __str__(self):
-        return f'{self.last_name} {self.first_name}'
+        return self.email
         
     class Meta:
         verbose_name = 'Клиент'
         verbose_name_plural = 'Клиенты'
+
+    def get_full_name(self):
+        return self.last_name + ' ' + self.first_name
 
 @receiver(post_save, sender=Client)
 def send_conf_mail(sender, instance=None, created=False, **kwargs):

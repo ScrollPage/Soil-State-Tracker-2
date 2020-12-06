@@ -11,7 +11,6 @@ from client.models import Client
 class ClientActivity(GenericViewSet):
     '''Активация аккаунта'''
 
-    queryset = Client.objects.all()
     serializer_class = TokenSerialzizer
     permission_classes = [permissions.AllowAny]
 

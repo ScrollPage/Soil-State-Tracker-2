@@ -24,7 +24,7 @@ cluster_mean_data = ClusterViewSet.as_view({
 
 urlpatterns = [
     path('cluster/', cluster, name='cluster-list'),
-    path('cluster/remove/', detector_remove, name='remove-detector'),
-    path('cluster/<int:pk>/', detector_add, name='add-detector'),
+    path('cluster/remove/', detector_remove, name='remove-detectors'),
+    path('cluster/<int:pk>/', detector_add, name='cluster-detectors'),
     path('cluster/<int:pk>/data/', cluster_mean_data, name='cluster-mean-data'),
 ]

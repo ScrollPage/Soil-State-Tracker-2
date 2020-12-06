@@ -4,6 +4,7 @@ from rest_framework.decorators import action
 from django.db.models import Count, Prefetch, Avg
 
 from cacheops import cached_as
+from cacheops import invalidate_model
 
 from .serializers import ClusterSerializer, ClusterDetectorSerializer
 from .service import (
@@ -32,7 +33,8 @@ class ClusterViewSet(PSListCreateViewSet):
 
     def get_queryset(self):
         return Cluster.objects.filter(user=self.request.user) \
-            .annotate(num_detectors=Count('cluster_detectors'))
+            .annotate(num_detectors=Count('cluster_detectors')) \
+            .order_by('id')
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
@@ -48,7 +50,6 @@ class ClusterViewSet(PSListCreateViewSet):
                         .defer('detector')
                 )
             )
-
         sliced_data = slice_data_by_timestamp(detectors)
         resulting_queryset = queryset_mean(sliced_data)
         serializer = self.get_serializer(resulting_queryset, many=True)
@@ -69,7 +70,8 @@ class ClusterViewSet(PSListCreateViewSet):
     def cluster_detectors(self, request, *args, **kwargs):
         cluster = self.get_object()
         queryset = cluster.cluster_detectors.all() \
-            .select_related('cluster')
+            .select_related('cluster').nocache() \
+            .order_by('id')
 
         page = self.paginate_queryset(queryset)
         if page is not None:

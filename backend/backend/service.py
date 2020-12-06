@@ -1,5 +1,6 @@
 from rest_framework.test import APIClient
 from rest_framework.views import exception_handler as drf_exception_handler
+from django.urls import reverse
 
 from .bot import bot
 from . import local
@@ -23,8 +24,7 @@ def get_response(url, method, user=None, data=None, kwargs=None, format=None):
     if user:
         client.force_authenticate(user)
 
-    if not is_url:
-        url = reverse(url, kwargs=kwargs)
+    url = reverse(url, kwargs=kwargs)
 
     method_dict = {
         'post': client.post,

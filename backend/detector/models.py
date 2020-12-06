@@ -1,6 +1,9 @@
 from django.db import models
 from django.contrib.postgres.indexes import BrinIndex
 
+from random import uniform
+from datetime import datetime, timedelta
+
 from client.models import Client
 from group.models import Cluster
 
@@ -23,7 +26,7 @@ class Detector(models.Model):
     )
 
     def __str__(self):
-        return f'датчик {self.id}, принадлежащий {self.user}'
+        return f'датчик {self.id}'
 
     class Meta:
         verbose_name = 'Датчик'
@@ -51,3 +54,21 @@ class DetectorData(models.Model):
         verbose_name = 'Данные датчика'
         verbose_name_plural = 'Данные датчиков'
         indexes = [BrinIndex(fields=['timestamp'])]
+
+    @classmethod
+    def create_random(cls, detector, days=None):
+        data = cls.objects.create(
+            detector=detector,
+            first_temp=round(uniform(0, 20), 2),
+            second_temp=round(uniform(0, 20), 2),
+            third_temp=round(uniform(0, 20), 2),
+            humidity=round(uniform(0, 20), 2),
+            lightning=round(uniform(0, 20), 2),
+            pH=round(uniform(0, 20), 2),
+        )
+
+        if days:
+            data.timestamp = datetime.now().date()+timedelta(days=days)
+            data.save()
+
+        return data

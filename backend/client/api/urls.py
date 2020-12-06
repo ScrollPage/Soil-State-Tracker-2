@@ -11,6 +11,6 @@ activate = views.ClientActivity.as_view({
     'post': 'activate'
 })
 
-urlpatterns += format_suffix_patterns([
+urlpatterns += [
     path('activate/', activate, name='activate'),
-])
+]
