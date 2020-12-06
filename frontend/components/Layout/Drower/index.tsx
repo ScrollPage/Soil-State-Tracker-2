@@ -17,21 +17,20 @@ import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import { logout } from "@/store/actions/auth";
 import { SItemBtn, SItemLink } from "@/components/Header/styles";
-import { IProtection } from "@/types/protection";
+import { useUser } from "@/hooks/useUser";
 
 interface IDrower {
   setMenuOpen: Dispatch<SetStateAction<boolean>>;
   menuOpen: boolean;
-  protection: IProtection;
 }
 
-const Drower: React.FC<IDrower> = ({ setMenuOpen, menuOpen, protection }) => {
+const Drower: React.FC<IDrower> = ({ setMenuOpen, menuOpen }) => {
   let drower = useRef(null);
 
   const { push } = useRouter();
   const dispatch = useDispatch();
 
-  const { isAuth } = protection;
+  const { isAuth } = useUser();
 
   useEffect(() => {
     if (menuOpen) {
@@ -82,9 +81,7 @@ const Drower: React.FC<IDrower> = ({ setMenuOpen, menuOpen, protection }) => {
           <Logo />
         </SDrowerItem>
         <SDrowerItem>
-          <SDrowerPages>
-            {renderLinks(protection, true, setMenuOpen)}
-          </SDrowerPages>
+          <SDrowerPages>{renderLinks(true, setMenuOpen)}</SDrowerPages>
           <SDrowerAuth>
             {!isAuth ? (
               <>

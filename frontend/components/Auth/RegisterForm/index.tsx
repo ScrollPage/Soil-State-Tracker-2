@@ -67,21 +67,38 @@ const RegisterForm = () => {
       >
         {(props: FormikProps<FormValues>) => (
           <Form>
-            <Input type="text" name="email" placeholder="Enter your E-mail" />
-            <Input type="text" name="firstName" placeholder="Введите имя" />
-            <Input type="text" name="lastName" placeholder="Введите фамилию" />
+            <Input
+              type="text"
+              name="email"
+              placeholder="Введите E-mail"
+              src="email"
+            />
+            {/* <Input
+              type="text"
+              name="firstName"
+              placeholder="Введите имя"
+              src="user"
+            />
+            <Input
+              type="text"
+              name="lastName"
+              placeholder="Введите фамилию"
+              src="user"
+            /> */}
             <Input
               type="password"
               name="password"
               placeholder="Введите пароль"
+              src="padlock"
             />
             <Input
               type="password"
               name="confirmPassword"
               placeholder="Повторите пароль"
+              src="reload"
             />
             <SButton myType="white" type="submit" disabled={props.isSubmitting}>
-              Создать аккаунт
+              Продолжить
             </SButton>
           </Form>
         )}

@@ -10,6 +10,7 @@ import ControlCluster from "@/components/Control/ControlCluster";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { ControlForm } from "@/components/Control/ControlForm";
+import ControlLayout from "@/components/Layout/ControlLayout";
 
 interface IControl {
   detectors: IDetector[] | null;
@@ -18,17 +19,19 @@ interface IControl {
 
 const Control = ({ detectors, clusters }: IControl) => {
   return (
-    <SControl>
-      <DndProvider backend={HTML5Backend}>
-        <SControlDetectors>
-          <ControlTransfer detectors={detectors} />
-        </SControlDetectors>
-        <SControlClusters>
-          <ControlCluster clusters={clusters} />
-          <ControlForm />
-        </SControlClusters>
-      </DndProvider>
-    </SControl>
+    <ControlLayout>
+      <SControl>
+        <DndProvider backend={HTML5Backend}>
+          <SControlDetectors>
+            <ControlTransfer detectors={detectors} />
+          </SControlDetectors>
+          <SControlClusters>
+            <ControlCluster clusters={clusters} />
+            <ControlForm />
+          </SControlClusters>
+        </DndProvider>
+      </SControl>
+    </ControlLayout>
   );
 };
 
@@ -66,6 +69,7 @@ export const getServerSideProps: GetServerSideProps<IControl> = async (ctx) => {
 };
 
 const SControl = styled.div`
+  flex: 1;
   display: flex;
   padding: 20px 0;
   flex-direction: row;

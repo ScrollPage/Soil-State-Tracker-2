@@ -7,8 +7,9 @@ export const SLayout = styled.div`
 `;
 
 export const SMain = styled.div`
-  padding-top: 60px;
+  padding-top: 120px;
   height: 100%;
+  display: flex;
   /* background-color: #EEF2F7; */
 `;
 

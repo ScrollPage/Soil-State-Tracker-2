@@ -19,6 +19,9 @@ const Container = styled.div<{ fluid?: boolean }>`
   @media (min-width: 1199.98px) {
     max-width: 900px;
   }
+  @media (min-width: 1407.98px) {
+    max-width: 1050px;
+  }
   ${(props) =>
     props.fluid &&
     css`

@@ -6,30 +6,33 @@ import styled from "styled-components";
 import { GetServerSideProps } from "next";
 import { ensureRedirectToData } from "@/utils.ts/ensure";
 import Container from "@/components/UI/Container";
+import AuthLayout from "@/components/Layout/AuthLayout";
 
 interface ILogin {}
 
 const Login = ({}: ILogin) => {
   return (
-    <Wrapper>
-      <Head>
-        <title>Вход</title>
-      </Head>
-      <Container>
-        <Inner>
-          <Title>Войти в аккаунт</Title>
-          <Main>
-            <LoginForm />
-          </Main>
-          <Subtitle>Нет аккаунта?</Subtitle>
-          <Bottom>
-            <Link href="/register">
-              <a>Регистрация</a>
-            </Link>
-          </Bottom>
-        </Inner>
-      </Container>
-    </Wrapper>
+    <AuthLayout>
+      <Wrapper>
+        <Head>
+          <title>Вход</title>
+        </Head>
+        <Container>
+          <Inner>
+            <Title>Войти в аккаунт</Title>
+            <Main>
+              <LoginForm />
+            </Main>
+            <Subtitle>Нет аккаунта?</Subtitle>
+            <Bottom>
+              <Link href="/register">
+                <a>Регистрация</a>
+              </Link>
+            </Bottom>
+          </Inner>
+        </Container>
+      </Wrapper>
+    </AuthLayout>
   );
 };
 
@@ -43,10 +46,13 @@ export const getServerSideProps: GetServerSideProps<ILogin> = async (ctx) => {
 };
 
 const Wrapper = styled.div`
-  height: 100%;
-  background: url(login/login_bgc.png) left bottom no-repeat;
-  background-size: 100%;
-  padding-top: 115px;
+  background: url(login/login_bgc.png) bottom no-repeat;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  flex: 1;
+  padding: 235px 0 110px 0;
 `;
 
 const Inner = styled.div`
@@ -78,6 +84,7 @@ const Subtitle = styled.span`
 const Main = styled.span``;
 
 const Bottom = styled.span`
+  margin-top: 10px;
   font-family: "Play";
   font-style: normal;
   font-weight: normal;

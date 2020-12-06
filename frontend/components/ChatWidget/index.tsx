@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { SChatWidgetBtn } from "./styles";
 import ChatWidgetInner from "./ChatWidgetInner";
+import Image from "next/image";
 
 const ChatWidget = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,7 +12,7 @@ const ChatWidget = () => {
         <ChatWidgetInner setIsOpen={setIsOpen} />
       ) : (
         <SChatWidgetBtn onClick={() => setIsOpen(true)}>
-          Начать чат, мы онлайн!
+          <Image src="/chat/open.svg" height={29} width={29} />
         </SChatWidgetBtn>
       )}
     </>

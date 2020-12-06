@@ -8,15 +8,13 @@ import Logo from "../UI/Logo";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { logout } from "@/store/actions/auth";
-import { IProtection } from "@/types/protection";
 import { useUser } from "@/hooks/useUser";
 
 interface IHeader {
   setMenuOpen: Dispatch<SetStateAction<boolean>>;
-  protection: IProtection;
 }
 
-const Header = ({ setMenuOpen, protection }: IHeader) => {
+const Header = ({ setMenuOpen }: IHeader) => {
   const { push } = useRouter();
   const dispatch = useDispatch();
 
@@ -40,7 +38,7 @@ const Header = ({ setMenuOpen, protection }: IHeader) => {
             <Logo />
           </SItem>
           <SItem>
-            <HeaderMenu protection={protection} />
+            <HeaderMenu />
           </SItem>
           <SItem>
             {isAuth ? (
