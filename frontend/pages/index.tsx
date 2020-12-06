@@ -12,7 +12,7 @@ export default function Index({}: IIndex) {
     <MainLayout>
       <Wrapper>
         <Head>
-          <title>Главная</title>
+          <title>LoRaWAN Dam</title>
         </Head>
         <Home />
         <How>asd</How>

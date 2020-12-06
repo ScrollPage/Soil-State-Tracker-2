@@ -48,7 +48,7 @@ export const getServerSideProps: GetServerSideProps<IRegister> = async (
 };
 
 const Wrapper = styled.div`
-  background: url(login/login_bgc.png) bottom no-repeat;
+  background: url(login/login_bgc.png) no-repeat;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;

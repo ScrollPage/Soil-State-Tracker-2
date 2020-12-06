@@ -16,6 +16,7 @@ const renderCluster = (data: IDetector[][]) => {
   return data.map((part) =>
     part.map((detector) => (
       <ClusterDetector
+        cluster={detector.cluster}
         key={`clusterDetector__key__${detector.id}`}
         id={detector.id}
         x={detector.x}
@@ -63,7 +64,6 @@ export default function ClusterPage({ clusterId }: IClusterPage) {
         <SButton
           disabled={size >= maxSize || data?.[0]?.length === 0}
           onClick={sizeHandler}
-          width="200px"
         >
           Загрузить еще
         </SButton>

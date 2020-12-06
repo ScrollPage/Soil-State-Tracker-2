@@ -38,7 +38,7 @@ const Control = ({ detectors, clusters }: IControl) => {
 export default Control;
 
 export const getServerSideProps: GetServerSideProps<IControl> = async (ctx) => {
-  ensureAuth(ctx);
+  // ensureAuth(ctx);
 
   let detectors: IDetector[] | null = null;
   await instanceWithSSR(ctx)

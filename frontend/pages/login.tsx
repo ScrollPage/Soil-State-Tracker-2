@@ -46,13 +46,13 @@ export const getServerSideProps: GetServerSideProps<ILogin> = async (ctx) => {
 };
 
 const Wrapper = styled.div`
-  background: url(login/login_bgc.png) bottom no-repeat;
+  background: url(login/login_bgc.png) no-repeat;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
   flex: 1;
-  padding: 235px 0 110px 0;
+  padding: 235px 0 110px;
 `;
 
 const Inner = styled.div`
