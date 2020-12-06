@@ -7,7 +7,7 @@ import {
   getAlertText,
   getAlertType,
 } from "../../../store/selectors";
-import { SAlert } from "./styles";
+import { Wrapper, Content, Text, Close } from "./styles";
 
 const Alert: React.FC = () => {
   const text = useSelector(getAlertText);
@@ -20,9 +20,7 @@ const Alert: React.FC = () => {
     if (isNotClose) {
       return;
     }
-    setTimeout(() => {
-      dispatch(hide());
-    }, 3000);
+    setTimeout(hideHandler, 3000);
   }, [text]);
 
   const hideHandler = () => {
@@ -32,9 +30,12 @@ const Alert: React.FC = () => {
   if (!text) return null;
 
   return (
-    <SAlert>
-      <AntdAlert message={text} type={type} closable onClose={hideHandler} />
-    </SAlert>
+    <Wrapper>
+      <Content type={type}>
+        <Close onClick={hideHandler} />
+        <Text>{text}</Text>
+      </Content>
+    </Wrapper>
   );
 };
 

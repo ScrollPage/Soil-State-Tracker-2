@@ -3,7 +3,7 @@ import * as actions from './../actions/alert';
 
 const initialState = {
     text: null as string | null,
-    typeOf: 'success' as "success" | "info" | "warning" | "error" | undefined,
+    typeOf: 'success' as "success" | "warning" | "error",
     IsNotClose: false
 };
 
