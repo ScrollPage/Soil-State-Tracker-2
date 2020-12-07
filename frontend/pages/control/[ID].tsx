@@ -1,5 +1,6 @@
 import { instanceWithSSR } from "@/api";
 import { ClusterDetector } from "@/components/Cluster/ClusterDetector";
+import ControlLayout from "@/components/Layout/ControlLayout";
 import { SButton } from "@/components/UI/Button";
 import EmptyMessage from "@/components/UI/EmptyMessage";
 import ErrorMessage from "@/components/UI/ErrorMessage";
@@ -47,28 +48,31 @@ export default function ClusterPage({ clusterId }: IClusterPage) {
   };
 
   return (
-    <SClusterPage>
-      <Head>
-        <title>Группа</title>
-      </Head>
-      <SClusterPageTitle>{data?.[0]?.[0]?.cluster}</SClusterPageTitle>
-      <SClusterContainer>
-        {error && <ErrorMessage message="Ошибка вывода датчиков" />}
-        {!data && !error && <LoadingSpinner />}
-        {data?.[0]?.length === 0 && (
-          <EmptyMessage message="В данной группе нет датчиков" />
-        )}
-        {data && renderCluster(data)}
-      </SClusterContainer>
-      <SClusterPageBottom>
-        <SButton
-          disabled={size >= maxSize || data?.[0]?.length === 0}
-          onClick={sizeHandler}
-        >
-          Загрузить еще
-        </SButton>
-      </SClusterPageBottom>
-    </SClusterPage>
+    <ControlLayout>
+      <SClusterPage>
+        <Head>
+          <title>Группа</title>
+        </Head>
+        <SClusterPageTitle>{data?.[0]?.[0]?.cluster}</SClusterPageTitle>
+        <SClusterContainer>
+          {error && <ErrorMessage message="Ошибка вывода датчиков" />}
+          {!data && !error && <LoadingSpinner />}
+          {data?.[0]?.length === 0 && (
+            <EmptyMessage message="В данной группе нет датчиков" />
+          )}
+          {data && renderCluster(data)}
+        </SClusterContainer>
+        <SClusterPageBottom>
+          <SButton
+            disabled={size >= maxSize || data?.[0]?.length === 0}
+            myType="white"
+            onClick={sizeHandler}
+          >
+            Загрузить еще
+          </SButton>
+        </SClusterPageBottom>
+      </SClusterPage>
+    </ControlLayout>
   );
 }
 

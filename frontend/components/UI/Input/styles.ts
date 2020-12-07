@@ -1,16 +1,15 @@
 import styled from 'styled-components';
 
-export const SInput = styled.div`
+export const SInput = styled.div<{ width?: string }>`
   position: relative;
   display: flex;
   flex-direction: column;
   margin-bottom: 30px;
-  /* width: 100%; */
+  width: 350px;
 `;
 
 export const SInputTag = styled.input <{ isShowError?: boolean, width?: string }> `
   border: 1.5px solid ${({ isShowError }) => isShowError ? 'red' : "rgba(196, 196, 196, 0.3)"};
-  width: ${({ width }) => width ? width : '350px'};
   padding: 20px 50px;
   background-color: rgba(196, 196, 196, 0.3);
   backdrop-filter: blur(4px);

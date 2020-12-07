@@ -16,6 +16,7 @@ import ChatWidget from "@/components/ChatWidget";
 import { useUser } from "@/hooks/useUser";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 // import Link from "next/link";
 
 interface ControlLayoutProps {
@@ -24,6 +25,7 @@ interface ControlLayoutProps {
 
 const ControlLayout: React.FC<ControlLayoutProps> = ({ children }) => {
   const { isStaff } = useUser();
+  const { pathname } = useRouter();
   return (
     <>
       <Header>
@@ -56,13 +58,13 @@ const ControlLayout: React.FC<ControlLayoutProps> = ({ children }) => {
           </Name>
         </Rectangle>
         <Side>
-          <SideLink active={true}>
-            <Link href="/">
+          <SideLink active={pathname === "/control"}>
+            <Link href="/control">
               <a>Управление</a>
             </Link>
           </SideLink>
-          <SideLink>
-            <Link href="/">
+          <SideLink active={pathname === "/control/[ID]"}>
+            <Link href="/control/[ID]" as="/control/1">
               <a>Данные</a>
             </Link>
           </SideLink>

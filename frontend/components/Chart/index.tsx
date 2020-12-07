@@ -24,7 +24,7 @@ const options: ISelectOption[] = [
 export const Chart: React.FC<IChart> = ({ detectorData }) => {
   const [param, setParam] = useState(options[0]);
 
-  const changeHandler = (param: ISelectOption) => {
+  const changeHandler = (param: any) => {
     setParam(param);
   };
 

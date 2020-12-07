@@ -2,9 +2,11 @@ import styled from "styled-components";
 
 export const Header = styled.div`
   position: fixed;
+  top: 0;
+  left: 0;
   height: 120px;
-  background-color: transparent;
   width: 100%;
+  background-color: transparent;
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -20,14 +22,16 @@ export const Content = styled.div`
 
 export const Title = styled.h1`
   margin-left: 50px;
-  font-family: "Montserrat";
-  font-style: normal;
-  font-weight: normal;
-  font-size: 40px;
-  line-height: 50px;
-  text-align: center;
-  letter-spacing: 0.1em;
-  color: #FFFFFF;
+  > a {
+    font-family: "Montserrat";
+    font-style: normal;
+    font-weight: normal;
+    font-size: 40px;
+    line-height: 50px;
+    text-align: center;
+    letter-spacing: 0.1em;
+    color: #FFFFFF;
+ }
 `;
 
 export const GoBack = styled.p`

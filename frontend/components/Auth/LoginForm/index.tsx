@@ -43,6 +43,7 @@ const LoginForm = () => {
               name="password"
               placeholder="Пароль"
               src="padlock"
+              // width="350px"
             />
             <SButton myType="white" type="submit">
               Продолжить

@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Alert as AntdAlert } from "antd";
 import { hide } from "@/store/actions/alert";
 import {
   getAlertIsNotClose,

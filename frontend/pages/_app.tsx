@@ -1,5 +1,4 @@
 import Head from "next/head";
-import stylesheet from "antd/dist/antd.min.css";
 import nprogress from "nprogress/nprogress.css";
 import { SWRConfig } from "swr";
 import Router from "next/router";
@@ -27,7 +26,6 @@ Router.events.on("routeChangeError", () => NProgress.done());
 const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
     <>
-      <style dangerouslySetInnerHTML={{ __html: stylesheet }} />
       <style dangerouslySetInnerHTML={{ __html: nprogress }} />
       <Head>
         <meta
@@ -92,48 +90,7 @@ const theme = {
 };
 
 const GlobalStyle = createGlobalStyle`
-  ${normalize}
-  * {
-    text-decoration: none;
-  }
-  #__next {
-    flex: 1;
-    width: 100%;
-    position: relative;
-  }
-  p {
-    margin: 0;
-  }
-  html {
-    box-sizing: border-box;
-  }
-  body {
-    display: flex;
-    overscroll-behavior: none;
-    overflow-x: hidden;
-    /* overflow-y: scroll; */
-    &.no-scroll {
-      overflow-y: hidden;
-    }
-    &::-webkit-scrollbar {
-        width: 5px;
-        background-color: #f5f5f5;
-        @media (max-width: 575.98px) {
-            width: 0px;
-        }
-    }
-    &::-webkit-scrollbar-track {
-        height: 90%;
-    }
-    &::-webkit-scrollbar-thumb {
-        background-color: #000;
-    }
-  }
-  #nprogress .bar {
-    background: #000 !important;
-  }
-
-  @font-face {
+    @font-face {
 	  font-family: 'Play';
 	  src: url('fonts/Play-Regular.eot');
 	  src: local('☺'), url('fonts/Play-Regular.woff') format('woff'), url('fonts/Play-Regular.ttf') format('truetype'), url('fonts/Play-Regular.svg') format('svg');
@@ -187,6 +144,52 @@ const GlobalStyle = createGlobalStyle`
   	src: local('☺'), url('fonts/Raleway-Bold.woff') format('woff'), url('fonts/Raleway-Bold.ttf') format('truetype'), url('fonts/Raleway-Bold.svg') format('svg');
   	font-weight: 700;
   	font-style: normal;
+  }
+
+  ${normalize}
+  * {
+    text-decoration: none;
+    box-sizing: border-box;
+  }
+  #__next {
+    flex: 1;
+    width: 100%;
+    position: relative;
+    height: 100%;
+    width: 100%;
+  }
+  p {
+    margin: 0;
+  }
+  html {
+    height: 100%;
+    width: 100%;
+  }
+  body {
+    height: 100%;
+    width: 100%;
+    overscroll-behavior: none;
+    overflow-x: hidden;
+    /* overflow-y: scroll; */
+    &.no-scroll {
+      overflow-y: hidden;
+    }
+    &::-webkit-scrollbar {
+        width: 5px;
+        background-color: #f5f5f5;
+        @media (max-width: 575.98px) {
+            width: 0px;
+        }
+    }
+    &::-webkit-scrollbar-track {
+        height: 90%;
+    }
+    &::-webkit-scrollbar-thumb {
+        background-color: #000;
+    }
+  }
+  #nprogress .bar {
+    background: #000 !important;
   }
 
 `;

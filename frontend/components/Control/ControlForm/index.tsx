@@ -39,11 +39,12 @@ export const ControlForm = () => {
           <Form>
             <SControlFormTitle>Создать группу</SControlFormTitle>
             <Input
+              src="padlock"
               type="text"
               name="name"
               placeholder="Введите название группы"
             />
-            <SButton type="submit" width={"300px"}>
+            <SButton type="submit" myType="orange">
               Подтвердить
             </SButton>
           </Form>

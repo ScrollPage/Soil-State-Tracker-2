@@ -17,10 +17,10 @@ const Container = styled.div<{ fluid?: boolean }>`
     max-width: 860px;
   }
   @media (min-width: 1199.98px) {
-    max-width: 900px;
+    max-width: 1000px;
   }
   @media (min-width: 1407.98px) {
-    max-width: 1050px;
+    max-width: 1200px;
   }
   ${(props) =>
     props.fluid &&

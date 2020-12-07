@@ -43,7 +43,7 @@ const Header = ({ setMenuOpen }: IHeader) => {
           <SItem>
             {isAuth ? (
               <SItemBtn>
-                <SButton shape="round" onClick={logoutHandler}>
+                <SButton myType="orange" onClick={logoutHandler}>
                   Выйти
                 </SButton>
               </SItemBtn>
@@ -55,7 +55,7 @@ const Header = ({ setMenuOpen }: IHeader) => {
                   </SItemLink>
                 </SItemBtn>
                 <SItemBtn>
-                  <SButton shape="round" onClick={goToRegisterHandler}>
+                  <SButton myType="orange" onClick={goToRegisterHandler}>
                     Регистрация
                   </SButton>
                 </SItemBtn>
@@ -65,9 +65,7 @@ const Header = ({ setMenuOpen }: IHeader) => {
           <SItem>
             <SItemBtn>
               <SButton
-                shape="circle"
-                height={"30px"}
-                width={"30px"}
+                myType="orange"
                 onClick={() => setMenuOpen((state) => !state)}
               >
                 <MenuOutlined />

@@ -2,18 +2,19 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
   height: 100vh;
-  background: url(main/bgc.png) repeat;
+  background: url(login/login_bgc.png) repeat;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
 `;
 
 export const Content = styled.div`
-  padding: 0 130px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
 `
 export const Title = styled.div`
   font-family: Rosalinda;

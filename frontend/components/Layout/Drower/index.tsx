@@ -68,12 +68,7 @@ const Drower: React.FC<IDrower> = ({ setMenuOpen, menuOpen }) => {
     <SDrower ref={drower}>
       <SDrowerInner>
         <SDrowerClose>
-          <SButton
-            shape="circle"
-            height={"30px"}
-            width={"30px"}
-            onClick={() => setMenuOpen(false)}
-          >
+          <SButton myType="white" onClick={() => setMenuOpen(false)}>
             <CloseOutlined />
           </SButton>
         </SDrowerClose>
@@ -91,14 +86,14 @@ const Drower: React.FC<IDrower> = ({ setMenuOpen, menuOpen }) => {
                   </SItemLink>
                 </SItemBtn>
                 <SItemBtn>
-                  <SButton shape="round" onClick={goToRegisterHandler}>
+                  <SButton myType="white" onClick={goToRegisterHandler}>
                     Регистрация
                   </SButton>
                 </SItemBtn>
               </>
             ) : (
               <SItemBtn>
-                <SButton shape="round" onClick={logoutHandler}>
+                <SButton myType="white" onClick={logoutHandler}>
                   Выйти
                 </SButton>
               </SItemBtn>

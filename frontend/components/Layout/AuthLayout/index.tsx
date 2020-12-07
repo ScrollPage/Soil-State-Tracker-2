@@ -16,7 +16,11 @@ const AuthLayout: React.FC<AuthLayoutProps> = ({ children }) => {
       <Header>
         <Content>
           <Image height={84} width={114} src="/main/logo.svg" />
-          <Title>LoRaWAN Dam</Title>
+          <Title>
+            <Link href="/">
+              <a>LoRaWAN Dam</a>
+            </Link>
+          </Title>
         </Content>
         <GoBack>
           <Link href="/">
