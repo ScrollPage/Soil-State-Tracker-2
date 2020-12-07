@@ -22,6 +22,7 @@ export const authSignup = (
       dispatch(show('Вы успешно создали аккаунт! Подтвердите почту и войдите', 'success'));
     })
     .catch(() => {
+      Router.push({ pathname: '/register' }, undefined, { shallow: true });
       dispatch(show('Пользователь с такими данными уже существует!', 'warning'));
     });
 };

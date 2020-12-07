@@ -1,16 +1,19 @@
 import Head from "next/head";
 import RegisterForm from "@/components/Auth/RegisterForm";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { ensureRedirectToData } from "@/utils.ts/ensure";
 import { GetServerSideProps } from "next";
 import Container from "@/components/UI/Container";
 import AuthLayout from "@/components/Layout/AuthLayout";
+import { Stepper } from "@/components/UI/Stepper";
 
 interface IRegister {}
 
 const Register = ({}: IRegister) => {
+  const [formStep, setFormStep] = useState(0);
+
   return (
     <AuthLayout>
       <Wrapper>
@@ -18,11 +21,12 @@ const Register = ({}: IRegister) => {
           <title>Регистрация</title>
         </Head>
         <Container>
+          <Stepper step={formStep} />
           <Inner>
-            <Title>Создать аккаунт</Title>
-            <Main>
-              <RegisterForm />
-            </Main>
+            <Title>
+              {formStep === 0 ? "Заполнение данных" : "Создать аккаунт"}
+            </Title>
+            <RegisterForm step={formStep} setStep={setFormStep} />
             <Subtitle>Есть аккаунт?</Subtitle>
             <Bottom>
               <Link href="/login">
@@ -54,10 +58,11 @@ const Wrapper = styled.div`
   -o-background-size: cover;
   background-size: cover;
   flex: 1;
-  padding: 235px 0 110px 0;
+  padding: 188px 0 110px 0;
 `;
 
 const Inner = styled.div`
+  margin-top: 40px;
   width: 100%;
   display: flex;
   align-items: center;
@@ -83,15 +88,15 @@ const Subtitle = styled.span`
   color: #ffffff;
 `;
 
-const Main = styled.span``;
-
 const Bottom = styled.span`
   margin-top: 10px;
-  font-family: "Play";
-  font-style: normal;
-  font-weight: normal;
-  font-size: 18px;
-  line-height: 21px;
-  text-align: center;
-  color: #ffffff;
+  > a {
+    font-family: "Play";
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 21px;
+    text-align: center;
+    color: #4753bb;
+  }
 `;

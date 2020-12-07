@@ -20,9 +20,7 @@ const Login = ({}: ILogin) => {
         <Container>
           <Inner>
             <Title>Войти в аккаунт</Title>
-            <Main>
-              <LoginForm />
-            </Main>
+            <LoginForm />
             <Subtitle>Нет аккаунта?</Subtitle>
             <Bottom>
               <Link href="/register">
@@ -52,7 +50,7 @@ const Wrapper = styled.div`
   -o-background-size: cover;
   background-size: cover;
   flex: 1;
-  padding: 235px 0 110px;
+  padding: 328px 0 110px 0;
 `;
 
 const Inner = styled.div`
@@ -81,15 +79,15 @@ const Subtitle = styled.span`
   color: #ffffff;
 `;
 
-const Main = styled.span``;
-
 const Bottom = styled.span`
   margin-top: 10px;
-  font-family: "Play";
-  font-style: normal;
-  font-weight: normal;
-  font-size: 18px;
-  line-height: 21px;
-  text-align: center;
-  color: #ffffff;
+  > a {
+    font-family: "Play";
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 21px;
+    text-align: center;
+    color: #4753bb;
+  }
 `;
