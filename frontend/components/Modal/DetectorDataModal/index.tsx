@@ -12,15 +12,26 @@ import EmptyMessage from "@/components/UI/EmptyMessage";
 import { Chart } from "@/components/Chart";
 
 export interface IDetectorDataModalProps {
-  id: number;
+  id: number | null;
+  clusterId?: string;
 }
 
 interface IDetectorDataModal extends IDetectorDataModalProps {
   setClose: () => void;
 }
 
-const DetectorDataModal: React.FC<IDetectorDataModal> = ({ id, setClose }) => {
-  const { data, error } = useSWR(id ? `/api/detector/${id}/` : null);
+const DetectorDataModal: React.FC<IDetectorDataModal> = ({
+  id,
+  setClose,
+  clusterId,
+}) => {
+  const { data, error } = useSWR(
+    id
+      ? `/api/detector/${id}/`
+      : clusterId
+      ? `/api/cluster/${clusterId}/data/`
+      : null
+  );
 
   return (
     <SDetectorDataModal>

@@ -2,7 +2,14 @@ import { SButton } from "@/components/UI/Button";
 import Container from "@/components/UI/Container";
 import Image from "next/image";
 import React from "react";
-import { Wrapper, Content, Title, Subtitle, Strawberry } from "./styles";
+import {
+  Wrapper,
+  Content,
+  Title,
+  Subtitle,
+  Strawberry,
+  StrawberryBgc,
+} from "./styles";
 
 export const Home = () => {
   return (
@@ -22,6 +29,9 @@ export const Home = () => {
       <Strawberry>
         <Image src="/main/club.png" height={746} width={742} />
       </Strawberry>
+      <StrawberryBgc>
+        <Image src="/main/club_bgc.png" height={967} width={864} />
+      </StrawberryBgc>
     </Wrapper>
   );
 };

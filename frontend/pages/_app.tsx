@@ -32,6 +32,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width"
         />
+        <link rel="stylesheet" href="/fonts/fonts.css" />
       </Head>
       <>
         <GlobalStyle />
@@ -82,72 +83,17 @@ export default wrapper.withRedux(MyApp);
 
 const theme = {
   blue: "#2F3F53",
+  lightBlue: "#F5F9FF",
   green: "#60CFBF",
   red: "#CF6060",
   yellow: "#CFBD60",
   white: "#FFF",
   orange: "#E86900",
+  blueBgc: "#E5E5E5",
 };
 
 const GlobalStyle = createGlobalStyle`
-    @font-face {
-	  font-family: 'Play';
-	  src: url('fonts/Play-Regular.eot');
-	  src: local('☺'), url('fonts/Play-Regular.woff') format('woff'), url('fonts/Play-Regular.ttf') format('truetype'), url('fonts/Play-Regular.svg') format('svg');
-	  font-weight: normal;
-	  font-style: normal;
-  }
-
-  @font-face {
-	  font-family: 'Play';
-	  src: url('fonts/Play-Bold.eot');
-	  src: local('☺'), url('fonts/Play-Bold.woff') format('woff'), url('fonts/Play-Bold.ttf') format('truetype'), url('fonts/Play-Bold.svg') format('svg');
-	  font-weight: 700;
-	  font-style: normal;
-  }
-
-  @font-face {
-  	font-family: 'Montserrat';
-  	src: url('fonts/Montserrat-Regular.eot');
-  	src: local('☺'), url('fonts/Montserrat-Regular.woff') format('woff'), url('fonts/Montserrat-Regular.ttf') format('truetype'), url('fonts/Montserrat-Regular.svg') format('svg');
-  	font-weight: normal;
-  	font-style: normal;
-  }
-
-  @font-face {
-	  font-family: 'Montserrat';
-	  src: url('fonts/Montserrat-Bold.eot');
-	  src: local('☺'), url('fonts/Montserrat-Bold.woff') format('woff'), url('fonts/Montserrat-Bold.ttf') format('truetype'), url('fonts/Montserrat-Bold.svg') format('svg');
-	  font-weight: 700;
-	  font-style: normal;
-  }
-
-  @font-face {
-	  font-family: 'Rosalinda';
-	  src: url('fonts/Rosalinda.eot');
-	  src: local('☺'), url('fonts/Rosalinda.woff') format('woff'), url('fonts/Rosalinda.ttf') format('truetype'), url('fonts/Rosalinda.svg') format('svg');
-	  font-weight: normal;
-	  font-style: normal;
-  }
-
-  @font-face {
-	  font-family: 'Raleway';
-	  src: url('fonts/Raleway-Light.eot');
-	  src: local('☺'), url('fonts/Raleway-Light.woff') format('woff'), url('fonts/Raleway-Light.ttf') format('truetype'), url('fonts/Raleway-Light.svg') format('svg');
-	  font-weight: normal;
-	  font-style: normal;
-  }
-
-  @font-face {
-  	font-family: 'Raleway';
-  	src: url('fonts/Raleway-Bold.eot');
-  	src: local('☺'), url('fonts/Raleway-Bold.woff') format('woff'), url('fonts/Raleway-Bold.ttf') format('truetype'), url('fonts/Raleway-Bold.svg') format('svg');
-  	font-weight: 700;
-  	font-style: normal;
-  }
-
   ${normalize}
-  font-family: 'Play';
   * {
     text-decoration: none;
     box-sizing: border-box;

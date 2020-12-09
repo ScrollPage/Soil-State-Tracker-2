@@ -4,7 +4,7 @@ import { modalShow } from "@/store/actions/modal";
 import { IDetector } from "@/types/detector";
 import React from "react";
 import { useDispatch } from "react-redux";
-import { SClusterDetector } from "./styles";
+import { Wrapper, Field } from "./styles";
 
 export const ClusterDetector: React.FC<IDetector> = ({ id, x, y }) => {
   const dispatch = useDispatch();
@@ -16,13 +16,13 @@ export const ClusterDetector: React.FC<IDetector> = ({ id, x, y }) => {
   };
 
   return (
-    <SClusterDetector>
-      <h3>id: {id}</h3>
-      <h3>x: {x}</h3>
-      <h3>y: {y}</h3>
-      <SButton myType="orange" onClick={showHandler}>
+    <Wrapper>
+      <Field>id: {id}</Field>
+      <Field>x: {x}</Field>
+      <Field>y: {y}</Field>
+      <SButton myType="blue" small onClick={showHandler}>
         Информация
       </SButton>
-    </SClusterDetector>
+    </Wrapper>
   );
 };

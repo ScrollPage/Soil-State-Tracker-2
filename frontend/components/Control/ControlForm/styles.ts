@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 
 export const SControlForm = styled.div`
-  width: 100%;
-  border: 1px solid #ccc;
-  padding: 20px;
-  border-radius: 5px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
+  margin-bottom: 28px;
+  padding: 23px;
   > form {
     display: flex;
     align-items: center;
@@ -12,4 +12,10 @@ export const SControlForm = styled.div`
   }
 `
 
-export const SControlFormTitle = styled.h2``
+export const SControlFormTitle = styled.h2`
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 22px;
+`

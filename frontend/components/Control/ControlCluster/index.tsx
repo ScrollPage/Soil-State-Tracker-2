@@ -1,4 +1,3 @@
-import EmptyMessage from "@/components/UI/EmptyMessage";
 import ErrorMessage from "@/components/UI/ErrorMessage";
 import LoadingSpinner from "@/components/UI/LoadingSpinner";
 import { ICluster } from "@/types/cluster";
@@ -20,8 +19,7 @@ const ControlCluster: React.FC<IControlCluster> = ({ clusters }) => {
 
   if (!clusterData) return <LoadingSpinner />;
 
-  if (clusterData?.length === 0)
-    return <EmptyMessage message="У вас нет групп!" />;
+  if (clusterData?.length === 0) return null;
 
   return (
     <SControlCluster>

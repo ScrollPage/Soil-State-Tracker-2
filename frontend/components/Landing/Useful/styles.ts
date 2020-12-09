@@ -2,23 +2,21 @@ import styled from "styled-components";
 
 export const Strawberry = styled.div`
   position: absolute;
-  bottom: -100px;
-  right: 122px;
+  bottom: 0px;
+  left: 0;
   z-index: 2;
-`;
+`
 
 export const Wrapper = styled.div`
-  height: 100vh;
   background-color: ${({ theme }) => theme.lightBlue};
-  position: relative;
-  padding: 209px 0 269px 0;
+  padding: 150px 0;
   ${Strawberry} {
     &:last-of-type {
+      transform: scale(-1, 1);
       opacity: 0.65;
       z-index: 1;
-      bottom: -30px;
-      right: 142px;
-      transform: scale(-1, 1)
+      bottom: 80px;
+      left: -40px;
     }
   }
 `;
@@ -32,27 +30,34 @@ export const Title = styled.div`
   color: #000000;
 `;
 
+export const Inner = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+`
+export const Main = styled.div`
+  display: flex;
+  flex-direction: column;
+`
+
+export const ImageWrapper = styled.div`
+  position: relative;
+  height: 483px;
+  width: 398px;
+`
+
+export const TextBlock = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-left: 86px;
+`
+
 export const Text = styled.div`
   font-family: "Raleway";
   font-style: normal;
   font-weight: 300;
   font-size: 24px;
   line-height: 40px;
-  width: 60%;
-  align-self: flex-end;
-  text-indent: 40px;
-`;
-
-export const Inner = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
-`;
-
-export const MyImage = styled.div`
-  position: absolute;
-  bottom: -140px;
-  left: -90px;
-  z-index: 1;
+  margin-bottom: 20px;
 `;

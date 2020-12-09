@@ -9,7 +9,7 @@ export const Header = styled.div`
   width: 100%;
   height: 120px;
   z-index: 4;
-  background: url(main/bgc.png) bottom no-repeat;
+  background: url("/main/bgc.png") bottom no-repeat #000;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -26,7 +26,7 @@ export const SideBar = styled.div`
   left: 0;
   bottom: 0;
   width: 250px;
-  background: url(control/rectangle.svg) no-repeat top left;
+  background: url("/control/rectangle.svg") no-repeat top left;
   box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.08);
   display: flex;
   flex-direction: column;
