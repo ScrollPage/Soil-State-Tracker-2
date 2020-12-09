@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-  height: 827px;
   padding-top: 163px;
 `;
 export const Title = styled.div`
@@ -23,4 +22,5 @@ export const Box = styled.div`
   border-radius: 20px;
   height: 562px;
   width: 841px;
+  margin-bottom: -70px;
 `;

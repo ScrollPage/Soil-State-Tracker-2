@@ -47,6 +47,7 @@ export const Text = styled.div`
   font-size: 24px;
   line-height: 40px;
   color: #000000;
+  z-index: 1;
 `;
 export const TextBlock = styled.div`
   display: flex;
