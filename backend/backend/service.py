@@ -3,7 +3,6 @@ from rest_framework.views import exception_handler as drf_exception_handler
 from django.urls import reverse
 
 from .bot import bot
-from . import local
 
 def exception_handler(exc, context):
     # msg = f'An exception occured: {str(exc)}\n'

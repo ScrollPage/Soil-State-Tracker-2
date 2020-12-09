@@ -1,4 +1,4 @@
 import telebot
-from . import local
+import os
 
-bot = telebot.TeleBot(local.BOT_TOKEN)
+bot = telebot.TeleBot(os.environ.get('BOT_TOKEN'))

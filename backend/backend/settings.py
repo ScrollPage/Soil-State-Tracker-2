@@ -9,12 +9,11 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-
+import os
 from pathlib import Path
 from datetime import timedelta
 import pusher
-
-from . import local
+import local
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,11 +23,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '#ptm!vz5bcz*cc^q0u0&yt$_lsvt5*p3z@&r8z-6@fk-h+)xf$'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-ALLOWED_HOSTS = []
+DEBUG = bool(int(os.environ.get('DEBUG', default=0)))
+
+ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS').split(' ')
 
 
 # Application definition
@@ -102,12 +102,12 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'Soil-State-Tracker-2',
-        'USER': 'postgres',
-        'PASSWORD': 'pass',
-        'HOST': '127.0.0.1',
-        'PORT': 5432
+        'ENGINE': os.environ.get('SQL_ENGINE', 'django.db.backends.postgresql'),
+        'NAME': os.environ.get('SQL_DATABASE', 'Soil-State-Tracker-2'),
+        'USER': os.environ.get('SQL_USER', 'postgres'),
+        'PASSWORD': os.environ.get('SQL_PASSWORD', 'pass'),
+        'HOST': os.environ.get('SQL_HOST', 'locahost'),
+        'PORT': os.environ.get('SQL_PORT', '5432'),
     }
 }
 
@@ -147,7 +147,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = '/staticfiles/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # REST FRAMEWORK
 REST_FRAMEWORK = {
@@ -170,8 +171,8 @@ CORS_ORIGIN_WHITELIST = (
 # smtp
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = local.EMAIL_HOST_USER
-EMAIL_HOST_PASSWORD = local.EMAIL_HOST_PASSWORD
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', local.EMAIL_HOST_PASSWORD)
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', local.EMAIL_HOST_USER)
 EMAIL_PORT = 587
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -223,15 +224,15 @@ DJOSER = {
 
 # Pusher
 pusher_client = pusher.Pusher(
-    app_id=local.PUSHER_APP_ID,
-    key=local.PUSHER_KEY,
-    secret=local.PUSHER_SECRET,
-    cluster=local.PUSHER_CLUSTER,
+    app_id=os.environ.get('PUSHER_APP_ID', local.PUSHER_APP_ID),
+    key=os.environ.get('PUSHER_KEY', local.PUSHER_KEY),
+    secret=os.environ.get('PUSHER_SECRET', local.PUSHER_SECRET),
+    cluster=os.environ.get('PUSHER_CLUSTER', local.PUSHER_CLUSTER),
     ssl=True
 )
 
 #REDIS related settings
-REDIS_HOST = '127.0.0.1'
+REDIS_HOST = 'redis'
 REDIS_PORT = 6379
 
 # Cacheops
