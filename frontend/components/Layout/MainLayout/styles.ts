@@ -74,7 +74,6 @@ export const Inner = styled.div`
 `;
 
 export const Main = styled.div`
-  height: 100%;
   display: flex;
   flex-direction: column;
 `;

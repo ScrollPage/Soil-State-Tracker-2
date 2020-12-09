@@ -21,6 +21,7 @@ import { SButton } from "@/components/UI/Button";
 import { useRouter } from "next/router";
 import { useScroll } from "@/hooks/useScroll";
 import { useWindowSize } from "@/hooks/useWindowSize";
+import { Footer } from "@/components/Landing/Footer";
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -115,6 +116,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
         </Inner>
       </Header>
       <Main>{children}</Main>
+      <Footer />
       {!isStaff && <ChatWidget />}
     </>
   );
