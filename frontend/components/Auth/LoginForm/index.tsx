@@ -37,8 +37,14 @@ const LoginForm = () => {
       >
         {(props: FormikProps<FormValues>) => (
           <Form>
-            <Input type="text" name="email" placeholder="E-mail" />
-            <Input type="password" name="password" placeholder="Пароль" />
+            <Input type="text" name="email" placeholder="E-mail" src="email" />
+            <Input
+              type="password"
+              name="password"
+              placeholder="Пароль"
+              src="padlock"
+              // width="350px"
+            />
             <SButton myType="white" type="submit">
               Продолжить
             </SButton>

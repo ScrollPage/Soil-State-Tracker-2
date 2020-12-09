@@ -1,3 +1,4 @@
+import { useUser } from "@/hooks/useUser";
 import { IProtection } from "@/types/protection";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -27,12 +28,11 @@ const staffNavItems: INavitem[] = [
 ];
 
 export const renderLinks = (
-  protection: IProtection,
   isDrower?: boolean,
   setMenuOpen?: Dispatch<SetStateAction<boolean>>
 ) => {
   const router = useRouter();
-  const { isAuth, isStaff } = protection;
+  const { isAuth, isStaff } = useUser();
 
   const menuOpenHadler = () => {
     if (isDrower && setMenuOpen) {
@@ -63,12 +63,8 @@ export const renderLinks = (
   ));
 };
 
-interface IHeaderMenu {
-  protection: IProtection;
-}
-
-const HeaderMenu = ({ protection }: IHeaderMenu) => {
-  return <SHeaderMenu>{renderLinks(protection, false)}</SHeaderMenu>;
+const HeaderMenu = () => {
+  return <SHeaderMenu>{renderLinks(false)}</SHeaderMenu>;
 };
 
 export default HeaderMenu;

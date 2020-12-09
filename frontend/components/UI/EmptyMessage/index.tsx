@@ -12,8 +12,13 @@ const EmptyMessageContainer = styled.div`
 
 const EmptyMessagePresenter = styled.div`
   display: inline-block;
-  margin: 20px auto;
   font-weight: 600;
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 18px;
+  line-height: 22px;
+  color: #000000;
 `;
 
 const EmptyMessage = ({ message }: IEmptyMessage) => (

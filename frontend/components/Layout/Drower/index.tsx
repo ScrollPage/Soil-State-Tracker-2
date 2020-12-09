@@ -17,21 +17,20 @@ import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import { logout } from "@/store/actions/auth";
 import { SItemBtn, SItemLink } from "@/components/Header/styles";
-import { IProtection } from "@/types/protection";
+import { useUser } from "@/hooks/useUser";
 
 interface IDrower {
   setMenuOpen: Dispatch<SetStateAction<boolean>>;
   menuOpen: boolean;
-  protection: IProtection;
 }
 
-const Drower: React.FC<IDrower> = ({ setMenuOpen, menuOpen, protection }) => {
+const Drower: React.FC<IDrower> = ({ setMenuOpen, menuOpen }) => {
   let drower = useRef(null);
 
   const { push } = useRouter();
   const dispatch = useDispatch();
 
-  const { isAuth } = protection;
+  const { isAuth } = useUser();
 
   useEffect(() => {
     if (menuOpen) {
@@ -69,12 +68,7 @@ const Drower: React.FC<IDrower> = ({ setMenuOpen, menuOpen, protection }) => {
     <SDrower ref={drower}>
       <SDrowerInner>
         <SDrowerClose>
-          <SButton
-            shape="circle"
-            height={"30px"}
-            width={"30px"}
-            onClick={() => setMenuOpen(false)}
-          >
+          <SButton myType="white" onClick={() => setMenuOpen(false)}>
             <CloseOutlined />
           </SButton>
         </SDrowerClose>
@@ -82,9 +76,7 @@ const Drower: React.FC<IDrower> = ({ setMenuOpen, menuOpen, protection }) => {
           <Logo />
         </SDrowerItem>
         <SDrowerItem>
-          <SDrowerPages>
-            {renderLinks(protection, true, setMenuOpen)}
-          </SDrowerPages>
+          <SDrowerPages>{renderLinks(true, setMenuOpen)}</SDrowerPages>
           <SDrowerAuth>
             {!isAuth ? (
               <>
@@ -94,14 +86,14 @@ const Drower: React.FC<IDrower> = ({ setMenuOpen, menuOpen, protection }) => {
                   </SItemLink>
                 </SItemBtn>
                 <SItemBtn>
-                  <SButton shape="round" onClick={goToRegisterHandler}>
+                  <SButton myType="white" onClick={goToRegisterHandler}>
                     Регистрация
                   </SButton>
                 </SItemBtn>
               </>
             ) : (
               <SItemBtn>
-                <SButton shape="round" onClick={logoutHandler}>
+                <SButton myType="white" onClick={logoutHandler}>
                   Выйти
                 </SButton>
               </SItemBtn>

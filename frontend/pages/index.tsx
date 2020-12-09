@@ -1,37 +1,27 @@
 import { ensureAuth } from "@/utils.ts/ensure";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
-import styled from "styled-components";
+import MainLayout from "@/components/Layout/MainLayout";
+import { Home } from "@/components/Landing/Home";
+import { HowWeDo } from "@/components/Landing/HowWeDo";
 
-interface IHome {}
+interface IIndex {}
 
-export default function Home({}: IHome) {
+export default function Index({}: IIndex) {
   return (
-    <SHome>
+    <MainLayout>
       <Head>
-        <title>Главная</title>
+        <title>LoRaWAN Dam</title>
       </Head>
-      <h1>Home</h1>
-    </SHome>
+      <Home />
+      <HowWeDo />
+    </MainLayout>
   );
 }
 
-export const getServerSideProps: GetServerSideProps<IHome> = async (ctx) => {
+export const getServerSideProps: GetServerSideProps<IIndex> = async (ctx) => {
   // ensureAuth(ctx);
   return {
     props: {},
   };
 };
-
-const SHome = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  width: 100%;
-  h1 {
-    font-family: "Play";
-    font-weight: bold;
-    font-size: 36px;
-  }
-`;

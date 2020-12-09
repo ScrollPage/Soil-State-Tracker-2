@@ -1,6 +1,5 @@
 import { SButton } from "@/components/UI/Button";
 import { SendOutlined } from "@ant-design/icons";
-import { Input } from "antd";
 import React from "react";
 import { SChatInput } from "./styles";
 
@@ -19,10 +18,10 @@ const ChatInput: React.FC<IChatInput> = ({
     <SChatInput>
       <form onSubmit={sendMessage}>
         <div>
-          <Input onChange={(e) => messageChange(e)} value={message} />
+          <input onChange={(e) => messageChange(e)} value={message} />
         </div>
         <div>
-          <SButton type="submit" height={"31.6"}>
+          <SButton type="submit" myType="white">
             <SendOutlined />
           </SButton>
         </div>

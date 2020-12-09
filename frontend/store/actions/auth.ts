@@ -22,6 +22,7 @@ export const authSignup = (
       dispatch(show('Вы успешно создали аккаунт! Подтвердите почту и войдите', 'success'));
     })
     .catch(() => {
+      Router.push({ pathname: '/register' }, undefined, { shallow: true });
       dispatch(show('Пользователь с такими данными уже существует!', 'warning'));
     });
 };
@@ -54,7 +55,7 @@ export const authLogin = (email: string, password: string): ThunkType => async d
       dispatch(checkAuthTimeout(24 * 3600 * 1000));
       dispatch(authInfo());
 
-      Router.push({ pathname: '/' }, undefined, { shallow: true });
+      Router.push({ pathname: '/control' }, undefined, { shallow: true });
 
       dispatch(show('Вы успешно вошли!', 'success'));
     })

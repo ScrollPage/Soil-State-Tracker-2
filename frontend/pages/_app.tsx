@@ -1,6 +1,4 @@
-import Layout from "@/components/Layout/Layout";
 import Head from "next/head";
-import stylesheet from "antd/dist/antd.min.css";
 import nprogress from "nprogress/nprogress.css";
 import { SWRConfig } from "swr";
 import Router from "next/router";
@@ -14,9 +12,7 @@ import store from "@/store/store";
 import axios from "axios";
 import Alert from "@/components/UI/Alert";
 import App, { AppContext, AppProps } from "next/app";
-import cookies from "next-cookies";
 import RootModal from "@/components/Modal";
-import { IProtection } from "@/types/protection";
 
 NProgress.configure({
   showSpinner: false,
@@ -27,14 +23,9 @@ Router.events.on("routeChangeStart", () => NProgress.start());
 Router.events.on("routeChangeComplete", () => NProgress.done());
 Router.events.on("routeChangeError", () => NProgress.done());
 
-interface IMyApp extends AppProps {
-  protection: IProtection;
-}
-
-const MyApp = ({ Component, pageProps, protection }: IMyApp) => {
+const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
     <>
-      <style dangerouslySetInnerHTML={{ __html: stylesheet }} />
       <style dangerouslySetInnerHTML={{ __html: nprogress }} />
       <Head>
         <meta
@@ -64,9 +55,7 @@ const MyApp = ({ Component, pageProps, protection }: IMyApp) => {
             <ThemeProvider theme={theme}>
               <Alert />
               <RootModal />
-              <Layout protection={protection}>
-                <Component {...pageProps} />
-              </Layout>
+              <Component {...pageProps} />
             </ThemeProvider>
           </Provider>
         </SWRConfig>
@@ -76,21 +65,13 @@ const MyApp = ({ Component, pageProps, protection }: IMyApp) => {
 };
 
 MyApp.getInitialProps = async (AppContext: AppContext) => {
-  const { Component, ctx } = AppContext;
+  const { Component } = AppContext;
   const appProps = Component.getInitialProps
     ? await App.getInitialProps(AppContext)
     : {};
-  const isAuth = cookies(ctx)?.token ? true : false;
-  const isStaff = cookies(ctx)?.isStaff === "true" ? true : false;
-
-  const protection: IProtection = {
-    isAuth,
-    isStaff,
-  };
 
   return {
     ...appProps,
-    protection,
   };
 };
 
@@ -105,52 +86,11 @@ const theme = {
   red: "#CF6060",
   yellow: "#CFBD60",
   white: "#FFF",
+  orange: "#E86900",
 };
 
 const GlobalStyle = createGlobalStyle`
-  ${normalize}
-  * {
-    text-decoration: none;
-  }
-  #__next {
-    height: 100% !important;
-    width: 100%;
-    position: relative;
-  }
-  p {
-    margin: 0;
-  }
-  html {
-    box-sizing: border-box;
-  }
-  body {
-    height: 100% !important; 
-    width: 100%;
-    overscroll-behavior: none;
-    overflow-x: hidden;
-    overflow-y: scroll;
-    &.no-scroll {
-      overflow-y: hidden;
-    }
-    &::-webkit-scrollbar {
-        width: 5px;
-        background-color: #f5f5f5;
-        @media (max-width: 575.98px) {
-            width: 0px;
-        }
-    }
-    &::-webkit-scrollbar-track {
-        height: 90%;
-    }
-    &::-webkit-scrollbar-thumb {
-        background-color: #000;
-    }
-  }
-  #nprogress .bar {
-    background: #000 !important;
-  }
-
-  @font-face {
+    @font-face {
 	  font-family: 'Play';
 	  src: url('fonts/Play-Regular.eot');
 	  src: local('☺'), url('fonts/Play-Regular.woff') format('woff'), url('fonts/Play-Regular.ttf') format('truetype'), url('fonts/Play-Regular.svg') format('svg');
@@ -180,6 +120,77 @@ const GlobalStyle = createGlobalStyle`
 	  src: local('☺'), url('fonts/Montserrat-Bold.woff') format('woff'), url('fonts/Montserrat-Bold.ttf') format('truetype'), url('fonts/Montserrat-Bold.svg') format('svg');
 	  font-weight: 700;
 	  font-style: normal;
+  }
+
+  @font-face {
+	  font-family: 'Rosalinda';
+	  src: url('fonts/Rosalinda.eot');
+	  src: local('☺'), url('fonts/Rosalinda.woff') format('woff'), url('fonts/Rosalinda.ttf') format('truetype'), url('fonts/Rosalinda.svg') format('svg');
+	  font-weight: normal;
+	  font-style: normal;
+  }
+
+  @font-face {
+	  font-family: 'Raleway';
+	  src: url('fonts/Raleway-Light.eot');
+	  src: local('☺'), url('fonts/Raleway-Light.woff') format('woff'), url('fonts/Raleway-Light.ttf') format('truetype'), url('fonts/Raleway-Light.svg') format('svg');
+	  font-weight: normal;
+	  font-style: normal;
+  }
+
+  @font-face {
+  	font-family: 'Raleway';
+  	src: url('fonts/Raleway-Bold.eot');
+  	src: local('☺'), url('fonts/Raleway-Bold.woff') format('woff'), url('fonts/Raleway-Bold.ttf') format('truetype'), url('fonts/Raleway-Bold.svg') format('svg');
+  	font-weight: 700;
+  	font-style: normal;
+  }
+
+  ${normalize}
+  font-family: 'Play';
+  * {
+    text-decoration: none;
+    box-sizing: border-box;
+  }
+  #__next {
+    flex: 1;
+    width: 100%;
+    position: relative;
+    height: 100%;
+    width: 100%;
+  }
+  p {
+    margin: 0;
+  }
+  html {
+    height: 100%;
+    width: 100%;
+  }
+  body {
+    height: 100%;
+    width: 100%;
+    overscroll-behavior: none;
+    overflow-x: hidden;
+    /* overflow-y: scroll; */
+    &.no-scroll {
+      overflow-y: hidden;
+    }
+    &::-webkit-scrollbar {
+        width: 5px;
+        background-color: #f5f5f5;
+        @media (max-width: 575.98px) {
+            width: 0px;
+        }
+    }
+    &::-webkit-scrollbar-track {
+        height: 90%;
+    }
+    &::-webkit-scrollbar-thumb {
+        background-color: #E86900;
+    }
+  }
+  #nprogress .bar {
+    background: #E86900 !important;
   }
 
 `;

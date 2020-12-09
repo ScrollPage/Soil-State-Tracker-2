@@ -2,18 +2,15 @@ import styled from 'styled-components';
 
 export const SControlItem = styled.div<{ isDragging?: boolean }>`
   opacity: ${({ isDragging }) => isDragging ? 0 : 1};
-  width: 100%;
+  background: #FFFFFF;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
   display: flex;
   justify-content: space-between;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 10px;
-  margin-bottom: 10px;
+  padding: 15px 20px;
+  margin-bottom: 27px;
+  width: 375px;
   cursor: move;
-  background-color: #fff;
-  &:hover {
-    background-color: rgba(0, 0, 0, 0.05)
-  }
 `;
 
 export const SControlItemText = styled.div`
@@ -21,10 +18,14 @@ export const SControlItemText = styled.div`
   -moz-user-select: none;
   -khtml-user-select: none;
   -webkit-user-select: none;
-  font-weight: 400;
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 18px;
+  line-height: 22px;
+  color: #000000;
   span {
     display: inline-block;
-    font-weight: 600;
   }
 `
 

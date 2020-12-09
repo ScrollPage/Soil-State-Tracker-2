@@ -19,14 +19,15 @@ import {
   removeNotifyChatMutate,
 } from "@/mutates/chat";
 import { show } from "@/store/actions/alert";
+import { useUser } from "@/hooks/useUser";
 
 interface ILayout {
   children: React.ReactNode;
-  protection: IProtection;
 }
 
-const Layout: React.FC<ILayout> = ({ children, protection }) => {
+const Layout: React.FC<ILayout> = ({ children }) => {
   const dispatch = useDispatch();
+  const { isStaff } = useUser();
 
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -98,15 +99,11 @@ const Layout: React.FC<ILayout> = ({ children, protection }) => {
   return (
     <>
       <SLayout ref={layout}>
-        <Header protection={protection} setMenuOpen={setMenuOpen} />
+        <Header setMenuOpen={setMenuOpen} />
         <SMain>{children}</SMain>
       </SLayout>
-      <Drower
-        protection={protection}
-        setMenuOpen={setMenuOpen}
-        menuOpen={menuOpen}
-      />
-      {!protection.isStaff && <ChatWidget />}
+      <Drower setMenuOpen={setMenuOpen} menuOpen={menuOpen} />
+      {!isStaff && <ChatWidget />}
     </>
   );
 };

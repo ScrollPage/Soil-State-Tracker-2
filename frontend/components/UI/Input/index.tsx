@@ -7,6 +7,7 @@ import { SInput, SInputTag, SInputError, SInputImg } from "./styles";
 type InputProps = InputHTMLAttributes<HTMLInputElement> & {
   name: string;
   width?: string;
+  src: string;
 };
 
 const Input: React.FC<InputProps> = (props) => {
@@ -15,7 +16,7 @@ const Input: React.FC<InputProps> = (props) => {
   return (
     <SInput>
       <SInputImg>
-        <Image height={20} width={20} src="/input/email.svg" />
+        <Image height={20} width={20} src={`/input/${props.src}.svg`} />
       </SInputImg>
       <SInputTag
         {...field}

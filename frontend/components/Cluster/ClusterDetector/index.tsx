@@ -20,7 +20,9 @@ export const ClusterDetector: React.FC<IDetector> = ({ id, x, y }) => {
       <h3>id: {id}</h3>
       <h3>x: {x}</h3>
       <h3>y: {y}</h3>
-      <SButton onClick={showHandler}>Информация</SButton>
+      <SButton myType="orange" onClick={showHandler}>
+        Информация
+      </SButton>
     </SClusterDetector>
   );
 };

@@ -10,6 +10,9 @@ import ControlCluster from "@/components/Control/ControlCluster";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { ControlForm } from "@/components/Control/ControlForm";
+import ControlLayout from "@/components/Layout/ControlLayout";
+import Container from "@/components/UI/Container";
+import Head from "next/head";
 
 interface IControl {
   detectors: IDetector[] | null;
@@ -18,24 +21,34 @@ interface IControl {
 
 const Control = ({ detectors, clusters }: IControl) => {
   return (
-    <SControl>
-      <DndProvider backend={HTML5Backend}>
-        <SControlDetectors>
-          <ControlTransfer detectors={detectors} />
-        </SControlDetectors>
-        <SControlClusters>
-          <ControlCluster clusters={clusters} />
-          <ControlForm />
-        </SControlClusters>
-      </DndProvider>
-    </SControl>
+    <ControlLayout>
+      <Container>
+        <Wrapper>
+          <Head>
+            <title>Управление</title>
+          </Head>
+          <Title>Управление</Title>
+          <Main>
+            <DndProvider backend={HTML5Backend}>
+              <Detectors>
+                <ControlTransfer detectors={detectors} />
+              </Detectors>
+              <Clusters>
+                <ControlCluster clusters={clusters} />
+                <ControlForm />
+              </Clusters>
+            </DndProvider>
+          </Main>
+        </Wrapper>
+      </Container>
+    </ControlLayout>
   );
 };
 
 export default Control;
 
 export const getServerSideProps: GetServerSideProps<IControl> = async (ctx) => {
-  ensureAuth(ctx);
+  // ensureAuth(ctx);
 
   let detectors: IDetector[] | null = null;
   await instanceWithSSR(ctx)
@@ -65,24 +78,45 @@ export const getServerSideProps: GetServerSideProps<IControl> = async (ctx) => {
   };
 };
 
-const SControl = styled.div`
+const Wrapper = styled.div`
   display: flex;
-  padding: 20px 0;
-  flex-direction: row;
+  flex-direction: column;
+  padding: 0px 80px 80px 0;
+  @media (max-width: 1199.98px) {
+    padding: 0px 30px 80px 0;
+  }
   @media (max-width: 767.98px) {
-    flex-direction: column;
+    padding: 0px 0px 80px 0;
   }
 `;
 
-const SControlDetectors = styled.div`
-  flex: 1;
+const Detectors = styled.div`
   margin-right: 10px;
-  @media (max-width: 767.98px) {
+  @media (max-width: 1199.98px) {
     margin-right: 0px;
     margin-bottom: 10px;
   }
 `;
 
-const SControlClusters = styled.div`
+const Clusters = styled.div``;
+
+const Title = styled.h1`
+  margin-top: 69px;
+  font-family: Play;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 48px;
+  line-height: 56px;
+  color: #000000;
+`;
+
+const Main = styled.div`
   flex: 1;
+  display: flex;
+  flex-direction: row;
+  margin-top: 30px;
+  justify-content: space-between;
+  @media (max-width: 1199.98px) {
+    flex-direction: column;
+  }
 `;
