@@ -9,7 +9,8 @@ export const Header = styled.div`
   width: 100%;
   height: 120px;
   z-index: 4;
-  background: url(main/bgc.png) bottom no-repeat;
+  background: url(main/bgc.png) bottom no-repeat #000;
+  /* background-color: #000; */
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;

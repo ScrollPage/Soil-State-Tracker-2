@@ -27,7 +27,7 @@ const ControlTransfer: React.FC<IControlTransfer> = ({ detectors }) => {
     <STransfer>
       <ControlClusterItem
         id={0}
-        name="Общие датчики"
+        name="Мои датчики"
         cluster_detectors={detectorData}
       />
     </STransfer>

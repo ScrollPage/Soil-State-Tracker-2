@@ -10,7 +10,7 @@ export const Wrapper = styled.div`
 
 export const Content = styled.div<{ type: typeOfType }>`
   position: relative;
-  padding: 12px 40px 12px 20px;
+  padding: 12px 50px 12px 20px;
   border-radius: 12px;
   display: flex;
   justify-content: flex-start;

@@ -81,12 +81,12 @@ export const getServerSideProps: GetServerSideProps<IControl> = async (ctx) => {
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 0px 80px 80px 0;
+  padding: 0px 80px 80px 80px;
   @media (max-width: 1199.98px) {
-    padding: 0px 30px 80px 0;
+    padding: 0px 30px 80px 30px;
   }
   @media (max-width: 767.98px) {
-    padding: 0px 0px 80px 0;
+    padding: 0px 0px 80px 0px;
   }
 `;
 

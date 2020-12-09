@@ -13,9 +13,13 @@ const ControlClusterTooltip: React.FC<IControlClusterTooltip> = ({
 }) => {
   return (
     <SControlClusterTooltip>
-      <Link href="/control/[ID]" as={`/control/${id}`}>
-        <a>{name}</a>
-      </Link>
+      {id === 0 ? (
+        name
+      ) : (
+        <Link href={`/control/${id}`}>
+          <a>{name}</a>
+        </Link>
+      )}
     </SControlClusterTooltip>
   );
 };
