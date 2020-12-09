@@ -1,16 +1,19 @@
 import { instanceWithSSR } from "@/api";
 import { ClusterDetector } from "@/components/Cluster/ClusterDetector";
 import ControlLayout from "@/components/Layout/ControlLayout";
+import { IDetectorDataModalProps } from "@/components/Modal/DetectorDataModal";
 import { SButton } from "@/components/UI/Button";
 import Container from "@/components/UI/Container";
 import EmptyMessage from "@/components/UI/EmptyMessage";
 import ErrorMessage from "@/components/UI/ErrorMessage";
 import LoadingSpinner from "@/components/UI/LoadingSpinner";
+import { modalShow } from "@/store/actions/modal";
 import { IDetector } from "@/types/detector";
 import { ensureAuth } from "@/utils.ts/ensure";
 import { getAsString } from "@/utils.ts/getAsString";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { useSWRInfinite } from "swr";
 
@@ -33,6 +36,19 @@ interface IClusterPage {
 }
 
 export default function ClusterPage({ clusterId }: IClusterPage) {
+  const dispatch = useDispatch();
+
+  const showHandler = () => {
+    if (clusterId) {
+      dispatch(
+        modalShow<IDetectorDataModalProps>("DETECTOR_DATA_MODAL", {
+          clusterId,
+          id: null,
+        })
+      );
+    }
+  };
+
   const getKey = (pageIndex: number, previousPageData: IDetector[] | null) => {
     if (previousPageData && !previousPageData?.length) return null;
     return `/api/cluster/${clusterId}/?page=${pageIndex + 1}`;
@@ -57,7 +73,9 @@ export default function ClusterPage({ clusterId }: IClusterPage) {
           </Head>
           <Header>
             <Title>{data?.[0]?.[0]?.cluster}</Title>
-            <SButton myType="blue">Статистика по кластеру</SButton>
+            <SButton onClick={showHandler} myType="blue">
+              Статистика по кластеру
+            </SButton>
           </Header>
           <Main>
             {error && <ErrorMessage message="Ошибка вывода датчиков" />}
