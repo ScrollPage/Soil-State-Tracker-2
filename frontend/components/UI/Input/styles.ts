@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const SInput = styled.div<{ width?: string }>`
+export const Wrapper = styled.div<{ width?: string }>`
   position: relative;
   display: flex;
   flex-direction: column;
@@ -8,7 +8,7 @@ export const SInput = styled.div<{ width?: string }>`
   width: 350px;
 `;
 
-export const SInputTag = styled.input <{ isShowError?: boolean, width?: string }> `
+export const Inner = styled.input <{ isShowError?: boolean, width?: string }> `
   border: 1.5px solid ${({ isShowError }) => isShowError ? 'red' : "rgba(196, 196, 196, 0.3)"};
   padding: 20px 50px;
   background-color: rgba(196, 196, 196, 0.3);
@@ -24,14 +24,14 @@ export const SInputTag = styled.input <{ isShowError?: boolean, width?: string }
   }  
 `;
 
-export const SInputError = styled.small`
+export const Error = styled.small`
   font-family: "Play";
   position: absolute;
   bottom: -20px;
   color: ${({ theme }) => theme.red};
 `;
 
-export const SInputImg = styled.small`
+export const Icon = styled.small`
   position: absolute;
   z-index: 1;
   top: 23px;

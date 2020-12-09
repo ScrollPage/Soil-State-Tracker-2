@@ -1,5 +1,5 @@
 import React from "react";
-import { SControlForm, SControlFormTitle } from "./styles";
+import { Wrapper, Title } from "./styles";
 import { Formik, Form, FormikProps } from "formik";
 import { SButton } from "@/components/UI/Button";
 import Input from "@/components/UI/Input";
@@ -22,7 +22,7 @@ export const ControlForm = () => {
   const dispatch = useDispatch();
 
   return (
-    <SControlForm>
+    <Wrapper>
       <Formik
         initialValues={{
           name: "",
@@ -37,7 +37,7 @@ export const ControlForm = () => {
       >
         {(props: FormikProps<FormValues>) => (
           <Form>
-            <SControlFormTitle>Создать группу</SControlFormTitle>
+            <Title>Создать группу</Title>
             <Input
               src="padlock"
               type="text"
@@ -50,6 +50,6 @@ export const ControlForm = () => {
           </Form>
         )}
       </Formik>
-    </SControlForm>
+    </Wrapper>
   );
 };

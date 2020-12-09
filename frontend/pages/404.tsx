@@ -15,17 +15,17 @@ export default function Custom404() {
   }, []);
 
   return (
-    <SCustom404>
+    <Wrapper>
       <Head>
         <title>404 ошибка</title>
       </Head>
       <h1>Страница не найдена</h1>
       <h3>Вы будете перенаправлены на главную страницу</h3>
-    </SCustom404>
+    </Wrapper>
   );
 }
 
-const SCustom404 = styled.div`
+const Wrapper = styled.div`
   display: flex;
   height: 100vh;
   width: 100%;

@@ -9,9 +9,9 @@ import Container from "@/components/UI/Container";
 import AuthLayout from "@/components/Layout/AuthLayout";
 import { Stepper } from "@/components/UI/Stepper";
 
-interface IRegister {}
+interface RegisterProps {}
 
-const Register = ({}: IRegister) => {
+const Register = ({}: RegisterProps) => {
   const [formStep, setFormStep] = useState(0);
 
   return (
@@ -42,7 +42,7 @@ const Register = ({}: IRegister) => {
 
 export default Register;
 
-export const getServerSideProps: GetServerSideProps<IRegister> = async (
+export const getServerSideProps: GetServerSideProps<RegisterProps> = async (
   ctx
 ) => {
   ensureRedirectToData(ctx);

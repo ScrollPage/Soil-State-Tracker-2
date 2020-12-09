@@ -1,18 +1,18 @@
 import Link from "next/link";
 import React, { memo } from "react";
-import { SControlClusterTooltip } from "./styles";
+import { Tooltip } from "./styles";
 
-interface IControlClusterTooltip {
+interface ControlClusterTooltipProps {
   id: number;
   name: string;
 }
 
-const ControlClusterTooltip: React.FC<IControlClusterTooltip> = ({
+const ControlClusterTooltip: React.FC<ControlClusterTooltipProps> = ({
   id,
   name,
 }) => {
   return (
-    <SControlClusterTooltip>
+    <Tooltip>
       {id === 0 ? (
         name
       ) : (
@@ -20,7 +20,7 @@ const ControlClusterTooltip: React.FC<IControlClusterTooltip> = ({
           <a>{name}</a>
         </Link>
       )}
-    </SControlClusterTooltip>
+    </Tooltip>
   );
 };
 

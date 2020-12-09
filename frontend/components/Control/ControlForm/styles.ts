@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const SControlForm = styled.div`
+export const Wrapper = styled.div`
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.08);
   border-radius: 20px;
   margin-bottom: 28px;
@@ -12,7 +12,7 @@ export const SControlForm = styled.div`
   }
 `
 
-export const SControlFormTitle = styled.h2`
+export const Title = styled.h2`
   font-family: Montserrat;
   font-style: normal;
   font-weight: 600;

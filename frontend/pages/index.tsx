@@ -33,9 +33,9 @@ const stepText = [
   },
 ];
 
-interface IIndex {}
+interface IndexProps {}
 
-export default function Index({}: IIndex) {
+export default function Index({}: IndexProps) {
   return (
     <MainLayout>
       <Head>
@@ -68,7 +68,9 @@ export default function Index({}: IIndex) {
   );
 }
 
-export const getServerSideProps: GetServerSideProps<IIndex> = async (ctx) => {
+export const getServerSideProps: GetServerSideProps<IndexProps> = async (
+  ctx
+) => {
   // ensureAuth(ctx);
   return {
     props: {},

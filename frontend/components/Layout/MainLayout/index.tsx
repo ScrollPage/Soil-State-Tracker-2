@@ -13,7 +13,6 @@ import {
 } from "./styles";
 import { useDispatch } from "react-redux";
 import { logout } from "@/store/actions/auth";
-import ChatWidget from "@/components/ChatWidget";
 import { useUser } from "@/hooks/useUser";
 import Link from "next/link";
 import Image from "next/image";
@@ -119,7 +118,6 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
       <Main>{children}</Main>
       <Footer />
       <SctollToTopButton />
-      {!isStaff && <ChatWidget />}
     </>
   );
 };

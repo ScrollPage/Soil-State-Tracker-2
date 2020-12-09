@@ -14,12 +14,12 @@ import ControlLayout from "@/components/Layout/ControlLayout";
 import Container from "@/components/UI/Container";
 import Head from "next/head";
 
-interface IControl {
+interface ControlProps {
   detectors: IDetector[] | null;
   clusters: ICluster[] | null;
 }
 
-const Control = ({ detectors, clusters }: IControl) => {
+const Control = ({ detectors, clusters }: ControlProps) => {
   return (
     <ControlLayout>
       <Container>
@@ -47,7 +47,9 @@ const Control = ({ detectors, clusters }: IControl) => {
 
 export default Control;
 
-export const getServerSideProps: GetServerSideProps<IControl> = async (ctx) => {
+export const getServerSideProps: GetServerSideProps<ControlProps> = async (
+  ctx
+) => {
   // ensureAuth(ctx);
 
   let detectors: IDetector[] | null = null;

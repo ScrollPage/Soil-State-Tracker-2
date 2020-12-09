@@ -3,12 +3,12 @@ import { IDetector } from "@/types/detector";
 import React, { memo } from "react";
 import ControlItem from "../ControlItem";
 
-interface IRenderControlItems {
+interface RenderControlItemsProps {
   detectors: IDetector[];
   id: number;
 }
 
-const RenderControlItems: React.FC<IRenderControlItems> = ({
+const RenderControlItems: React.FC<RenderControlItemsProps> = ({
   detectors,
   id,
 }) => {

@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 
-export const SChart = styled.div`
+export const Wrapper = styled.div`
   padding: 20px
 `
 
-export const SChartSelect = styled.div`
+export const MySelect = styled.div`
   margin-bottom: 30px;
 `
 

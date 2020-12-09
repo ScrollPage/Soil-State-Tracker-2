@@ -1,10 +1,10 @@
 import { IDetectorData } from "@/types/detector";
 import React, { useState } from "react";
-import { SChart, SChartSelect } from "./styles";
+import { Wrapper, MySelect } from "./styles";
 import { Line } from "react-chartjs-2";
 import Select from "react-select";
 
-interface IChart {
+interface ChartProps {
   detectorData: IDetectorData[];
 }
 
@@ -21,7 +21,7 @@ const options: ISelectOption[] = [
   { value: "pH", label: "Водородный показатель" },
 ];
 
-export const Chart: React.FC<IChart> = ({ detectorData }) => {
+export const Chart: React.FC<ChartProps> = ({ detectorData }) => {
   const [param, setParam] = useState(options[0]);
 
   const changeHandler = (param: any) => {
@@ -29,14 +29,14 @@ export const Chart: React.FC<IChart> = ({ detectorData }) => {
   };
 
   return (
-    <SChart>
-      <SChartSelect>
+    <Wrapper>
+      <MySelect>
         <Select
           defaultValue={options[0]}
           options={options}
           onChange={changeHandler}
         />{" "}
-      </SChartSelect>
+      </MySelect>
       <Line
         data={{
           labels: detectorData.map((item) => item.timestamp),
@@ -56,6 +56,6 @@ export const Chart: React.FC<IChart> = ({ detectorData }) => {
         height={300}
         width={500}
       />
-    </SChart>
+    </Wrapper>
   );
 };

@@ -8,9 +8,9 @@ import { ensureRedirectToData } from "@/utils.ts/ensure";
 import Container from "@/components/UI/Container";
 import AuthLayout from "@/components/Layout/AuthLayout";
 
-interface ILogin {}
+interface LoginProps {}
 
-const Login = ({}: ILogin) => {
+const Login = ({}: LoginProps) => {
   return (
     <AuthLayout>
       <Wrapper>
@@ -36,7 +36,9 @@ const Login = ({}: ILogin) => {
 
 export default Login;
 
-export const getServerSideProps: GetServerSideProps<ILogin> = async (ctx) => {
+export const getServerSideProps: GetServerSideProps<LoginProps> = async (
+  ctx
+) => {
   ensureRedirectToData(ctx);
   return {
     props: {},

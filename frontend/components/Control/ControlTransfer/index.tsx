@@ -4,13 +4,13 @@ import { IDetector } from "@/types/detector";
 import React, { memo } from "react";
 import useSWR from "swr";
 import ControlClusterItem from "../ControlClusterItem";
-import { STransfer } from "./styles";
+import { Wrapper } from "./styles";
 
-interface IControlTransfer {
+interface ControlTransferProps {
   detectors: IDetector[] | null;
 }
 
-const ControlTransfer: React.FC<IControlTransfer> = ({ detectors }) => {
+const ControlTransfer: React.FC<ControlTransferProps> = ({ detectors }) => {
   const { data: detectorData, error: detecotorError } = useSWR(
     "/api/detector/",
     {
@@ -24,13 +24,13 @@ const ControlTransfer: React.FC<IControlTransfer> = ({ detectors }) => {
   if (!detectorData) return <LoadingSpinner />;
 
   return (
-    <STransfer>
+    <Wrapper>
       <ControlClusterItem
         id={0}
         name="Мои датчики"
         cluster_detectors={detectorData}
       />
-    </STransfer>
+    </Wrapper>
   );
 };
 

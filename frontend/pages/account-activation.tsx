@@ -8,11 +8,11 @@ import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 
-interface IAccountActivation {
+interface AccountActivationProps {
   token: string | null;
 }
 
-const AccountActivation = ({ token }: IAccountActivation) => {
+const AccountActivation = ({ token }: AccountActivationProps) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -21,20 +21,20 @@ const AccountActivation = ({ token }: IAccountActivation) => {
     }
   }, [token]);
   return (
-    <SAccountActivation>
+    <Wrapper>
       <Head>
         <title>Активация аккаунта</title>
       </Head>
       <h1>
         Активация аккаунта <CheckOutlined />
       </h1>
-    </SAccountActivation>
+    </Wrapper>
   );
 };
 
 export default AccountActivation;
 
-export const getServerSideProps: GetServerSideProps<IAccountActivation> = async (
+export const getServerSideProps: GetServerSideProps<AccountActivationProps> = async (
   ctx
 ) => {
   let token = getAsString(ctx.query.token);
@@ -46,7 +46,7 @@ export const getServerSideProps: GetServerSideProps<IAccountActivation> = async 
   };
 };
 
-const SAccountActivation = styled.div`
+const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
