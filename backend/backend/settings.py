@@ -106,7 +106,7 @@ DATABASES = {
         'NAME': os.environ.get('SQL_DATABASE', 'Soil-State-Tracker-2'),
         'USER': os.environ.get('SQL_USER', 'postgres'),
         'PASSWORD': os.environ.get('SQL_PASSWORD', 'pass'),
-        'HOST': os.environ.get('SQL_HOST', 'locahost'),
+        'HOST': os.environ.get('SQL_HOST', '127.0.0.1'),
         'PORT': os.environ.get('SQL_PORT', '5432'),
     }
 }

@@ -1,52 +1,77 @@
 version: '3'
 
 services:
-  
-    db:
-        container_name: postgres
-        image: postgres:13.0
-        volumes: 
-            - pg_data:/var/lib/postgresql/data/
-        environment: 
-          - POSTGRES_USER=postgres
-          - POSTGRES_PASSWORD=postgres
-          - POSTGRES_db=postgres
 
-    redis:
-        container_name: redis
-        image: redis
-        ports:
-          - "6379:6379"
-        volumes:
-          - redis_data:/var/lib/redis/data/
-        restart: always
+  nginx:
+    container_name: nginx
+    build: ./nginx
+    ports:
+      - 8000:80
+    depends_on: 
+      - application
+    volumes: 
+      - static_volume:/home/app/web/staticfiles
 
-    web:
-        container_name: application
-        build:
-            context: ./
-            dockerfile: Dockerfile
-        command: gunicorn backend.wsgi:application --bind 0.0.0.0:8000
-        volumes: 
-            - static_volume:/home/app/web/staticfiles
-        expose: 
-            - 8000
-        env_file:
-            - ./.env
-        depends_on: 
-            - db
-            - redis
+  db:
+    container_name: postgres
+    image: postgres:13.0
+    volumes: 
+      - pg_data:/var/lib/postgresql/data/
+    environment: 
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_db=postgres
 
-    nginx:
-        container_name: nginx
-        build: ./nginx
-        ports:
-            - 8000:80
-        depends_on: 
-            - web
-        volumes: 
-            - static_volume:/home/app/web/staticfiles
+  # influxdb:
+  #   image: influxdb:latest
+  #   container_name: influxdb
+  #   ports:
+  #     - 8086:8086
+  #   volumes:
+  #     - influxdb:/var/lib/influxdb
+  #   restart: always
+
+  # grafana:
+  #   container_name: fiware-grafana
+  #   restart: always
+  #   image: grafana/grafana
+  #   depends_on:
+  #     - db
+  #     - influxdb
+  #   ports:
+  #     - "3001:3001"
+  #   environment:
+  #     - plugins="crate-datasource,grafana-clock-panel,grafana-worldmap-panel,natel-plotly-panel"
+  #   volumes:
+  #     - ./grafana:/var/lib/grafana:rw
+
+  redis:
+    container_name: redis
+    image: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/var/lib/redis/data/
+    restart: always
+
+  application:
+    container_name: application
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    command: gunicorn backend.wsgi:application --bind 0.0.0.0:8000
+    volumes: 
+      - static_volume:/home/app/web/staticfiles
+    expose: 
+      - 8000
+    env_file:
+      - ./.env
+    depends_on: 
+      - db
+      - redis
+
 volumes: 
-    pg_data:
-    static_volume:
-    redis_data:
+  pg_data:
+  static_volume:
+  redis_data:
+  influxdb:
