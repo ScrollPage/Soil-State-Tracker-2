@@ -1,8 +1,24 @@
 import styled from "styled-components";
 
+export const Strawberry = styled.div`
+  position: absolute;
+  bottom: 0px;
+  left: 0;
+  z-index: 2;
+`
+
 export const Wrapper = styled.div`
-  height: 776px;
   background-color: ${({ theme }) => theme.lightBlue};
+  padding: 150px 0;
+  ${Strawberry} {
+    &:last-of-type {
+      transform: scale(-1, 1);
+      opacity: 0.65;
+      z-index: 1;
+      bottom: 80px;
+      left: -40px;
+    }
+  }
 `;
 
 export const Title = styled.div`
@@ -23,10 +39,6 @@ export const Inner = styled.div`
 export const Main = styled.div`
   display: flex;
   flex-direction: column;
-`
-
-export const Strawberry = styled.div`
-  position: absolute;
 `
 
 export const ImageWrapper = styled.div`

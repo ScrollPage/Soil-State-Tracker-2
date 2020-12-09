@@ -1,8 +1,16 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-export const Wrapper = styled.div`
-  padding: 110px 0;
+export const TextStep = styled.div`
+  position: absolute;
+  bottom: -158px;
+  font-family: Raleway;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 200px;
+  line-height: 235px;
+  color: ${({ theme }) => theme.lightBlue};
 `;
+
 export const Inner = styled.div`
   display: flex;
   flex-direction: column;
@@ -21,6 +29,7 @@ export const Title = styled.div`
   color: #000000;
 `;
 export const Subtitle = styled.div`
+  align-self: flex-start;
   margin-bottom: 30px;
   font-family: Raleway;
   font-style: normal;
@@ -31,6 +40,7 @@ export const Subtitle = styled.div`
 `;
 export const Text = styled.div`
   margin: 0 40px 0 100px;
+  text-align: left;
   font-family: Raleway;
   font-style: normal;
   font-weight: 300;
@@ -39,6 +49,8 @@ export const Text = styled.div`
   color: #000000;
 `;
 export const TextBlock = styled.div`
+  display: flex;
+  flex-direction: column;
   flex: 1;
 `;
 
@@ -46,4 +58,25 @@ export const Box = styled.div`
   height: 200px;
   width: 345px;
   background: #C4C4C4;
+`;
+
+export const Wrapper = styled.div<{ isSecond: boolean }>`
+  padding: 110px 0;
+  ${({ isSecond, theme }) => isSecond && css`
+    background-color: ${theme.lightBlue};
+    ${Main} {
+      flex-direction: row-reverse;
+    }
+    ${Subtitle} {
+      align-self: flex-end;
+    }
+    ${Text} {
+      margin: 0 100px 0 40px;
+      text-align: right;
+    }
+    ${TextStep} {
+      color: #fff;
+      right: 0;
+    }
+  `}
 `;

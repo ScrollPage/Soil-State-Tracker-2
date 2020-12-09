@@ -73,9 +73,11 @@ export default function ClusterPage({ clusterId }: IClusterPage) {
           </Head>
           <Header>
             <Title>{data?.[0]?.[0]?.cluster}</Title>
-            <SButton onClick={showHandler} myType="blue">
-              Статистика по кластеру
-            </SButton>
+            {data && data?.[0]?.length !== 0 && (
+              <SButton onClick={showHandler} myType="blue">
+                Статистика по кластеру
+              </SButton>
+            )}
           </Header>
           <Main>
             {error && <ErrorMessage message="Ошибка вывода датчиков" />}
@@ -85,15 +87,17 @@ export default function ClusterPage({ clusterId }: IClusterPage) {
             )}
             {data && renderCluster(data)}
           </Main>
-          <NextPage>
-            <SButton
-              disabled={size >= maxSize || data?.[0]?.length === 0}
-              myType="blue"
-              onClick={sizeHandler}
-            >
-              Загрузить еще
-            </SButton>
-          </NextPage>
+          {data && data?.[0]?.length !== 0 && (
+            <NextPage>
+              <SButton
+                disabled={size >= maxSize || data?.[0]?.length === 0}
+                myType="blue"
+                onClick={sizeHandler}
+              >
+                Загрузить еще
+              </SButton>
+            </NextPage>
+          )}
         </Wrapper>
       </Container>
     </ControlLayout>

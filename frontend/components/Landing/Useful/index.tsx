@@ -30,6 +30,9 @@ export const UseFul = () => {
             <Strawberry>
               <Image src="/main/club.png" height={370} width={370} />
             </Strawberry>
+            <Strawberry>
+              <Image src="/main/club.png" height={370} width={370} />
+            </Strawberry>
           </ImageWrapper>
         </Inner>
       </Container>
