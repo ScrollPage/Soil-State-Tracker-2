@@ -8,7 +8,7 @@ const Container = styled.div<{ fluid?: boolean }>`
   height: 100%;
   @media (min-width: 575.98px) {
     max-width: 540px;
-    padding: 0px;
+    /* padding: 0px; */
   }
   @media (min-width: 767.98px) {
     max-width: 720px;

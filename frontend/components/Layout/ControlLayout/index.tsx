@@ -24,12 +24,13 @@ interface ControlLayoutProps {
 }
 
 const ControlLayout: React.FC<ControlLayoutProps> = ({ children }) => {
-  const { isStaff } = useUser();
+  const { isStaff, firstName, lastName } = useUser();
   const { pathname } = useRouter();
   return (
     <>
       <Header>
         <Nav>
+          <Image height={84} width={114} src="/main/logo.svg" />
           <NavLink>
             <Link href="/">
               <a>Главная</a>
@@ -54,7 +55,7 @@ const ControlLayout: React.FC<ControlLayoutProps> = ({ children }) => {
         <Rectangle>
           <Circle />
           <Name>
-            Далай <br /> Лама
+            {firstName} <br /> {lastName}
           </Name>
         </Rectangle>
         <Side>

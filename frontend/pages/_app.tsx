@@ -65,7 +65,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 };
 
 MyApp.getInitialProps = async (AppContext: AppContext) => {
-  const { Component, ctx } = AppContext;
+  const { Component } = AppContext;
   const appProps = Component.getInitialProps
     ? await App.getInitialProps(AppContext)
     : {};
@@ -147,6 +147,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   ${normalize}
+  font-family: 'Play';
   * {
     text-decoration: none;
     box-sizing: border-box;
@@ -185,11 +186,11 @@ const GlobalStyle = createGlobalStyle`
         height: 90%;
     }
     &::-webkit-scrollbar-thumb {
-        background-color: #000;
+        background-color: #E86900;
     }
   }
   #nprogress .bar {
-    background: #000 !important;
+    background: #E86900 !important;
   }
 
 `;

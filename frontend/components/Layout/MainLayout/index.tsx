@@ -19,6 +19,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { SButton } from "@/components/UI/Button";
 import { useRouter } from "next/router";
+import { useScroll } from "@/hooks/useScroll";
+import { useWindowSize } from "@/hooks/useWindowSize";
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -28,10 +30,12 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const dispatch = useDispatch();
   const { isStaff, isAuth } = useUser();
   const { push } = useRouter();
+  const scroll = useScroll();
+  const { height } = useWindowSize();
 
   return (
     <>
-      <Header>
+      <Header small={scroll > (height ?? 1000) - 120}>
         <Info>
           <Image height={120} width={160} src="/main/logo.svg" />
           <Name>
@@ -46,7 +50,6 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
           <AuthButtons>
             {isAuth ? (
               <>
-                {" "}
                 <SButton
                   myType="orange"
                   small

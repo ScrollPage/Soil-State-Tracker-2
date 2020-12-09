@@ -7,6 +7,7 @@ export const Wrapper = styled.div`
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+  position: relative;
 `;
 
 export const Content = styled.div`
@@ -25,6 +26,13 @@ export const Title = styled.div`
   color: #FFFFFF;
   margin-bottom: 17px;
 `
+
+export const Strawberry = styled.div`
+  position: absolute;
+  right: -170px;
+  bottom: -200px;
+`
+
 export const Subtitle = styled.div`
   font-family: Raleway;
   font-style: normal;

@@ -1,5 +1,5 @@
 import React from "react";
-import { Wrapper, Step, Title, Circle } from "./styles";
+import { Wrapper, Step, Title } from "./styles";
 
 interface StepperProps {
   step: number;

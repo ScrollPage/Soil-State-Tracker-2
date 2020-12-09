@@ -5,20 +5,22 @@ export const Wrapper = styled.div``
 export const Header = styled.div`
   position: fixed;
   top: 0; 
-  left: 0px;
+  left: 249px;
   width: 100%;
   height: 120px;
+  z-index: 4;
   background: url(main/bgc.png) bottom no-repeat;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-  padding: 0 50px 0 345px;
+  padding: 0 50px 0 50px;
   display: flex;
   justify-content: space-between;
 `
 
 export const SideBar = styled.div`
+  z-index: 5;
   position: fixed;
   top: 0;
   left: 0;

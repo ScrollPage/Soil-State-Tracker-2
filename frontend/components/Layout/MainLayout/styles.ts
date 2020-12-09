@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Header = styled.div`
+export const Header = styled.div<{ small: boolean }>`
   top: 0;
   left: 0;
   width: 100%;
@@ -10,6 +10,11 @@ export const Header = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+  z-index: 4;
+  color: ${({ small }) => small ? "#000000" : "#FFFFFF"};
+  a {
+    color: ${({ small }) => small ? "#000000" : "#FFFFFF"};
+  }
 `;
 export const Info = styled.div`
   display: flex;
@@ -24,7 +29,6 @@ export const Title = styled.div`
   font-weight: 300;
   font-size: 36px;
   line-height: 42px;
-  color: #FFFFFF;
   margin-bottom: 11px;
 `;
 export const Subtitle = styled.div`
@@ -33,7 +37,6 @@ export const Subtitle = styled.div`
   font-weight: 300;
   font-size: 18px;
   line-height: 21px;
-  color: #FFFFFF;
 `;
 
 export const AuthButtons = styled.div`
@@ -50,7 +53,6 @@ export const NavLink = styled.div`
     font-weight: 300;
     font-size: 24px;
     line-height: 28px;
-    color: #FFFFFF;
     margin-right: 50px;
   }
 `;

@@ -49,20 +49,20 @@ export default function ClusterPage({ clusterId }: IClusterPage) {
 
   return (
     <ControlLayout>
-      <SClusterPage>
-        <Head>
-          <title>Группа</title>
-        </Head>
-        <SClusterPageTitle>{data?.[0]?.[0]?.cluster}</SClusterPageTitle>
-        <SClusterContainer>
+      <Head>
+        <title>Группа</title>
+      </Head>
+      <Wrapper>
+        <Title>{data?.[0]?.[0]?.cluster}</Title>
+        <Main>
           {error && <ErrorMessage message="Ошибка вывода датчиков" />}
           {!data && !error && <LoadingSpinner />}
           {data?.[0]?.length === 0 && (
             <EmptyMessage message="В данной группе нет датчиков" />
           )}
           {data && renderCluster(data)}
-        </SClusterContainer>
-        <SClusterPageBottom>
+        </Main>
+        <NextPage>
           <SButton
             disabled={size >= maxSize || data?.[0]?.length === 0}
             myType="white"
@@ -70,8 +70,8 @@ export default function ClusterPage({ clusterId }: IClusterPage) {
           >
             Загрузить еще
           </SButton>
-        </SClusterPageBottom>
-      </SClusterPage>
+        </NextPage>
+      </Wrapper>
     </ControlLayout>
   );
 }
@@ -97,24 +97,30 @@ export const getServerSideProps: GetServerSideProps<IClusterPage> = async (
   };
 };
 
-const SClusterPage = styled.div`
+const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 20px 0 60px 0;
+  padding: 0px 80px 80px 0;
+  @media (max-width: 1199.98px) {
+    padding: 0px 30px 80px 0;
+  }
+  @media (max-width: 767.98px) {
+    padding: 0px 0px 80px 0;
+  }
 `;
 
-const SClusterContainer = styled.div`
+const Main = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
 `;
 
-const SClusterPageTitle = styled.h1`
+const Title = styled.h1`
   margin-top: 0px;
   text-align: center;
 `;
 
-const SClusterPageBottom = styled.div`
+const NextPage = styled.div`
   display: flex;
   justify-content: center;
   margin-top: 40px;

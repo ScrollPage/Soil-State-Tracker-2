@@ -6,7 +6,6 @@ export const SButton = styled.button<{ myType: "white" | "blue" | "orange", smal
   box-sizing: border-box;
   outline: none;
   cursor: pointer;
-
   ${({ myType }) => myType === 'white' && css`
     background-color: transparent;
     border: 1px solid #fff;

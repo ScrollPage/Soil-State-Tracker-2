@@ -1,10 +1,13 @@
 import styled from 'styled-components';
+import { SControlClusterItem } from '../ControlClusterItem/styles';
 
 export const SControlCluster = styled.div`
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 10px 10px 0 10px;
-  margin-bottom: 10px;
+  margin-bottom: 28px;
   display: flex;
   flex-direction: column;
+  ${SControlClusterItem} {
+    &:last-of-type {
+      margin: 0;
+    }
+  }
 `

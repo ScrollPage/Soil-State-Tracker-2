@@ -48,7 +48,6 @@ export const Step = styled.div<{ active: boolean }>`
   `};
 `;
 
-export const Circle = styled.div``;
 
 export const Title = styled.div<{ active: boolean }>`
   font-family: "Play";
