@@ -6,7 +6,7 @@ import { useDrop } from "react-dnd";
 import { useDispatch } from "react-redux";
 import ControlClusterTooltip from "../ControlClusterTooltip";
 import RenderControlItems from "../RenderControlItems";
-import { SControlClusterItem, SControlClusterItemBody } from "./styles";
+import { Wrapper, Main } from "./styles";
 
 const ControlClusterItem: React.FC<ICluster> = ({
   cluster_detectors: detectors,
@@ -27,12 +27,12 @@ const ControlClusterItem: React.FC<ICluster> = ({
   });
 
   return (
-    <SControlClusterItem ref={drop} isOver={isOver} canDrop={canDrop}>
+    <Wrapper ref={drop} isOver={isOver} canDrop={canDrop}>
       <ControlClusterTooltip id={id} name={name} />
-      <SControlClusterItemBody>
+      <Main>
         <RenderControlItems detectors={detectors} id={id} />
-      </SControlClusterItemBody>
-    </SControlClusterItem>
+      </Main>
+    </Wrapper>
   );
 };
 

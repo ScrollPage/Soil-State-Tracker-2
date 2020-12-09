@@ -1,8 +1,9 @@
 import { IDetector } from "@/types/detector";
 import { ItemTypes } from "@/utils.ts/items";
+import Image from "next/image";
 import React, { memo } from "react";
 import { useDrag } from "react-dnd";
-import { SControlItem, SControlItemText } from "./styles";
+import { Wrapper, Text } from "./styles";
 
 const ControlItem: React.FC<IDetector & { clusterId: number }> = ({
   clusterId,
@@ -23,20 +24,13 @@ const ControlItem: React.FC<IDetector & { clusterId: number }> = ({
 
   return (
     <>
-      <SControlItem ref={drag} isDragging={isDragging}>
-        <SControlItemText>
+      <Wrapper ref={drag} isDragging={isDragging}>
+        <Image src="/control/detector.png" height={70} width={70} />
+        <Text>
           <span>id:</span>&nbsp;
           {id}
-        </SControlItemText>
-        <SControlItemText>
-          <span>x:</span>&nbsp;
-          {x}
-        </SControlItemText>
-        <SControlItemText>
-          <span>y:</span>&nbsp;
-          {y}
-        </SControlItemText>
-      </SControlItem>
+        </Text>
+      </Wrapper>
     </>
   );
 };

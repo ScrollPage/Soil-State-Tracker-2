@@ -4,7 +4,7 @@ import { ICluster } from "@/types/cluster";
 import React, { memo } from "react";
 import useSWR from "swr";
 import ControlClusterItem from "../ControlClusterItem";
-import { SControlCluster } from "./styles";
+import { Wrapper } from "./styles";
 
 interface IControlCluster {
   clusters: ICluster[] | null;
@@ -22,7 +22,7 @@ const ControlCluster: React.FC<IControlCluster> = ({ clusters }) => {
   if (clusterData?.length === 0) return null;
 
   return (
-    <SControlCluster>
+    <Wrapper>
       {clusterData.map((cluster) => (
         <ControlClusterItem
           key={`controlClusterItem__key__${cluster.name}`}
@@ -31,7 +31,7 @@ const ControlCluster: React.FC<IControlCluster> = ({ clusters }) => {
           id={cluster.id}
         />
       ))}
-    </SControlCluster>
+    </Wrapper>
   );
 };
 

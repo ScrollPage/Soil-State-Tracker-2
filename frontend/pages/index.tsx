@@ -7,6 +7,7 @@ import { HowWeDo } from "@/components/Landing/HowWeDo";
 import { Internet } from "@/components/Landing/Internet";
 import { UseFul } from "@/components/Landing/Useful";
 import { Step } from "@/components/Landing/Step";
+import { OurTeam } from "@/components/Landing/OurTeam";
 
 const stepText = [
   {
@@ -62,6 +63,7 @@ export default function Index({}: IIndex) {
         text={stepText[2].text}
         isSecond={stepText[2].isSecond}
       />
+      <OurTeam />
     </MainLayout>
   );
 }
