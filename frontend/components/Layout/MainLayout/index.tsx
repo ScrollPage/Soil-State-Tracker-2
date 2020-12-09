@@ -22,6 +22,7 @@ import { useRouter } from "next/router";
 import { useScroll } from "@/hooks/useScroll";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { Footer } from "@/components/Landing/Footer";
+import { SctollToTopButton } from "@/components/UI/ScrollToTopButton";
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -117,6 +118,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
       </Header>
       <Main>{children}</Main>
       <Footer />
+      <SctollToTopButton />
       {!isStaff && <ChatWidget />}
     </>
   );
