@@ -247,7 +247,8 @@ CACHEOPS_DEFAULTS = {
 
 CACHEOPS = {
     'detector.DetectorData': {'ops': 'all', 'timeout': 60*120},
-    'detector.Detector': {'ops': {'count', 'fetch'}, 'timeout': 60*120},
+    'detector.Detector': {'ops': {}, 'timeout': 60*120},
+    'group.cluster': {'ops': 'all'},
     'chat.message': {'ops': 'all'},
     'chat.chat': {'ops': 'all'}
 }

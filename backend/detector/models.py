@@ -3,6 +3,7 @@ from django.contrib.postgres.indexes import BrinIndex
 
 from random import uniform
 from datetime import datetime, timedelta
+from picklefield.fields import PickledObjectField
 
 from client.models import Client
 from group.models import Cluster
