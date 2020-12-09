@@ -33,12 +33,17 @@ def slice_data_by_timestamp(queryset):
     res = list()
     i = 0
     time = datetime.now().date()
-    detector_data_queryset = DetectorData.objects.filter(detector__in=queryset)
-    
+
+    @cached_as(queryset)
+    def _get_detector_data():
+        return DetectorData.objects.filter(detector__in=queryset).nocache()
+
     timestamp_aggregation = queryset.aggregate(
             min_timestamp=Min('data__timestamp'),
             max_timestamp=Max('data__timestamp')
         )
+
+    detector_data_queryset = _get_detector_data()
 
     min_timestamp = timestamp_aggregation['min_timestamp']
     max_timestamp = timestamp_aggregation['max_timestamp']
@@ -52,15 +57,14 @@ def slice_data_by_timestamp(queryset):
 
     return res
 
-def queryset_mean(queryset):
+def queryset_mean(queryset, detectors):
 
-    def map_slicing_func(queryset):
+    def map_slicing_func(queryset, detectors=detectors):
         if not queryset:
             return
 
-        @cached_as(queryset)
+        @cached_as(queryset, extra=detectors)
         def _get_aggregation(queryset=queryset):
-
             return queryset \
                 .aggregate(
                     mean_first_temp=Avg('first_temp'),
