@@ -12,6 +12,7 @@ export const SControlClusterItem = styled.div<{ isOver: boolean, canDrop: boolea
   border-radius: 20px;
   margin-bottom: 28px;
   padding: 23px;
+  min-width: 420px;
 `;
 
 

@@ -1,5 +1,19 @@
 import styled from "styled-components";
 
+export const Strawberry = styled.div`
+  position: absolute;
+  right: -170px;
+  bottom: -200px;
+  z-index: 2;
+`
+
+export const StrawberryBgc = styled.div`
+  position: absolute;
+  right: -100px;
+  bottom: -320px;
+  z-index: 1;
+`
+
 export const Wrapper = styled.div`
   height: 100vh;
   background: url(login/login_bgc.png) repeat;
@@ -25,12 +39,6 @@ export const Title = styled.div`
   line-height: 160px;
   color: #FFFFFF;
   margin-bottom: 17px;
-`
-
-export const Strawberry = styled.div`
-  position: absolute;
-  right: -170px;
-  bottom: -200px;
 `
 
 export const Subtitle = styled.div`
