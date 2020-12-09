@@ -1,11 +1,11 @@
 import styled from 'styled-components';
-import { SControlClusterItem } from '../ControlClusterItem/styles';
+import { Wrapper as ControlClusterItem } from '../ControlClusterItem/styles';
 
-export const SControlCluster = styled.div`
+export const Wrapper = styled.div`
   margin-bottom: 28px;
   display: flex;
   flex-direction: column;
-  ${SControlClusterItem} {
+  ${ControlClusterItem} {
     &:last-of-type {
       margin: 0;
     }
