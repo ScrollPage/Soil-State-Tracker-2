@@ -4,7 +4,7 @@ import { ICluster } from "@/types/cluster";
 import React, { memo } from "react";
 import useSWR from "swr";
 import ControlClusterItem from "../ControlClusterItem";
-import { Wrapper } from "./styles";
+import { Wrapper, Title, Main } from "./styles";
 
 interface ControlClusterProps {
   clusters: ICluster[] | null;
@@ -23,14 +23,17 @@ const ControlCluster: React.FC<ControlClusterProps> = ({ clusters }) => {
 
   return (
     <Wrapper>
-      {clusterData.map((cluster) => (
-        <ControlClusterItem
-          key={`controlClusterItem__key__${cluster.name}`}
-          name={cluster.name}
-          cluster_detectors={cluster.cluster_detectors}
-          id={cluster.id}
-        />
-      ))}
+      <Title>Доступные кластеры</Title>
+      <Main>
+        {clusterData.map((cluster) => (
+          <ControlClusterItem
+            key={`controlClusterItem__key__${cluster.name}`}
+            name={cluster.name}
+            cluster_detectors={cluster.cluster_detectors}
+            id={cluster.id}
+          />
+        ))}
+      </Main>
     </Wrapper>
   );
 };

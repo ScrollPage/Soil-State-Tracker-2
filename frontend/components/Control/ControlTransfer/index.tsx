@@ -4,7 +4,7 @@ import { IDetector } from "@/types/detector";
 import React, { memo } from "react";
 import useSWR from "swr";
 import ControlClusterItem from "../ControlClusterItem";
-import { Wrapper } from "./styles";
+import { Wrapper,Title } from "./styles";
 
 interface ControlTransferProps {
   detectors: IDetector[] | null;
@@ -25,6 +25,7 @@ const ControlTransfer: React.FC<ControlTransferProps> = ({ detectors }) => {
 
   return (
     <Wrapper>
+      <Title>Мои датчики</Title>
       <ControlClusterItem
         id={0}
         name="Мои датчики"

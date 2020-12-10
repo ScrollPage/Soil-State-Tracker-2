@@ -48,8 +48,8 @@ export const Chart: React.FC<ChartProps> = ({ detectorData }) => {
                 y: item?.[param.value],
                 x: index + 1,
               })),
-              borderColor: "#805ad5",
-              backgroundColor: "white",
+              borderColor: "#E86900",
+              backgroundColor: "transparent",
             },
           ],
         }}

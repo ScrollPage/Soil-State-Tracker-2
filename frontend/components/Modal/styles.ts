@@ -4,7 +4,7 @@ export const Wrapper = styled.div`
     position: fixed;
     z-index: 10;
     width: 600px;
-    top: 200px;
+    top: 100px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;

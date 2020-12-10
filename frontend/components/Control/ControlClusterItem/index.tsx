@@ -27,7 +27,7 @@ const ControlClusterItem: React.FC<ICluster> = ({
   });
 
   return (
-    <Wrapper ref={drop} isOver={isOver} canDrop={canDrop}>
+    <Wrapper ref={drop} isOver={isOver} canDrop={canDrop} isMain={id === 0}>
       <ControlClusterTooltip id={id} name={name} />
       <Main>
         <RenderControlItems detectors={detectors} id={id} />
