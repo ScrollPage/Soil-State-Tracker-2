@@ -1,5 +1,6 @@
 import { SButton } from "@/components/UI/Button";
 import Container from "@/components/UI/Container";
+import { MyPartic } from "@/components/UI/MyPartic";
 import Image from "next/image";
 import React from "react";
 import {
@@ -14,6 +15,7 @@ import {
 export const Home = () => {
   return (
     <Wrapper>
+      <MyPartic />
       <Container>
         <Content>
           <Title>Вырасти лучшую клубнику</Title>

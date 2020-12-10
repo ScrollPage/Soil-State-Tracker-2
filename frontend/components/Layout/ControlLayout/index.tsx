@@ -23,7 +23,7 @@ interface ControlLayoutProps {
 }
 
 const ControlLayout: React.FC<ControlLayoutProps> = ({ children }) => {
-  const { isStaff, firstName, lastName } = useUser();
+  const { firstName, lastName } = useUser();
   const { pathname } = useRouter();
   return (
     <>

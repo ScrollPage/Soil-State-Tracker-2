@@ -7,6 +7,7 @@ import { GetServerSideProps } from "next";
 import { ensureRedirectToData } from "@/utils.ts/ensure";
 import Container from "@/components/UI/Container";
 import AuthLayout from "@/components/Layout/AuthLayout";
+import { MyPartic } from "@/components/UI/MyPartic";
 
 interface LoginProps {}
 
@@ -17,6 +18,7 @@ const Login = ({}: LoginProps) => {
         <Head>
           <title>Вход</title>
         </Head>
+        <MyPartic />
         <Container>
           <Inner>
             <Title>Войти в аккаунт</Title>
@@ -46,11 +48,17 @@ export const getServerSideProps: GetServerSideProps<LoginProps> = async (
 };
 
 const Wrapper = styled.div`
-  background: url(login/login_bgc.png) no-repeat;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
+  ${Container} {
+    pointer-events: none;
+  }
+  background-color: #000;
+  #tsparticles {
+    height: 100vh;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
   flex: 1;
   padding: 328px 0 110px 0;
 `;
@@ -82,6 +90,8 @@ const Subtitle = styled.span`
 `;
 
 const Bottom = styled.span`
+  z-index: 10;
+  pointer-events: auto;
   margin-top: 10px;
   > a {
     font-family: "Play";

@@ -14,7 +14,6 @@ import {
 import { useDispatch } from "react-redux";
 import { logout } from "@/store/actions/auth";
 import { useUser } from "@/hooks/useUser";
-import Link from "next/link";
 import Image from "next/image";
 import { SButton } from "@/components/UI/Button";
 import { useRouter } from "next/router";
@@ -29,10 +28,13 @@ interface MainLayoutProps {
 
 const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const dispatch = useDispatch();
-  const { isStaff, isAuth } = useUser();
+  const { isAuth } = useUser();
   const { push } = useRouter();
   const scroll = useScroll();
   const { height } = useWindowSize();
+  // const useRef = howItWorks
+
+  // const goToBlock = (top: number) => window.scroll({ top, behavior: "smooth" });
 
   return (
     <>
@@ -72,7 +74,6 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
               </>
             ) : (
               <>
-                {" "}
                 <SButton
                   myType="white"
                   small
@@ -97,21 +98,9 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
             )}
           </AuthButtons>
           <Nav>
-            <NavLink>
-              <Link href="/">
-                <a>Как это работает</a>
-              </Link>
-            </NavLink>
-            <NavLink>
-              <Link href="/">
-                <a>Кому подойдет</a>
-              </Link>
-            </NavLink>
-            <NavLink>
-              <Link href="/">
-                <a>Команда</a>
-              </Link>
-            </NavLink>
+            <NavLink>Как это работает</NavLink>
+            <NavLink>Кому подойдет</NavLink>
+            <NavLink>Команда</NavLink>
           </Nav>
         </Inner>
       </Header>

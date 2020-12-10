@@ -8,6 +8,7 @@ import { GetServerSideProps } from "next";
 import Container from "@/components/UI/Container";
 import AuthLayout from "@/components/Layout/AuthLayout";
 import { Stepper } from "@/components/UI/Stepper";
+import { MyPartic } from "@/components/UI/MyPartic";
 
 interface RegisterProps {}
 
@@ -20,6 +21,7 @@ const Register = ({}: RegisterProps) => {
         <Head>
           <title>Регистрация</title>
         </Head>
+        <MyPartic />
         <Container>
           <Stepper step={formStep} />
           <Inner>
@@ -52,13 +54,19 @@ export const getServerSideProps: GetServerSideProps<RegisterProps> = async (
 };
 
 const Wrapper = styled.div`
-  background: url(login/login_bgc.png) no-repeat;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
+  ${Container} {
+    pointer-events: none;
+  }
+  background-color: #000;
   flex: 1;
   padding: 188px 0 110px 0;
+  #tsparticles {
+    height: 100vh;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
 `;
 
 const Inner = styled.div`
@@ -76,6 +84,7 @@ const Title = styled.h1`
   line-height: 56px;
   color: ${({ theme }) => theme.white};
   margin-bottom: 84px;
+  pointer-events: auto;
 `;
 const Subtitle = styled.span`
   margin-top: 20px;
@@ -89,8 +98,11 @@ const Subtitle = styled.span`
 `;
 
 const Bottom = styled.span`
+  pointer-events: auto;
+  z-index: 2;
   margin-top: 10px;
   > a {
+    pointer-events: auto;
     font-family: "Play";
     font-style: normal;
     font-weight: normal;

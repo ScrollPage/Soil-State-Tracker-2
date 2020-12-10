@@ -1,5 +1,4 @@
 import React from "react";
-import { CloseOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { getModalName, getModalProps } from "@/store/selectors";
 import { modalHide } from "@/store/actions/modal";
@@ -32,7 +31,7 @@ const RootModal: React.FC = () => {
       <StyledRootModal>
         <div>
           <div className="root-modal__close" onClick={() => setClose()}>
-            <CloseOutlined />
+            Close
           </div>
           <SpecificModal {...modalProps} setClose={setClose} />
         </div>

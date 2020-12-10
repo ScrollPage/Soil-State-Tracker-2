@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const Header = styled.div`
+  pointer-events: auto;
   position: fixed;
   top: 0;
   left: 0;
@@ -11,6 +12,7 @@ export const Header = styled.div`
   justify-content: flex-end;
   align-items: center;
   padding: 0 60px;
+  z-index: 10;
 `;
 
 export const Content = styled.div`

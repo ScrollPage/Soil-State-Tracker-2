@@ -1,6 +1,5 @@
 import React from "react";
 import { Main, Header, Title, GoBack, Content } from "./styles";
-import { useUser } from "@/hooks/useUser";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -9,7 +8,6 @@ interface AuthLayoutProps {
 }
 
 const AuthLayout: React.FC<AuthLayoutProps> = ({ children }) => {
-  const { isStaff } = useUser();
   return (
     <>
       <Header>

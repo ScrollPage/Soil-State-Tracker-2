@@ -5,6 +5,7 @@ export const SButton = styled.button<{ myType: "white" | "blue" | "orange", smal
   outline: none;
   cursor: pointer;
   font-style: normal;
+  pointer-events: auto;
 
   ${({ myType, small }) => myType === 'white' && css`
     height: 60px;

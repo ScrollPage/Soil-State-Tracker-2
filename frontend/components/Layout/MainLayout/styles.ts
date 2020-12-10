@@ -47,23 +47,17 @@ export const AuthButtons = styled.div`
 `;
 
 export const NavLink = styled.div`
-  > a {
-    font-family: "Raleway";
-    font-style: normal;
-    font-weight: 300;
-    font-size: 24px;
-    line-height: 28px;
-    margin-right: 50px;
-  }
+  font-family: "Raleway";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 24px;
+  line-height: 28px;
+  margin-left: 50px;
+  cursor: pointer;
 `;
 
 export const Nav = styled.div`
   display: flex;
-  ${NavLink} {
-    &:last-of-type {
-      margin-right: -50px;
-    }
-  }
 `;
 
 export const Inner = styled.div`

@@ -1,3 +1,4 @@
+import Container from "@/components/UI/Container";
 import styled from "styled-components";
 
 export const Strawberry = styled.div`
@@ -15,12 +16,18 @@ export const StrawberryBgc = styled.div`
 `
 
 export const Wrapper = styled.div`
+  ${Container} {
+    pointer-events: none;
+  }
+  #tsparticles {
+    height: 100vh;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
   height: 100vh;
-  background: url(login/login_bgc.png) repeat;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
+  background-color: #000;
   position: relative;
 `;
 
@@ -50,3 +57,5 @@ export const Subtitle = styled.div`
   color: #FFFFFF;
   margin-bottom: 35px;
 `
+
+
