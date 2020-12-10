@@ -1,5 +1,5 @@
 import styled from 'styled-components';
 
-export const STransfer = styled.div``;
+export const Wrapper = styled.div``;
 
 

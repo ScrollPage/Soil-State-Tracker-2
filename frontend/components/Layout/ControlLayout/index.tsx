@@ -12,7 +12,6 @@ import {
   SideBar,
   Circle,
 } from "./styles";
-import ChatWidget from "@/components/ChatWidget";
 import { useUser } from "@/hooks/useUser";
 import Image from "next/image";
 import Link from "next/link";
@@ -77,7 +76,6 @@ const ControlLayout: React.FC<ControlLayoutProps> = ({ children }) => {
         </Side>
       </SideBar>
       <Main>{children}</Main>
-      {!isStaff && <ChatWidget />}
     </>
   );
 };

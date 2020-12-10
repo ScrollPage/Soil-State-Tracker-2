@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const SControlClusterTooltip = styled.h2`
+export const Tooltip = styled.h2`
   text-align: center;
   margin: 0 0 31px 0;
   font-family: Montserrat;

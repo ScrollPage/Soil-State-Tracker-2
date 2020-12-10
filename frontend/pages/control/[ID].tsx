@@ -31,11 +31,11 @@ const renderCluster = (data: IDetector[][]) => {
   );
 };
 
-interface IClusterPage {
+interface ClusterPageProps {
   clusterId: string | undefined;
 }
 
-export default function ClusterPage({ clusterId }: IClusterPage) {
+export default function ClusterPage({ clusterId }: ClusterPageProps) {
   const dispatch = useDispatch();
 
   const showHandler = () => {
@@ -104,7 +104,7 @@ export default function ClusterPage({ clusterId }: IClusterPage) {
   );
 }
 
-export const getServerSideProps: GetServerSideProps<IClusterPage> = async (
+export const getServerSideProps: GetServerSideProps<ClusterPageProps> = async (
   ctx
 ) => {
   // ensureAuth(ctx);

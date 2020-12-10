@@ -32,14 +32,6 @@ const contactValidationSchema = object().shape({
     .oneOf([ref("password"), ""], "Пароли должны совпадать"),
 });
 
-interface FormValues {
-  email: string;
-  firstName: string;
-  lastName: string;
-  password: string;
-  confirmPassword: string;
-}
-
 interface RegisterFormProps {
   step: number;
   setStep: Dispatch<SetStateAction<number>>;

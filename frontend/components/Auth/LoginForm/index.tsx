@@ -1,5 +1,5 @@
 import React from "react";
-import { SLoginForm } from "./styles";
+import { Wrapper } from "./styles";
 import { Formik, Form, FormikProps } from "formik";
 import { SButton } from "@/components/UI/Button";
 import Input from "@/components/UI/Input";
@@ -21,7 +21,7 @@ const LoginForm = () => {
   const dispatch = useDispatch();
 
   return (
-    <SLoginForm>
+    <Wrapper>
       <Formik
         initialValues={{
           email: "",
@@ -51,7 +51,7 @@ const LoginForm = () => {
           </Form>
         )}
       </Formik>
-    </SLoginForm>
+    </Wrapper>
   );
 };
 

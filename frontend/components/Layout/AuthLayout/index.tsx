@@ -1,6 +1,5 @@
 import React from "react";
 import { Main, Header, Title, GoBack, Content } from "./styles";
-import ChatWidget from "@/components/ChatWidget";
 import { useUser } from "@/hooks/useUser";
 import Link from "next/link";
 import Image from "next/image";
@@ -29,7 +28,6 @@ const AuthLayout: React.FC<AuthLayoutProps> = ({ children }) => {
         </GoBack>
       </Header>
       <Main>{children}</Main>
-      {!isStaff && <ChatWidget />}
     </>
   );
 };
