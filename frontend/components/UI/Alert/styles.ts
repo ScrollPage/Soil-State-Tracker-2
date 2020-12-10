@@ -29,13 +29,13 @@ export const Text = styled.div`
 `;
 
 export const Close = styled.div`
-  position: absolute;
   top: 50%;
   right: 5px;
   transform: translateY(-50%);
   height: 20px;
   width: 20px;
   cursor: pointer;
+  position: absolute;
   &:after {
     content: '';
     position: absolute;

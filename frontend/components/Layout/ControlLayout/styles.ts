@@ -56,6 +56,10 @@ export const SideLink = styled.div<{ active?: boolean }>`
   background-color: ${({ active }) => active ? "#F6F6F6" : "#FFFFFF"};
   border-left: 10px solid ${({ active, theme }) => active ? theme.orange : "#FFFFFF"};
   > a {
+    transition: all .2s ease;
+    &:hover {
+      transform: scale(1.3);
+    }
     font-family: "Play";
     font-style: normal;
     font-weight: normal;

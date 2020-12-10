@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Main = styled.div`
   display: flex;
   flex-wrap: wrap;
-  width: 216px;
+  justify-content: center;
 `
 
 export const Wrapper = styled.div<{ isOver: boolean, canDrop: boolean }>`
@@ -12,6 +12,7 @@ export const Wrapper = styled.div<{ isOver: boolean, canDrop: boolean }>`
   border-radius: 20px;
   margin-bottom: 28px;
   padding: 23px 13px;
+  width: 476px;
 `;
 
 

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const SDetectorDataModal = styled.div`
+export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -9,7 +9,7 @@ export const SDetectorDataModal = styled.div`
 export const SDetectorDataModalBody = styled.div`
 `;
 
-export const SDetectorDataModalTitle = styled.h2`
+export const Title = styled.h2`
   margin-bottom: 20px;
 `;
 

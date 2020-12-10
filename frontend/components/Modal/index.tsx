@@ -2,12 +2,14 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getModalName, getModalProps } from "@/store/selectors";
 import { modalHide } from "@/store/actions/modal";
-import { StyledBackDrop, StyledRootModal } from "./styles";
+import { BackDrop, Wrapper, Close } from "./styles";
 
 import DetectorDataModal from "./DetectorDataModal";
+import AddClusterModal from "./AddClusterModal";
 
 const MODAL_COMPONENTS = {
   DETECTOR_DATA_MODAL: DetectorDataModal,
+  ADD_CLUSTER_MODAL: AddClusterModal,
 };
 
 const RootModal: React.FC = () => {
@@ -28,15 +30,13 @@ const RootModal: React.FC = () => {
 
   return (
     <>
-      <StyledRootModal>
+      <Wrapper>
         <div>
-          <div className="root-modal__close" onClick={() => setClose()}>
-            Close
-          </div>
+          <Close onClick={setClose} />
           <SpecificModal {...modalProps} setClose={setClose} />
         </div>
-      </StyledRootModal>
-      <StyledBackDrop onClick={() => setClose()} />
+      </Wrapper>
+      <BackDrop onClick={() => setClose()} />
     </>
   );
 };

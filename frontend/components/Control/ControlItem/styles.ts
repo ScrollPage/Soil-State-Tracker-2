@@ -13,6 +13,10 @@ export const Wrapper = styled.div<{ isDragging?: boolean }>`
   width: 130px;
   margin: 10px;
   cursor: move;
+  transition: all 0.2s ease;
+  &:hover {
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+  }
 `;
 
 export const Text = styled.div`

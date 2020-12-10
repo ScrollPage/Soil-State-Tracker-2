@@ -10,6 +10,7 @@ import ControlCluster from "@/components/Control/ControlCluster";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { ControlForm } from "@/components/Control/ControlForm";
+import { ControlAdd } from "@/components/Control/ControlAdd";
 import ControlLayout from "@/components/Layout/ControlLayout";
 import Container from "@/components/UI/Container";
 import Head from "next/head";
@@ -35,7 +36,7 @@ const Control = ({ detectors, clusters }: ControlProps) => {
               </Detectors>
               <Clusters>
                 <ControlCluster clusters={clusters} />
-                <ControlForm />
+                <ControlAdd />
               </Clusters>
             </DndProvider>
           </Main>

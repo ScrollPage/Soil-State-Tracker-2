@@ -1,12 +1,14 @@
 import styled from 'styled-components';
 
-export const StyledRootModal = styled.div`
+export const Wrapper = styled.div`
     position: fixed;
     z-index: 10;
     width: 600px;
-    top: 100px;
+    top: 200px;
     left: 50%;
     transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
     @media (max-width: 575.98px) {
         width: 90%;
         > div {
@@ -30,7 +32,31 @@ export const StyledRootModal = styled.div`
     }
 `;
 
-export const StyledBackDrop = styled.div`
+export const Close = styled.div`
+    position: absolute;
+    height: 18px;
+    width: 18px;
+    top: 15px;
+    right: 15px;
+    cursor: pointer;
+    &:after, &:before {
+      content: '';
+      position: absolute;
+      height: 18px;
+      width: 3px;
+      background-color: #000;
+      top: 50%;
+      left: 50%;
+    }
+    &:after {
+        transform: translateX(-50%) translateY(-50%) rotate(45deg);
+    }
+    &:before {
+        transform: translateX(-50%) translateY(-50%) rotate(-45deg);
+    }
+`
+
+export const BackDrop = styled.div`
     z-index: 9;
     background-color: rgba(0, 0, 0, 0.7);
     position: fixed;

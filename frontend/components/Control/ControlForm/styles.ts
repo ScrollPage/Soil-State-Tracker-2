@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.08);
-  border-radius: 20px;
   margin-bottom: 28px;
   padding: 23px;
   > form {

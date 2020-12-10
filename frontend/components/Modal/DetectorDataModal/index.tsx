@@ -1,10 +1,5 @@
 import React from "react";
-import { useDispatch } from "react-redux";
-import {
-  SDetectorDataModal,
-  SDetectorDataModalBody,
-  SDetectorDataModalTitle,
-} from "./styles";
+import { Wrapper, Title } from "./styles";
 import useSWR from "swr";
 import ErrorMessage from "@/components/UI/ErrorMessage";
 import LoadingSpinner from "@/components/UI/LoadingSpinner";
@@ -34,15 +29,15 @@ const DetectorDataModal: React.FC<IDetectorDataModal> = ({
   );
 
   return (
-    <SDetectorDataModal>
-      <SDetectorDataModalTitle>Информация о датчике</SDetectorDataModalTitle>
+    <Wrapper>
+      <Title>Информация о датчике</Title>
       {error && <ErrorMessage message="Ошибка вывода информации о датчике" />}
       {!data && !error && <LoadingSpinner />}
       {data?.length === 0 && (
         <EmptyMessage message="Нет информации по датчику" />
       )}
       {data && <Chart detectorData={data} />}
-    </SDetectorDataModal>
+    </Wrapper>
   );
 };
 

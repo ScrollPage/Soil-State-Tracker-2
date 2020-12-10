@@ -18,7 +18,11 @@ interface FormValues {
   name: string;
 }
 
-export const ControlForm = () => {
+interface ControlFormProps {
+  setClose: () => void;
+}
+
+export const ControlForm: React.FC<ControlFormProps> = ({ setClose }) => {
   const dispatch = useDispatch();
 
   return (
@@ -33,6 +37,7 @@ export const ControlForm = () => {
           await dispatch(addCluster(values.name));
           setSubmitting(false);
           resetForm();
+          setClose();
         }}
       >
         {(props: FormikProps<FormValues>) => (
