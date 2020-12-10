@@ -39,7 +39,7 @@ services:
       - db
       - influxdb
     ports:
-      - "3000:3000"
+      - "3001:3000"
     environment:
       - plugins="crate-datasource,grafana-clock-panel,grafana-worldmap-panel,natel-plotly-panel"
     volumes:
