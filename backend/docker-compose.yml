@@ -8,7 +8,7 @@ services:
     ports:
       - 8000:80
     depends_on: 
-      - application
+      - web
     volumes: 
       - static_volume:/home/app/web/staticfiles
 
@@ -22,28 +22,28 @@ services:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_db=postgres
 
-  # influxdb:
-  #   image: influxdb:latest
-  #   container_name: influxdb
-  #   ports:
-  #     - 8086:8086
-  #   volumes:
-  #     - influxdb:/var/lib/influxdb
-  #   restart: always
+  influxdb:
+    image: influxdb:latest
+    container_name: influxdb
+    ports:
+      - 8086:8086
+    volumes:
+      - influxdb:/var/lib/influxdb
+    restart: always
 
-  # grafana:
-  #   container_name: fiware-grafana
-  #   restart: always
-  #   image: grafana/grafana
-  #   depends_on:
-  #     - db
-  #     - influxdb
-  #   ports:
-  #     - "3001:3001"
-  #   environment:
-  #     - plugins="crate-datasource,grafana-clock-panel,grafana-worldmap-panel,natel-plotly-panel"
-  #   volumes:
-  #     - ./grafana:/var/lib/grafana:rw
+  grafana:
+    container_name: grafana
+    restart: always
+    image: grafana/grafana
+    depends_on:
+      - db
+      - influxdb
+    ports:
+      - "3000:3000"
+    environment:
+      - plugins="crate-datasource,grafana-clock-panel,grafana-worldmap-panel,natel-plotly-panel"
+    volumes:
+      - grafana:/var/lib/grafana
 
   redis:
     container_name: redis
@@ -54,12 +54,12 @@ services:
       - redis_data:/var/lib/redis/data/
     restart: always
 
-  application:
-    container_name: application
+  web:
+    container_name: web
     build:
       context: ./
       dockerfile: Dockerfile
-    command: gunicorn backend.wsgi:application --bind 0.0.0.0:8000
+    command: bash -c "gunicorn backend.wsgi:application --bind 0.0.0.0:8000"
     volumes: 
       - static_volume:/home/app/web/staticfiles
     expose: 
@@ -75,3 +75,4 @@ volumes:
   static_volume:
   redis_data:
   influxdb:
+  grafana:
