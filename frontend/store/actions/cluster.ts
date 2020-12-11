@@ -14,24 +14,24 @@ export const changeCluster = (from: number, to: number, detector: IDetector): Th
     return
   }
   changeClusterMutate(clusterUrl, detectorUrl, from, to, detector);
-  if (to === 0) {
-    url = '/api/cluster/remove/'
-  } else {
-    url = `/api/cluster/${to}/`
-  }
-  const token = Cookie.get('token');
-  await instance(token)
-    .post(url, {
-      detectors: [detector.id]
-    })
-    .then(() => {
-      dispatch(show('Вы успешно перенесли датчик!', 'success'));
-    })
-    .catch(() => {
-      dispatch(show('Ошибка переноса датчика!', 'warning'));
-    });
-  trigger(clusterUrl);
-  trigger(detectorUrl);
+  // if (to === 0) {
+  //   url = '/api/cluster/remove/'
+  // } else {
+  //   url = `/api/cluster/${to}/`
+  // }
+  // const token = Cookie.get('token');
+  // await instance(token)
+  //   .post(url, {
+  //     detectors: [detector.id]
+  //   })
+  //   .then(() => {
+  //     dispatch(show('Вы успешно перенесли датчик!', 'success'));
+  //   })
+  //   .catch(() => {
+  //     dispatch(show('Ошибка переноса датчика!', 'warning'));
+  //   });
+  // trigger(clusterUrl);
+  // trigger(detectorUrl);
 };
 
 export const addCluster = (name: string): ThunkType => async dispatch => {
