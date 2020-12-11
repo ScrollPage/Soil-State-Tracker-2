@@ -7,7 +7,7 @@ export const Main = styled.div`
 `
 
 export const Wrapper = styled.div<{ isOver: boolean, canDrop: boolean, isMain: boolean }>`
-  background-color: ${({ canDrop, isOver, theme, isMain }) => isMain ? "#fff" : isOver ? "rgba(102, 255, 102, 0.2)" : canDrop ? "rgba(204, 255, 0, 0.2)" : theme.lightBlue};
+  background-color: ${({ canDrop, isOver, theme, isMain }) => isOver ? "rgba(102, 255, 102, 0.2)" : canDrop ? "rgba(204, 255, 0, 0.2)" : isMain ? "#fff" : theme.lightBlue};
   box-shadow: ${({ isMain }) => isMain ? "none" : "0px 0px 20px rgba(0, 0, 0, 0.08)"};
   border-radius: 20px;
   margin-bottom: 28px;

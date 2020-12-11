@@ -9,7 +9,6 @@ import ControlTransfer from "@/components/Control/ControlTransfer";
 import ControlCluster from "@/components/Control/ControlCluster";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { ControlForm } from "@/components/Control/ControlForm";
 import { ControlAdd } from "@/components/Control/ControlAdd";
 import ControlLayout from "@/components/Layout/ControlLayout";
 import Container from "@/components/UI/Container";
@@ -84,7 +83,7 @@ export const getServerSideProps: GetServerSideProps<ControlProps> = async (
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 0px 80px 80px 80px;
+  padding: 69px 80px 80px 80px;
   @media (max-width: 1199.98px) {
     padding: 0px 30px 80px 30px;
   }
@@ -104,7 +103,6 @@ const Detectors = styled.div`
 const Clusters = styled.div``;
 
 const Title = styled.h1`
-  margin-top: 69px;
   font-family: Play;
   font-style: normal;
   font-weight: bold;

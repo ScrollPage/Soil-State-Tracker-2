@@ -15,7 +15,11 @@ const ControlItem: React.FC<IDetector & { clusterId: number }> = ({
     item: {
       type: ItemTypes.Item,
       from: clusterId,
-      id,
+      detector: {
+        id,
+        x,
+        y,
+      },
     },
     collect: (monitor) => ({
       isDragging: !!monitor.isDragging(),

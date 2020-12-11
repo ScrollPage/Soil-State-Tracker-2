@@ -1,12 +1,12 @@
 import { emailActivate } from "@/store/actions/auth";
 import { getAsString } from "@/utils.ts/getAsString";
 import { ensureRedirectToData } from "@/utils.ts/ensure";
-import { CheckOutlined } from "@ant-design/icons";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import { useRouter } from "next/router";
 
 interface AccountActivationProps {
   token: string | null;
@@ -14,20 +14,29 @@ interface AccountActivationProps {
 
 const AccountActivation = ({ token }: AccountActivationProps) => {
   const dispatch = useDispatch();
+  const { push } = useRouter();
 
   useEffect(() => {
     if (token) {
       dispatch(emailActivate(token));
     }
   }, [token]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      push({ pathname: "/login" }, undefined, {
+        shallow: true,
+      });
+    }, 3000);
+  }, []);
+
   return (
     <Wrapper>
       <Head>
         <title>Активация аккаунта</title>
       </Head>
-      <h1>
-        Активация аккаунта <CheckOutlined />
-      </h1>
+      <h1>Активация аккаунта</h1>
+      <h2>Через 3 секунды вы будете перенаправлены на страницу входа</h2>
     </Wrapper>
   );
 };

@@ -19,7 +19,7 @@ const ControlClusterItem: React.FC<ICluster> = ({
     accept: ItemTypes.Item,
     drop: (item) =>
       // @ts-ignore
-      dispatch(changeCluster(item.from, id, item.id)),
+      dispatch(changeCluster(item.from, id, item.detector)),
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),
       canDrop: monitor.canDrop(),

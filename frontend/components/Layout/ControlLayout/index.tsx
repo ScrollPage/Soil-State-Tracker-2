@@ -16,7 +16,6 @@ import { useUser } from "@/hooks/useUser";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-// import Link from "next/link";
 
 interface ControlLayoutProps {
   children: React.ReactNode;
@@ -38,11 +37,6 @@ const ControlLayout: React.FC<ControlLayoutProps> = ({ children }) => {
           <NavLink>
             <Link href="/">
               <a>Инструкция</a>
-            </Link>
-          </NavLink>
-          <NavLink>
-            <Link href="/">
-              <a>Поддержка</a>
             </Link>
           </NavLink>
         </Nav>
@@ -68,9 +62,9 @@ const ControlLayout: React.FC<ControlLayoutProps> = ({ children }) => {
               <a>Данные</a>
             </Link>
           </SideLink>
-          <SideLink>
-            <Link href="/">
-              <a>Кабинет</a>
+          <SideLink active={pathname === "/secure"}>
+            <Link href="/secure">
+              <a>Настройки</a>
             </Link>
           </SideLink>
         </Side>
