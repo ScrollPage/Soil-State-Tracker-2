@@ -1,5 +1,3 @@
-import { ensureAuth } from "@/utils.ts/ensure";
-import { GetServerSideProps } from "next";
 import Head from "next/head";
 import MainLayout from "@/components/Layout/MainLayout";
 import { Home } from "@/components/Landing/Home";
@@ -8,34 +6,9 @@ import { Internet } from "@/components/Landing/Internet";
 import { UseFul } from "@/components/Landing/Useful";
 import { Step } from "@/components/Landing/Step";
 import { OurTeam } from "@/components/Landing/OurTeam";
+import { stepText } from "@/someData/stepData";
 
-const stepText = [
-  {
-    title: "Как это работает?",
-    subtitle: "Регистрация",
-    text:
-      "Предприниматели в сети интернет формируют глобальную экономическую сеть и при этом - превращены в посмешище, хотя само их существование приносит несомненную пользу обществу. Предварительные выводы неутешительны.",
-    isSecond: false,
-  },
-  {
-    title: undefined,
-    subtitle: "Установка датчиков",
-    text:
-      "Предприниматели в сети интернет формируют глобальную экономическую сеть и при этом - превращены в посмешище, хотя само их существование приносит несомненную пользу обществу. Предварительные выводы неутешительны.",
-    isSecond: true,
-  },
-  {
-    title: undefined,
-    subtitle: "Использование сервиса",
-    text:
-      "Предприниматели в сети интернет формируют глобальную экономическую сеть и при этом - превращены в посмешище, хотя само их существование приносит несомненную пользу обществу. Предварительные выводы неутешительны.",
-    isSecond: false,
-  },
-];
-
-interface IndexProps {}
-
-export default function Index({}: IndexProps) {
+export default function Index() {
   return (
     <MainLayout>
       <Head>
@@ -67,12 +40,3 @@ export default function Index({}: IndexProps) {
     </MainLayout>
   );
 }
-
-export const getServerSideProps: GetServerSideProps<IndexProps> = async (
-  ctx
-) => {
-  // ensureAuth(ctx);
-  return {
-    props: {},
-  };
-};

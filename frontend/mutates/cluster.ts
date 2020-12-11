@@ -18,7 +18,6 @@ export const addClusterMutate = (url: string, name: string) => {
 
 export const changeClusterMutate = (clusterUrl: string, detectorUrl: string, from: number, to: number, detector: IDetector) => {
   if (to === 0) {
-    // В общий котел
     mutate(detectorUrl, async (detectors: IDetector[]) => {
       if (detectors) {
         const newDetectors = [

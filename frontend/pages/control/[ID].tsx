@@ -107,7 +107,7 @@ export default function ClusterPage({ clusterId }: ClusterPageProps) {
 export const getServerSideProps: GetServerSideProps<ClusterPageProps> = async (
   ctx
 ) => {
-  // ensureAuth(ctx);
+  ensureAuth(ctx);
   const clusterId = getAsString(ctx?.params?.ID);
 
   // let detectors: IDetector[] | null = null;
