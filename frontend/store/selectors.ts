@@ -20,10 +20,3 @@ export const getModalProps = (state: AppStateType) => {
   return state.modal.modalProps
 }
 
-export const getMessages = (state: AppStateType) => {
-  return state.message.messages
-}
-
-export const getMessagesLoading = (state: AppStateType) => {
-  return state.message.loading
-}

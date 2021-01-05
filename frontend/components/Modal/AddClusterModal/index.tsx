@@ -1,4 +1,4 @@
-import { ControlForm } from "@/components/Control/AddForm";
+import { AddForm } from "@/components/Control/AddForm";
 import React from "react";
 import { Wrapper } from "./styles";
 
@@ -11,7 +11,7 @@ interface IAddClusterModal extends IAddClusterModalProps {
 const AddClusterModal: React.FC<IAddClusterModal> = ({ setClose }) => {
   return (
     <Wrapper>
-      <ControlForm setClose={setClose} />
+      <AddForm setClose={setClose} />
     </Wrapper>
   );
 };

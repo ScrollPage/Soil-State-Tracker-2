@@ -60,6 +60,9 @@ export const SButton = styled.button<{ myType: "white" | "blue" | "orange", smal
   `};
 
   transition: background-color 0.3s ease;
+  &:disabled {
+    pointer-events: none;
+  }
 `;
 
 

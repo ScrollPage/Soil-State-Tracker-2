@@ -12,18 +12,16 @@ import { useDispatch } from "react-redux";
 import { useSWRInfinite } from "swr";
 import { Wrapper, Title, Main, Header, NextPage } from "./styles";
 
-const renderCluster = (data: IDetector[][]) => {
-  return data.map((part) =>
-    part.map((detector) => (
-      <ClusterDetector
-        cluster={detector.cluster}
-        key={`clusterDetector__key__${detector.id}`}
-        id={detector.id}
-        x={detector.x}
-        y={detector.y}
-      />
-    ))
-  );
+const renderCluster = (detectors: IDetector[]) => {
+  return detectors.map((detector) => (
+    <ClusterDetector
+      cluster={detector.cluster}
+      key={`clusterDetector__key__${detector.id}`}
+      id={detector.id}
+      x={detector.x}
+      y={detector.y}
+    />
+  ));
 };
 
 interface ClusterContainerProps {
@@ -46,26 +44,38 @@ export const ClusterContainer: React.FC<ClusterContainerProps> = ({
     }
   };
 
-  const getKey = (pageIndex: number, previousPageData: IDetector[] | null) => {
-    if (previousPageData && !previousPageData?.length) return null;
+  const PAGE_SIZE = 5;
+
+  const getKey = (pageIndex: number, previousPageData: any) => {
+    if (previousPageData && !previousPageData.length) return null;
     return `/api/cluster/${clusterId}/?page=${pageIndex + 1}`;
   };
 
-  const maxSize = 2;
+  const { data, error, mutate, size, setSize, isValidating } = useSWRInfinite(
+    getKey
+  );
 
-  const { data, size, setSize, error } = useSWRInfinite<IDetector[]>(getKey);
+  const detectors: IDetector[] = data ? [].concat(...data) : [];
+  const isLoadingInitialData = !data && !error;
+  const isLoadingMore =
+    isLoadingInitialData ||
+    (size > 0 && data && typeof data[size - 1] === "undefined");
+  const isEmpty = data?.[0]?.length === 0;
+  const isReachingEnd =
+    isEmpty ||
+    (data &&
+      (data[data.length - 1]?.length < PAGE_SIZE ||
+        (data[data.length - 1]?.length === PAGE_SIZE && false)));
+  // const isRefreshing = isValidating && data && data.length === size;
 
-  const sizeHandler = () => {
-    if (size < maxSize) {
-      setSize(size + 1);
-    }
-  };
+  console.log(data);
+
   return (
     <Container>
       <Wrapper>
         <Header>
           <Title>{data?.[0]?.[0]?.cluster}</Title>
-          {data && data?.[0]?.length !== 0 && (
+          {!isEmpty && (
             <SButton onClick={showHandler} myType="blue">
               Статистика по кластеру
             </SButton>
@@ -73,20 +83,22 @@ export const ClusterContainer: React.FC<ClusterContainerProps> = ({
         </Header>
         <Main>
           {error && <ErrorMessage message="Ошибка вывода датчиков" />}
-          {!data && !error && <LoadingSpinner />}
-          {data?.[0]?.length === 0 && (
-            <EmptyMessage message="В данной группе нет датчиков" />
-          )}
-          {data && renderCluster(data)}
+          {isLoadingInitialData && <LoadingSpinner />}
+          {isEmpty && <EmptyMessage message="В данной группе нет датчиков" />}
+          {renderCluster(detectors)}
         </Main>
-        {data && data?.[0]?.length !== 0 && (
+        {!isEmpty && (
           <NextPage>
             <SButton
-              disabled={size >= maxSize || data?.[0]?.length === 0}
+              disabled={isLoadingMore || isReachingEnd}
               myType="blue"
-              onClick={sizeHandler}
+              onClick={() => setSize(size + 1)}
             >
-              Загрузить еще
+              {isLoadingMore
+                ? "Загрузка..."
+                : isReachingEnd
+                ? "Больше нет"
+                : "Загрузить еще"}
             </SButton>
           </NextPage>
         )}
