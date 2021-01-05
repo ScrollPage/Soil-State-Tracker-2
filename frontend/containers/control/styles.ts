@@ -12,7 +12,7 @@ export const Wrapper = styled.div`
   }
 `;
 
-export const Detectors = styled.div`
+export const TransferWrapper = styled.div`
   margin-right: 10px;
   @media (max-width: 1199.98px) {
     margin-right: 0px;
@@ -20,7 +20,7 @@ export const Detectors = styled.div`
   }
 `;
 
-export const Clusters = styled.div``;
+export const ClusterWrapper = styled.div``;
 
 export const Title = styled.h1`
   font-family: Play;

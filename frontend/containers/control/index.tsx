@@ -1,11 +1,11 @@
 import React from "react";
-import ControlTransfer from "@/components/Control/ControlTransfer";
-import ControlCluster from "@/components/Control/ControlCluster";
+import Transfers from "@/components/Control/Transfers";
+import Clusters from "@/components/Control/Clusters";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { ControlAdd } from "@/components/Control/ControlAdd";
+import { Add } from "@/components/Control/Add";
 import Container from "@/components/UI/Container";
-import { Wrapper, Title, Main, Detectors, Clusters } from "./styles";
+import { Wrapper, Title, Main, TransferWrapper, ClusterWrapper } from "./styles";
 import { IDetector } from "@/types/detector";
 import { ICluster } from "@/types/cluster";
 
@@ -24,13 +24,13 @@ export const ControlContainer: React.FC<ControlContainerProps> = ({
         <Title>Управление</Title>
         <Main>
           <DndProvider backend={HTML5Backend}>
-            <Detectors>
-              <ControlTransfer detectors={detectors} />
-            </Detectors>
-            <Clusters>
-              <ControlCluster clusters={clusters} />
-              <ControlAdd />
-            </Clusters>
+            <TransferWrapper>
+              <Transfers detectors={detectors} />
+            </TransferWrapper>
+            <ClusterWrapper>
+              <Clusters clusters={clusters} />
+              <Add />
+            </ClusterWrapper>
           </DndProvider>
         </Main>
       </Wrapper>

@@ -3,14 +3,14 @@ import LoadingSpinner from "@/components/UI/LoadingSpinner";
 import { IDetector } from "@/types/detector";
 import React, { memo } from "react";
 import useSWR from "swr";
-import ControlClusterItem from "../ControlClusterItem";
-import { Wrapper,Title } from "./styles";
+import Cluster from "../Cluster";
+import { Wrapper, Title } from "./styles";
 
-interface ControlTransferProps {
+interface TransferProps {
   detectors: IDetector[] | null;
 }
 
-const ControlTransfer: React.FC<ControlTransferProps> = ({ detectors }) => {
+const Transfers: React.FC<TransferProps> = ({ detectors }) => {
   const { data: detectorData, error: detecotorError } = useSWR(
     "/api/detector/",
     {
@@ -26,13 +26,9 @@ const ControlTransfer: React.FC<ControlTransferProps> = ({ detectors }) => {
   return (
     <Wrapper>
       <Title>Мои датчики</Title>
-      <ControlClusterItem
-        id={0}
-        name="Мои датчики"
-        cluster_detectors={detectorData}
-      />
+      <Cluster id={0} name="Мои датчики" cluster_detectors={detectorData} />
     </Wrapper>
   );
 };
 
-export default memo(ControlTransfer);
+export default memo(Transfers);

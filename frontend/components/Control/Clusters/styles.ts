@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Wrapper as ControlClusterItem } from '../ControlClusterItem/styles';
+import { Wrapper as ControlClusterItem } from '../Cluster/styles';
 
 export const Main = styled.div`
   display: flex;

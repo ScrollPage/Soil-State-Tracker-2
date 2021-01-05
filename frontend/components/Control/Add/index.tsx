@@ -4,7 +4,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { Wrapper } from "./styles";
 
-export const ControlAdd = () => {
+export const Add = () => {
   const dispatch = useDispatch();
 
   const showHandler = () => {

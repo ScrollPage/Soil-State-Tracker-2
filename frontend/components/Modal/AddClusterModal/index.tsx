@@ -1,4 +1,4 @@
-import { ControlForm } from "@/components/Control/ControlForm";
+import { ControlForm } from "@/components/Control/AddForm";
 import React from "react";
 import { Wrapper } from "./styles";
 

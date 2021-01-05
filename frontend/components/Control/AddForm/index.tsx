@@ -18,11 +18,11 @@ interface FormValues {
   name: string;
 }
 
-interface ControlFormProps {
+interface AddFormProps {
   setClose: () => void;
 }
 
-export const ControlForm: React.FC<ControlFormProps> = ({ setClose }) => {
+export const AddForm: React.FC<AddFormProps> = ({ setClose }) => {
   const dispatch = useDispatch();
 
   return (

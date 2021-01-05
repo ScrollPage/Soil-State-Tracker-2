@@ -3,14 +3,14 @@ import LoadingSpinner from "@/components/UI/LoadingSpinner";
 import { ICluster } from "@/types/cluster";
 import React, { memo } from "react";
 import useSWR from "swr";
-import ControlClusterItem from "../ControlClusterItem";
+import Cluster from "../Cluster";
 import { Wrapper, Title, Main } from "./styles";
 
-interface ControlClusterProps {
+interface ClusterProps {
   clusters: ICluster[] | null;
 }
 
-const ControlCluster: React.FC<ControlClusterProps> = ({ clusters }) => {
+const Clusters: React.FC<ClusterProps> = ({ clusters }) => {
   const { data: clusterData, error: clusterError } = useSWR("/api/cluster/", {
     initialData: clusters,
   });
@@ -26,8 +26,8 @@ const ControlCluster: React.FC<ControlClusterProps> = ({ clusters }) => {
       <Title>Доступные кластеры</Title>
       <Main>
         {clusterData.map((cluster) => (
-          <ControlClusterItem
-            key={`controlClusterItem__key__${cluster.name}`}
+          <Cluster
+            key={`Cluster__key__${cluster.name}`}
             name={cluster.name}
             cluster_detectors={cluster.cluster_detectors}
             id={cluster.id}
@@ -38,4 +38,4 @@ const ControlCluster: React.FC<ControlClusterProps> = ({ clusters }) => {
   );
 };
 
-export default memo(ControlCluster);
+export default memo(Clusters);

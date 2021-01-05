@@ -4,11 +4,11 @@ import { ItemTypes } from "@/utils.ts/items";
 import React, { memo } from "react";
 import { useDrop } from "react-dnd";
 import { useDispatch } from "react-redux";
-import ControlClusterTooltip from "../ControlClusterTooltip";
+import ToolTip from "../Tooltip";
 import RenderControlItems from "../RenderControlItems";
 import { Wrapper, Main } from "./styles";
 
-const ControlClusterItem: React.FC<ICluster> = ({
+const Cluster: React.FC<ICluster> = ({
   cluster_detectors: detectors,
   name,
   id,
@@ -28,7 +28,7 @@ const ControlClusterItem: React.FC<ICluster> = ({
 
   return (
     <Wrapper ref={drop} isOver={isOver} canDrop={canDrop} isMain={id === 0}>
-      <ControlClusterTooltip id={id} name={name} />
+      <ToolTip id={id} name={name} />
       <Main>
         <RenderControlItems detectors={detectors} id={id} />
       </Main>
@@ -36,4 +36,4 @@ const ControlClusterItem: React.FC<ICluster> = ({
   );
 };
 
-export default memo(ControlClusterItem);
+export default memo(Cluster);
