@@ -35,7 +35,7 @@ export const Chart: React.FC<ChartProps> = ({ detectorData }) => {
           defaultValue={options[0]}
           options={options}
           onChange={changeHandler}
-        />{" "}
+        />
       </MySelect>
       <Line
         data={{
