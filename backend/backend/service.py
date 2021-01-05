@@ -14,7 +14,7 @@ def exception_handler(exc, context):
     #     msg += f'User is none\n'
     # d = {key: value for key, value in request.data.items()}
     # msg += f"Request's data: {d}\n"
-    # bot.send_message(text=msg, chat_id=local.BOT_CHAT_ID)
+    # bot.send_message(text=msg, chat_id=local.EXCEPTION_BOT_CHAT_ID)
     return drf_exception_handler(exc, context)
 
 def get_response(url, method, user=None, data=None, kwargs=None, format=None):
