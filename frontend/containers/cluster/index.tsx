@@ -1,5 +1,5 @@
 import React from "react";
-import { ClusterDetector } from "@/components/Cluster/ClusterDetector";
+import ClusterDetector from "@/components/Cluster/Detector";
 import { SButton } from "@/components/UI/Button";
 import Container from "@/components/UI/Container";
 import EmptyMessage from "@/components/UI/EmptyMessage";

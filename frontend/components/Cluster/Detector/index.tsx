@@ -3,11 +3,11 @@ import { SButton } from "@/components/UI/Button";
 import { modalShow } from "@/store/actions/modal";
 import { IDetector } from "@/types/detector";
 import Image from "next/image";
-import React from "react";
+import React, { memo } from "react";
 import { useDispatch } from "react-redux";
-import { Wrapper, Field, Detector, Main } from "./styles";
+import { Wrapper, Field, ImgWrapper, Main } from "./styles";
 
-export const ClusterDetector: React.FC<IDetector> = ({ id, x, y }) => {
+const Detector: React.FC<IDetector> = ({ id, x, y }) => {
   const dispatch = useDispatch();
 
   const showHandler = () => {
@@ -18,9 +18,9 @@ export const ClusterDetector: React.FC<IDetector> = ({ id, x, y }) => {
 
   return (
     <Wrapper>
-      <Detector>
+      <ImgWrapper>
         <Image src="/control/detector.png" height={70} width={70} />
-      </Detector>
+      </ImgWrapper>
       <Main>
         <Field>id: {id}</Field>
         <Field>x: {x}</Field>
@@ -32,3 +32,5 @@ export const ClusterDetector: React.FC<IDetector> = ({ id, x, y }) => {
     </Wrapper>
   );
 };
+
+export default memo(Detector);

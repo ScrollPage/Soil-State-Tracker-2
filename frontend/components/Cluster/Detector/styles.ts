@@ -9,7 +9,7 @@ export const Field = styled.p`
   color: #000000;
 `;
 
-export const Detector = styled.div`
+export const ImgWrapper = styled.div`
   display: flex;
 `
 
