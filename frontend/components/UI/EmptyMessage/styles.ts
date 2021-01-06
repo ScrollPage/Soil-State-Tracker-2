@@ -14,4 +14,5 @@ export const Content = styled.div`
   font-size: 18px;
   line-height: 22px;
   color: #000000;
+  padding: 15px 0;
 `;

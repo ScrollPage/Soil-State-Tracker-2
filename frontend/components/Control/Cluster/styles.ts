@@ -4,6 +4,7 @@ export const Main = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  min-height: 100px;
 `
 
 export const Wrapper = styled.div<{ isOver: boolean, canDrop: boolean, isMain: boolean }>`
