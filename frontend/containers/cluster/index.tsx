@@ -1,5 +1,5 @@
 import React from "react";
-import ClusterDetector from "@/components/Cluster/Detector";
+import Detector from "@/components/Cluster/Detector";
 import { SButton } from "@/components/UI/Button";
 import Container from "@/components/UI/Container";
 import EmptyMessage from "@/components/UI/EmptyMessage";
@@ -12,14 +12,15 @@ import { useDispatch } from "react-redux";
 import { useSWRInfinite } from "swr";
 import { Wrapper, Title, Main, Header, NextPage } from "./styles";
 
-const renderCluster = (detectors: IDetector[]) => {
+const renderCluster = (
+  detectors: IDetector[],
+  openModal: (id: number) => void
+) => {
   return detectors.map((detector) => (
-    <ClusterDetector
-      cluster={detector.cluster}
-      key={`clusterDetector__key__${detector.id}`}
-      id={detector.id}
-      x={detector.x}
-      y={detector.y}
+    <Detector
+      key={`Detector__key__${detector.id}`}
+      detector={detector}
+      showHandler={openModal}
     />
   ));
 };
@@ -33,15 +34,13 @@ export const ClusterContainer: React.FC<ClusterContainerProps> = ({
 }) => {
   const dispatch = useDispatch();
 
-  const showHandler = () => {
-    if (clusterId) {
-      dispatch(
-        modalShow<IDetectorDataModalProps>("DETECTOR_DATA_MODAL", {
-          clusterId,
-          id: null,
-        })
-      );
-    }
+  const showHandler = (id: number | undefined) => {
+    dispatch(
+      modalShow<IDetectorDataModalProps>("DETECTOR_DATA_MODAL", {
+        clusterId,
+        id,
+      })
+    );
   };
 
   const PAGE_SIZE = 5;
@@ -76,7 +75,7 @@ export const ClusterContainer: React.FC<ClusterContainerProps> = ({
         <Header>
           <Title>{data?.[0]?.[0]?.cluster}</Title>
           {!isEmpty && (
-            <SButton onClick={showHandler} myType="blue">
+            <SButton onClick={() => showHandler(undefined)} myType="blue">
               Статистика по кластеру
             </SButton>
           )}
@@ -85,7 +84,7 @@ export const ClusterContainer: React.FC<ClusterContainerProps> = ({
           {error && <ErrorMessage message="Ошибка вывода датчиков" />}
           {isLoadingInitialData && <LoadingSpinner />}
           {isEmpty && <EmptyMessage message="В данной группе нет датчиков" />}
-          {renderCluster(detectors)}
+          {renderCluster(detectors, showHandler)}
         </Main>
         {!isEmpty && (
           <NextPage>

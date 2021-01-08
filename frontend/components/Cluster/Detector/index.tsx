@@ -1,31 +1,25 @@
-import { IDetectorDataModalProps } from "@/components/Modal/DetectorDataModal";
 import { SButton } from "@/components/UI/Button";
-import { modalShow } from "@/store/actions/modal";
 import { IDetector } from "@/types/detector";
 import Image from "next/image";
 import React, { memo } from "react";
-import { useDispatch } from "react-redux";
 import { Wrapper, Field, ImgWrapper, Main } from "./styles";
 
-const Detector: React.FC<IDetector> = ({ id, x, y }) => {
-  const dispatch = useDispatch();
+interface DetectorProps {
+  detector: IDetector;
+  showHandler: (id: number) => void;
+}
 
-  const showHandler = () => {
-    dispatch(
-      modalShow<IDetectorDataModalProps>("DETECTOR_DATA_MODAL", { id })
-    );
-  };
-
+const Detector: React.FC<DetectorProps> = ({ detector, showHandler }) => {
   return (
     <Wrapper>
       <ImgWrapper>
         <Image src="/control/detector.png" height={70} width={70} />
       </ImgWrapper>
       <Main>
-        <Field>id: {id}</Field>
-        <Field>x: {x}</Field>
-        <Field>y: {y}</Field>
-        <SButton myType="blue" small onClick={showHandler}>
+        <Field>id: {detector.id}</Field>
+        <Field>x: {detector.x}</Field>
+        <Field>y: {detector.y}</Field>
+        <SButton myType="blue" small onClick={() => showHandler(detector.id)}>
           Статистика
         </SButton>
       </Main>

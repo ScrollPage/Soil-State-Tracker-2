@@ -7,7 +7,7 @@ import EmptyMessage from "@/components/UI/EmptyMessage";
 import { Chart } from "@/components/Chart";
 
 export interface IDetectorDataModalProps {
-  id: number | null;
+  id?: number;
   clusterId?: string;
 }
 
