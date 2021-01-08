@@ -24,7 +24,7 @@ const Input: React.FC<InputProps> = (props) => {
         isShowError={isShowError}
         width={props?.width}
       />
-      {isShowError && <Error>{meta.error}</Error>}
+      {isShowError && <Error data-testid="error">{meta.error}</Error>}
     </Wrapper>
   );
 };

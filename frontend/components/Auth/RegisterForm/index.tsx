@@ -1,11 +1,9 @@
 import React, { Dispatch, memo, SetStateAction } from "react";
 import { Wrapper, Buttons } from "./styles";
-import { Formik, Form, FormikConfig, FormikValues } from "formik";
+import { Formik, Form, FormikConfig, FormikValues, FormikProps } from "formik";
 import { SButton } from "@/components/UI/Button";
 import Input from "@/components/UI/Input";
 import { object, string, ref } from "yup";
-import { authSignup } from "@/store/actions/auth";
-import { useDispatch } from "react-redux";
 
 const nameValidationSchema = object().shape({
   firstName: string()
@@ -32,14 +30,25 @@ const contactValidationSchema = object().shape({
     .oneOf([ref("password"), ""], "Пароли должны совпадать"),
 });
 
+export interface RegisterFormValues {
+  email: string;
+  firstName: string;
+  lastName: string;
+  password: string;
+  confirmPassword: string;
+}
+
 interface RegisterFormProps {
   step: number;
   setStep: Dispatch<SetStateAction<number>>;
+  handleSubmit: (values: RegisterFormValues) => void;
 }
 
-const RegisterForm: React.FC<RegisterFormProps> = ({ step, setStep }) => {
-  const dispatch = useDispatch();
-
+const RegisterForm: React.FC<RegisterFormProps> = ({
+  step,
+  setStep,
+  handleSubmit,
+}) => {
   return (
     <Wrapper>
       <FormikStepper
@@ -52,45 +61,23 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ step, setStep }) => {
           password: "",
           confirmPassword: "",
         }}
-        onSubmit={async (values, { setSubmitting, resetForm }) => {
+        onSubmit={(values, { setSubmitting, resetForm }) => {
           setSubmitting(true);
-          await dispatch(
-            authSignup(
-              values.email,
-              values.firstName,
-              values.lastName,
-              values.password
-            )
-          );
+          handleSubmit(values as RegisterFormValues);
           setSubmitting(false);
           resetForm();
         }}
       >
         <FormikStep validationSchema={nameValidationSchema}>
-          <Input
-            type="text"
-            name="firstName"
-            placeholder="Введите имя"
-            src="user"
-          />
-          <Input
-            type="text"
-            name="lastName"
-            placeholder="Введите фамилию"
-            src="user"
-          />
+          <Input type="text" name="firstName" placeholder="Имя" src="user" />
+          <Input type="text" name="lastName" placeholder="Фамилия" src="user" />
         </FormikStep>
         <FormikStep validationSchema={contactValidationSchema}>
-          <Input
-            type="text"
-            name="email"
-            placeholder="Введите E-mail"
-            src="email"
-          />
+          <Input type="text" name="email" placeholder="E-mail" src="email" />
           <Input
             type="password"
             name="password"
-            placeholder="Введите пароль"
+            placeholder="Пароль"
             src="padlock"
           />
           <Input
@@ -150,7 +137,7 @@ const FormikStepper: React.FC<FormikStepperProps> = ({
           stepperProps.onSubmit(values, helpers);
         } else {
           const { setSubmitting, setTouched } = helpers;
-          setStep((e) => e + 1);
+          setStep(step + 1);
           setTouched({
             email: false,
             password: false,
@@ -167,7 +154,7 @@ const FormikStepper: React.FC<FormikStepperProps> = ({
             <Buttons>
               {step > 0 ? (
                 <SButton
-                  onClick={() => setStep((e) => e - 1)}
+                  onClick={() => setStep(step - 1)}
                   myType="white"
                   disabled={isSubmitting}
                   small

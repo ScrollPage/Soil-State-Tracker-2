@@ -1,7 +1,7 @@
 const path = require('path');
 const Dotenv = require('dotenv-webpack');
 const withCSS = require('@zeit/next-css');
-const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin')
+// const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin')
 
 module.exports = withCSS();
 

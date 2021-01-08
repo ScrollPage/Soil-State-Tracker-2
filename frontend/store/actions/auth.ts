@@ -3,19 +3,16 @@ import { ThunkType } from '@/types/thunk';
 import Cookie from 'js-cookie';
 import { show } from './alert';
 import Router from 'next/router';
+import { RegisterFormValues } from '@/components/Auth/RegisterForm';
+import { LoginFormValues } from '@/components/Auth/LoginForm';
 
-export const authSignup = (
-  email: string,
-  firstName: string,
-  lastName: string,
-  password: string,
-): ThunkType => async dispatch => {
+export const authSignup = (values: RegisterFormValues): ThunkType => async dispatch => {
   await instanceWithOutHeaders
     .post('/auth/users/ ', {
-      email,
-      first_name: firstName,
-      last_name: lastName,
-      password,
+      email: values.email,
+      first_name: values.firstName,
+      last_name: values.lastName,
+      password: values.password,
     })
     .then(() => {
       Router.push({ pathname: '/login' }, undefined, { shallow: true });
@@ -40,11 +37,11 @@ export const emailActivate = (token: string): ThunkType => async dispatch => {
     });
 };
 
-export const authLogin = (email: string, password: string): ThunkType => async dispatch => {
+export const authLogin = (values: LoginFormValues): ThunkType => async dispatch => {
   await instanceWithOutHeaders
     .post('/auth/jwt/create/', {
-      email,
-      password,
+      email: values.email,
+      password: values.password,
     })
     .then(res => {
       const expirationDate = new Date(new Date().getTime() + 24 * 3600 * 1000);

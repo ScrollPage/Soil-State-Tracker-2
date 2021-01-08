@@ -4,22 +4,22 @@ import { Formik, Form, FormikProps } from "formik";
 import { SButton } from "@/components/UI/Button";
 import Input from "@/components/UI/Input";
 import { object, string } from "yup";
-import { useDispatch } from "react-redux";
-import { authLogin } from "@/store/actions/auth";
 
 const validationSchema = object().shape({
   email: string().email("Некорректный E-mail").required("Введите E-mail"),
   password: string().required("Введите пароль"),
 });
 
-interface FormValues {
+export interface LoginFormValues {
   email: string;
   password: string;
 }
 
-const LoginForm = () => {
-  const dispatch = useDispatch();
+interface LoginFormProps {
+  handleSubmit: (values: LoginFormValues) => void;
+}
 
+const LoginForm: React.FC<LoginFormProps> = ({ handleSubmit }) => {
   return (
     <Wrapper>
       <Formik
@@ -28,14 +28,14 @@ const LoginForm = () => {
           password: "",
         }}
         validationSchema={validationSchema}
-        onSubmit={async (values, { setSubmitting, resetForm }) => {
+        onSubmit={(values, { setSubmitting, resetForm }) => {
           setSubmitting(true);
-          await dispatch(authLogin(values.email, values.password));
+          handleSubmit(values);
           setSubmitting(false);
           resetForm();
         }}
       >
-        {(props: FormikProps<FormValues>) => (
+        {(props: FormikProps<LoginFormValues>) => (
           <Form>
             <Input type="text" name="email" placeholder="E-mail" src="email" />
             <Input
