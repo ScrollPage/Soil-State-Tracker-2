@@ -26,12 +26,16 @@ const Clusters: React.FC<ClusterProps> = ({ clusters }) => {
       <Title>Доступные кластеры</Title>
       <Main>
         {clusterData.map((cluster) => (
-          <Cluster
-            key={`Cluster__key__${cluster.name}`}
-            name={cluster.name}
-            cluster_detectors={cluster.cluster_detectors}
-            id={cluster.id}
-          />
+          <div key={`Cluster__key__${cluster.name}`} data-testid="cluster">
+            <h1>{cluster.name}</h1>
+            <h1>{cluster.id}</h1>
+          </div>
+          // <Cluster
+          //   key={`Cluster__key__${cluster.name}`}
+          //   name={cluster.name}
+          //   cluster_detectors={cluster.cluster_detectors}
+          //   id={cluster.id}
+          // />
         ))}
       </Main>
     </Wrapper>

@@ -31,8 +31,7 @@ const ControlItem: React.FC<IDetector & { clusterId: number }> = ({
       <Wrapper ref={drag} isDragging={isDragging}>
         <Image src="/control/detector.png" height={70} width={70} />
         <Text>
-          <span>id:</span>&nbsp;
-          {id}
+          <span>id:</span>&nbsp;{id}
         </Text>
       </Wrapper>
     </>

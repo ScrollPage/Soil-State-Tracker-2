@@ -1,18 +1,16 @@
 import Head from "next/head";
 import nprogress from "nprogress/nprogress.css";
-import { SWRConfig } from "swr";
 import Router from "next/router";
 import NProgress from "nprogress";
 import { ThemeProvider } from "styled-components";
 import { createWrapper } from "next-redux-wrapper";
 import { Provider } from "react-redux";
-import Cookie from "js-cookie";
 import store from "@/store/store";
-import axios from "axios";
 import Alert from "@/components/UI/Alert";
 import App, { AppContext, AppProps } from "next/app";
 import RootModal from "@/components/Modal";
 import { GlobalStyle } from "@/someData/globalStyles";
+import { SWRProvider } from "@/utils.ts/test-swr";
 
 NProgress.configure({
   showSpinner: false,
@@ -35,28 +33,13 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
         <link rel="stylesheet" href="/fonts/fonts.css" />
       </Head>
       <GlobalStyle />
-      <SWRConfig
-        value={{
-          revalidateOnMount: true,
-          revalidateOnFocus: true,
-          dedupingInterval: 5000,
-          fetcher: (url) =>
-            axios({
-              url: url,
-              baseURL: process.env.DB_HOST,
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Token ${Cookie.get("token")}`,
-              },
-            }).then((r) => r.data),
-        }}
-      >
+      <SWRProvider>
         <Provider store={store}>
           <Alert />
           <RootModal />
           <Component {...pageProps} />
         </Provider>
-      </SWRConfig>
+      </SWRProvider>
     </ThemeProvider>
   );
 };

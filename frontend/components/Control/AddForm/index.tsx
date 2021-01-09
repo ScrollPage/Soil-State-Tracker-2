@@ -1,11 +1,9 @@
-import React from "react";
+import React, { memo } from "react";
 import { Wrapper, Title } from "./styles";
 import { Formik, Form, FormikProps } from "formik";
 import { SButton } from "@/components/UI/Button";
 import Input from "@/components/UI/Input";
 import { object, string } from "yup";
-import { useDispatch } from "react-redux";
-import { addCluster } from "@/store/actions/cluster";
 
 const validationSchema = object().shape({
   name: string()
@@ -20,11 +18,10 @@ interface FormValues {
 
 interface AddFormProps {
   setClose: () => void;
+  handleSubmit: (name: string) => void;
 }
 
-export const AddForm: React.FC<AddFormProps> = ({ setClose }) => {
-  const dispatch = useDispatch();
-
+const AddForm: React.FC<AddFormProps> = ({ setClose, handleSubmit }) => {
   return (
     <Wrapper>
       <Formik
@@ -32,9 +29,9 @@ export const AddForm: React.FC<AddFormProps> = ({ setClose }) => {
           name: "",
         }}
         validationSchema={validationSchema}
-        onSubmit={async (values, { setSubmitting, resetForm }) => {
+        onSubmit={(values, { setSubmitting, resetForm }) => {
           setSubmitting(true);
-          await dispatch(addCluster(values.name));
+          handleSubmit(values.name);
           setSubmitting(false);
           resetForm();
           setClose();
@@ -58,3 +55,5 @@ export const AddForm: React.FC<AddFormProps> = ({ setClose }) => {
     </Wrapper>
   );
 };
+
+export default memo(AddForm);

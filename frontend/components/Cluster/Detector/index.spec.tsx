@@ -1,11 +1,12 @@
 import Detector from "./index";
 import { screen, render, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { IDetector } from "@/types/detector";
 
 describe("Detector", () => {
   it("render component", async () => {
     const openModal = jest.fn();
-    const info = {
+    const info: IDetector = {
       id: 1,
       x: 123,
       y: -123,
