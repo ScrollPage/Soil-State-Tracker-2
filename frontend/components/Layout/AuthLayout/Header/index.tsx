@@ -1,9 +1,9 @@
-import React from "react";
+import React, { memo } from "react";
 import { Wrapper, Title, GoBack, Content } from "./styles";
 import Link from "next/link";
 import Image from "next/image";
 
-export const AuthHeader = () => {
+const AuthHeaderComponent = () => {
   return (
     <Wrapper>
       <Content>
@@ -22,3 +22,5 @@ export const AuthHeader = () => {
     </Wrapper>
   );
 };
+
+export const AuthHeader = memo(AuthHeaderComponent);

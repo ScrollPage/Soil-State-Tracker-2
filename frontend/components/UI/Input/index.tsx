@@ -1,6 +1,6 @@
 import { useField } from "formik";
 import Image from "next/image";
-import React from "react";
+import React, { memo } from "react";
 import { InputHTMLAttributes } from "react";
 import { Wrapper, Inner, Error, Icon } from "./styles";
 
@@ -10,7 +10,7 @@ type InputProps = InputHTMLAttributes<HTMLInputElement> & {
   src: string;
 };
 
-const Input: React.FC<InputProps> = (props) => {
+const InputComponent: React.FC<InputProps> = (props) => {
   const [field, meta] = useField(props);
   const isShowError = meta.touched && !!meta.error;
   return (
@@ -29,4 +29,4 @@ const Input: React.FC<InputProps> = (props) => {
   );
 };
 
-export default Input;
+export const Input = memo(InputComponent);

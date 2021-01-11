@@ -1,5 +1,5 @@
-import AddForm from "@/components/Control/AddForm";
-import React from "react";
+import { AddForm } from "@/components/Control/AddForm";
+import React, { memo } from "react";
 import { useDispatch } from "react-redux";
 import { addCluster } from "@/store/actions/cluster";
 import { Wrapper } from "./styles";
@@ -10,7 +10,7 @@ interface IAddClusterModal extends IAddClusterModalProps {
   setClose: () => void;
 }
 
-const AddClusterModal: React.FC<IAddClusterModal> = ({ setClose }) => {
+const AddClusterModalComponent: React.FC<IAddClusterModal> = ({ setClose }) => {
   const dispatch = useDispatch();
 
   const onSubmit = (name: string) => {
@@ -24,4 +24,4 @@ const AddClusterModal: React.FC<IAddClusterModal> = ({ setClose }) => {
   );
 };
 
-export default AddClusterModal;
+export const AddClusterModal = memo(AddClusterModalComponent);

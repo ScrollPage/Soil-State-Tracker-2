@@ -1,16 +1,16 @@
-import ErrorMessage from "@/components/UI/ErrorMessage";
-import LoadingSpinner from "@/components/UI/LoadingSpinner";
+import { ErrorMessage } from "@/components/UI/ErrorMessage";
+import { LoadingSpinner } from "@/components/UI/LoadingSpinner";
 import { IDetector } from "@/types/detector";
 import React, { memo } from "react";
 import useSWR from "swr";
-import Cluster from "../Cluster";
+import { Cluster } from "../Cluster";
 import { Wrapper, Title } from "./styles";
 
 interface TransferProps {
   detectors: IDetector[] | null;
 }
 
-const Transfers: React.FC<TransferProps> = ({ detectors }) => {
+const TransfersComponent: React.FC<TransferProps> = ({ detectors }) => {
   const { data: detectorData, error: detecotorError } = useSWR(
     "/api/detector/",
     {
@@ -31,4 +31,4 @@ const Transfers: React.FC<TransferProps> = ({ detectors }) => {
   );
 };
 
-export default memo(Transfers);
+export const Transfers = memo(TransfersComponent);

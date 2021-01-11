@@ -1,5 +1,5 @@
 import Head from "next/head";
-import MainLayout from "@/components/Layout/MainLayout";
+import { MainLayout } from "@/components/Layout/MainLayout";
 import { Home } from "@/components/Landing/Home";
 import { HowWeDo } from "@/components/Landing/HowWeDo";
 import { Internet } from "@/components/Landing/Internet";

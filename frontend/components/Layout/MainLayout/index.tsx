@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { Main } from "./styles";
 import { Footer } from "@/components/Landing/Footer";
 import { SctollToTopButton } from "@/components/UI/ScrollToTopButton";
@@ -8,7 +8,7 @@ interface MainLayoutProps {
   children: React.ReactNode;
 }
 
-const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
+const MainLayoutComponent: React.FC<MainLayoutProps> = ({ children }) => {
   return (
     <>
       <MainHeader />
@@ -19,4 +19,4 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   );
 };
 
-export default MainLayout;
+export const MainLayout = memo(MainLayoutComponent);

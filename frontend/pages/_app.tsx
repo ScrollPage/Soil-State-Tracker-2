@@ -6,9 +6,9 @@ import { ThemeProvider } from "styled-components";
 import { createWrapper } from "next-redux-wrapper";
 import { Provider } from "react-redux";
 import store from "@/store/store";
-import Alert from "@/components/UI/Alert";
 import App, { AppContext, AppProps } from "next/app";
-import RootModal from "@/components/Modal";
+import { Alert } from "@/components/UI/Alert";
+import { RootModal } from "@/components/Modal";
 import { GlobalStyle } from "@/someData/globalStyles";
 import { SWRProvider } from "@/utils.ts/test-swr";
 

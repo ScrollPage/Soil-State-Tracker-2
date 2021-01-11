@@ -2,7 +2,7 @@ import Head from "next/head";
 import React from "react";
 import { GetServerSideProps } from "next";
 import { ensureRedirectToData } from "@/utils.ts/ensure";
-import AuthLayout from "@/components/Layout/AuthLayout";
+import { AuthLayout } from "@/components/Layout/AuthLayout";
 import { LoginContainer } from "@/containers/login";
 
 interface LoginProps {}

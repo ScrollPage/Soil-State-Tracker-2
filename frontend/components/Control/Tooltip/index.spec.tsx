@@ -1,12 +1,12 @@
 import { render, screen } from "@testing-library/react";
-import Tooltip from "./index";
+import { ToolTip } from "./index";
 
 describe("Tooltip", () => {
   it("render component with notNullable id", () => {
     const name = "React";
     const id = 1;
 
-    render(<Tooltip id={id} name={name} />);
+    render(<ToolTip id={id} name={name} />);
 
     expect(document?.querySelector("a")?.getAttribute("href"))?.toBe(
       `/control/${id}`
@@ -18,7 +18,7 @@ describe("Tooltip", () => {
     const name = "React";
     const id = 0;
 
-    render(<Tooltip id={id} name={name} />);
+    render(<ToolTip id={id} name={name} />);
     expect(screen.queryByText(name)).not.toBeInTheDocument();
   });
 });

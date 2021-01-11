@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { AuthHeader } from "./Header";
 import { Main } from "./styles";
 
@@ -6,7 +6,7 @@ interface AuthLayoutProps {
   children: React.ReactNode;
 }
 
-const AuthLayout: React.FC<AuthLayoutProps> = ({ children }) => {
+const AuthLayoutComponent: React.FC<AuthLayoutProps> = ({ children }) => {
   return (
     <>
       <AuthHeader />
@@ -15,4 +15,4 @@ const AuthLayout: React.FC<AuthLayoutProps> = ({ children }) => {
   );
 };
 
-export default AuthLayout;
+export const AuthLayout = memo(AuthLayoutComponent);

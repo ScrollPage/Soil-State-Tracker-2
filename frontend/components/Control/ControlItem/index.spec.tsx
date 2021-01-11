@@ -1,6 +1,6 @@
 import { IDetector } from "@/types/detector";
 import { render, screen } from "@testing-library/react";
-import ControlItem from "./index";
+import { ControlItem } from "./index";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 

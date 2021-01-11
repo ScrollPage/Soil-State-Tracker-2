@@ -1,8 +1,8 @@
-import React from "react";
+import React, { memo } from "react";
 import { Wrapper } from "./styles";
 import { Formik, Form, FormikProps } from "formik";
 import { SButton } from "@/components/UI/Button";
-import Input from "@/components/UI/Input";
+import { Input } from "@/components/UI/Input";
 import { object, string } from "yup";
 import { useDispatch } from "react-redux";
 import { authLogin } from "@/store/actions/auth";
@@ -31,7 +31,7 @@ interface ChangeFormProps {
   initialEmail: string;
 }
 
-const ChangeForm: React.FC<ChangeFormProps> = ({
+const ChangeFormComponent: React.FC<ChangeFormProps> = ({
   initialFirstName,
   initialLastName,
   initialEmail,
@@ -80,4 +80,4 @@ const ChangeForm: React.FC<ChangeFormProps> = ({
   );
 };
 
-export default ChangeForm;
+export const ChangeForm = memo(ChangeFormComponent);

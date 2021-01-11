@@ -1,14 +1,14 @@
-import EmptyMessage from "@/components/UI/EmptyMessage";
+import { EmptyMessage } from "@/components/UI/EmptyMessage";
 import { IDetector } from "@/types/detector";
 import React, { memo } from "react";
-import ControlItem from "../ControlItem";
+import { ControlItem } from "../ControlItem";
 
 interface RenderControlItemsProps {
   detectors: IDetector[];
   id: number;
 }
 
-const RenderControlItems: React.FC<RenderControlItemsProps> = ({
+const RenderControlItemsComponent: React.FC<RenderControlItemsProps> = ({
   detectors,
   id,
 }) => {
@@ -36,4 +36,4 @@ const RenderControlItems: React.FC<RenderControlItemsProps> = ({
   );
 };
 
-export default memo(RenderControlItems);
+export const RenderControlItems = memo(RenderControlItemsComponent);

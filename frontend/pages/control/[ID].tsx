@@ -1,4 +1,4 @@
-import ControlLayout from "@/components/Layout/ControlLayout";
+import { ControlLayout } from "@/components/Layout/ControlLayout";
 import { ClusterContainer } from "@/containers/cluster";
 import { ensureAuth } from "@/utils.ts/ensure";
 import { getAsString } from "@/utils.ts/getAsString";

@@ -1,10 +1,10 @@
 import { IAddClusterModalProps } from "@/components/Modal/AddClusterModal";
 import { modalShow } from "@/store/actions/modal";
-import React from "react";
+import React, { memo } from "react";
 import { useDispatch } from "react-redux";
 import { Wrapper } from "./styles";
 
-export const Add = () => {
+const AddComponent = () => {
   const dispatch = useDispatch();
 
   const showHandler = () => {
@@ -13,3 +13,5 @@ export const Add = () => {
 
   return <Wrapper onClick={showHandler} />;
 };
+
+export const Add = memo(AddComponent);

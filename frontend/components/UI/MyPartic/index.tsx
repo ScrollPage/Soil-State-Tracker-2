@@ -1,7 +1,7 @@
-import React from "react";
+import React, { memo } from "react";
 import Particles from "react-particles-js";
 
-export const MyPartic = () => {
+const MyParticComponent = () => {
   return (
     <Particles
       params={{
@@ -58,3 +58,5 @@ export const MyPartic = () => {
     />
   );
 };
+
+export const MyPartic = memo(MyParticComponent);

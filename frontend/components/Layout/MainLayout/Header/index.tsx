@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React from "react";
+import React, { memo } from "react";
 import {
   Wrapper,
   Info,
@@ -19,7 +19,7 @@ import { useRouter } from "next/router";
 import { useScroll } from "@/hooks/useScroll";
 import { useWindowSize } from "@/hooks/useWindowSize";
 
-export const MainHeader = () => {
+const MainHeaderComponent = () => {
   const dispatch = useDispatch();
   const { isAuth } = useUser();
   const { push } = useRouter();
@@ -95,3 +95,5 @@ export const MainHeader = () => {
     </Wrapper>
   );
 };
+
+export const MainHeader = memo(MainHeaderComponent);

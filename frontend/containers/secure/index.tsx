@@ -1,7 +1,7 @@
 import React from "react";
 import { Wrapper, Title } from "./styles";
 import Container from "@/components/UI/Container";
-import ChangeForm from "@/components/Auth/ChangeForm";
+import { ChangeForm } from "@/components/Auth/ChangeForm";
 
 interface SucureContainerProps {
   changeInfo: {

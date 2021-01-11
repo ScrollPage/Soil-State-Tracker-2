@@ -1,5 +1,5 @@
-import RenderControlItems from "./index";
-import { screen, render, getAllByTestId } from "@testing-library/react";
+import { RenderControlItems } from "./index";
+import { cleanup, screen, render } from "@testing-library/react";
 import { IDetector } from "@/types/detector";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
@@ -18,6 +18,8 @@ const data: IDetector[] = [
     y: 12,
   },
 ];
+
+afterEach(cleanup);
 
 describe("RenderControlItems", () => {
   it("render component", async () => {

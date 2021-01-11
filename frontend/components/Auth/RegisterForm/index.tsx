@@ -1,8 +1,8 @@
 import React, { Dispatch, memo, SetStateAction } from "react";
 import { Wrapper, Buttons } from "./styles";
-import { Formik, Form, FormikConfig, FormikValues, FormikProps } from "formik";
+import { Formik, Form, FormikConfig, FormikValues } from "formik";
 import { SButton } from "@/components/UI/Button";
-import Input from "@/components/UI/Input";
+import { Input } from "@/components/UI/Input";
 import { object, string, ref } from "yup";
 
 const nameValidationSchema = object().shape({
@@ -44,7 +44,7 @@ interface RegisterFormProps {
   handleSubmit: (values: RegisterFormValues) => void;
 }
 
-const RegisterForm: React.FC<RegisterFormProps> = ({
+const RegisterFormComponent: React.FC<RegisterFormProps> = ({
   step,
   setStep,
   handleSubmit,
@@ -92,7 +92,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
   );
 };
 
-export default memo(RegisterForm);
+export const RegisterForm = memo(RegisterFormComponent);
 
 interface FormikStepProps {
   children: React.ReactNode;

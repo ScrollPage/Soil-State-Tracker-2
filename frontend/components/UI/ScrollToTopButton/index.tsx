@@ -1,9 +1,9 @@
 import { useScroll } from "@/hooks/useScroll";
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { SButton } from "../Button";
 import { Wrapper } from "./styles";
 
-export const SctollToTopButton = () => {
+const SctollToTopButtonComponent = () => {
   const scroll = useScroll();
   const [visible, setVisible] = useState(false);
 
@@ -29,3 +29,5 @@ export const SctollToTopButton = () => {
     </Wrapper>
   );
 };
+
+export const SctollToTopButton = memo(SctollToTopButtonComponent);

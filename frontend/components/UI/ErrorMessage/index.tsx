@@ -1,14 +1,14 @@
-import React from "react";
+import React, { memo } from "react";
 import { Content, Wrapper } from "./styles";
 
 interface IErrorMessage {
   message: string;
 }
 
-const ErrorMessage = ({ message }: IErrorMessage) => (
+const ErrorMessageComponent = ({ message }: IErrorMessage) => (
   <Wrapper>
     <Content>{message}</Content>
   </Wrapper>
 );
 
-export default ErrorMessage;
+export const ErrorMessage = memo(ErrorMessageComponent);

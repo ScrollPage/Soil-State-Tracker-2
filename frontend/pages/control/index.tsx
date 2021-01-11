@@ -4,7 +4,7 @@ import { ensureAuth } from "@/utils.ts/ensure";
 import { GetServerSideProps } from "next";
 import React from "react";
 import { ICluster } from "@/types/cluster";
-import ControlLayout from "@/components/Layout/ControlLayout";
+import { ControlLayout } from "@/components/Layout/ControlLayout";
 import Head from "next/head";
 import { ControlContainer } from "@/containers/control";
 

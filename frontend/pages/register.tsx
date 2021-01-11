@@ -2,7 +2,7 @@ import Head from "next/head";
 import React from "react";
 import { ensureRedirectToData } from "@/utils.ts/ensure";
 import { GetServerSideProps } from "next";
-import AuthLayout from "@/components/Layout/AuthLayout";
+import { AuthLayout } from "@/components/Layout/AuthLayout";
 import { RegisterContainer } from "@/containers/register";
 
 interface RegisterProps {}

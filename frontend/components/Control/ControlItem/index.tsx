@@ -5,7 +5,7 @@ import React, { memo } from "react";
 import { useDrag } from "react-dnd";
 import { Wrapper, Text } from "./styles";
 
-const ControlItem: React.FC<IDetector & { clusterId: number }> = ({
+const ControlItemComponent: React.FC<IDetector & { clusterId: number }> = ({
   clusterId,
   id,
   x,
@@ -38,4 +38,4 @@ const ControlItem: React.FC<IDetector & { clusterId: number }> = ({
   );
 };
 
-export default memo(ControlItem);
+export const ControlItem = memo(ControlItemComponent);

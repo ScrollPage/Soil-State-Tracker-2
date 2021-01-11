@@ -1,11 +1,11 @@
-import React from "react";
+import React, { memo } from "react";
 import { Wrapper, Step, Title } from "./styles";
 
 interface StepperProps {
   step: number;
 }
 
-export const Stepper: React.FC<StepperProps> = ({ step }) => {
+const StepperComponent: React.FC<StepperProps> = ({ step }) => {
   return (
     <Wrapper>
       <Step active={step === 0}>
@@ -17,3 +17,5 @@ export const Stepper: React.FC<StepperProps> = ({ step }) => {
     </Wrapper>
   );
 };
+
+export const Stepper = memo(StepperComponent);

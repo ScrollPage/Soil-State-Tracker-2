@@ -1,4 +1,4 @@
-import Detector from "./index";
+import { Detector } from "./index";
 import { screen, render, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { IDetector } from "@/types/detector";

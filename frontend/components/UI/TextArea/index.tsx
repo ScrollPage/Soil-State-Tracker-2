@@ -1,5 +1,5 @@
 import { useField } from "formik";
-import React, { TextareaHTMLAttributes } from "react";
+import React, { memo, TextareaHTMLAttributes } from "react";
 import { STextArea, STextAreaTag, STextAreaError } from "./styles";
 
 type InputProps = TextareaHTMLAttributes<HTMLTextAreaElement> & {
@@ -7,7 +7,7 @@ type InputProps = TextareaHTMLAttributes<HTMLTextAreaElement> & {
   width?: string;
 };
 
-const TextArea: React.FC<InputProps> = (props) => {
+const TextAreaComponent: React.FC<InputProps> = (props) => {
   const [field, meta] = useField(props);
   const isShowError = meta.touched && !!meta.error;
   return (
@@ -18,4 +18,4 @@ const TextArea: React.FC<InputProps> = (props) => {
   );
 };
 
-export default TextArea;
+export const TextArea = memo(TextAreaComponent);

@@ -1,10 +1,10 @@
 import React from "react";
-import Detector from "@/components/Cluster/Detector";
+import { Detector } from "@/components/Cluster/Detector";
 import { SButton } from "@/components/UI/Button";
 import Container from "@/components/UI/Container";
-import EmptyMessage from "@/components/UI/EmptyMessage";
-import ErrorMessage from "@/components/UI/ErrorMessage";
-import LoadingSpinner from "@/components/UI/LoadingSpinner";
+import { EmptyMessage } from "@/components/UI/EmptyMessage";
+import { ErrorMessage } from "@/components/UI/ErrorMessage";
+import { LoadingSpinner } from "@/components/UI/LoadingSpinner";
 import { IDetector } from "@/types/detector";
 import { modalShow } from "@/store/actions/modal";
 import { IDetectorDataModalProps } from "@/components/Modal/DetectorDataModal";

@@ -1,10 +1,10 @@
-import React from "react";
+import React, { memo } from "react";
 import Link from "next/link";
 import { useUser } from "@/hooks/useUser";
 import { useRouter } from "next/router";
 import { Wrapper, Side, Rectangle, Circle, SideLink, Name } from "./styles";
 
-export const ControlSideBar = () => {
+const ControlSideBarComponent = () => {
   const { firstName, lastName } = useUser();
   const { pathname } = useRouter();
   return (
@@ -35,3 +35,5 @@ export const ControlSideBar = () => {
     </Wrapper>
   );
 };
+
+export const ControlSideBar = memo(ControlSideBarComponent);

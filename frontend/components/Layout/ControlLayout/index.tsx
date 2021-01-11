@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { ControlHeader } from "./Header";
 import { ControlSideBar } from "./SideBar";
 import { Main } from "./styles";
@@ -7,7 +7,7 @@ interface ControlLayoutProps {
   children: React.ReactNode;
 }
 
-const ControlLayout: React.FC<ControlLayoutProps> = ({ children }) => {
+const ControlLayoutComponent: React.FC<ControlLayoutProps> = ({ children }) => {
   return (
     <>
       <ControlHeader />
@@ -17,4 +17,4 @@ const ControlLayout: React.FC<ControlLayoutProps> = ({ children }) => {
   );
 };
 
-export default ControlLayout;
+export const ControlLayout = memo(ControlLayoutComponent);

@@ -1,5 +1,6 @@
+import { memo } from "react";
 import { SLoadingSpinner } from "./styles";
 
-const LoadingSpinner = () => <SLoadingSpinner />;
+const LoadingSpinnerComponent = () => <SLoadingSpinner />;
 
-export default LoadingSpinner;
+export const LoadingSpinner = memo(LoadingSpinnerComponent);

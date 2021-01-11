@@ -1,17 +1,11 @@
-import React, { useEffect } from "react";
+import React, { memo, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { hide } from "@/store/actions/alert";
-import {
-  getAlertIsNotClose,
-  getAlertText,
-  getAlertType,
-} from "../../../store/selectors";
+import { getAlertInfo } from "@/store/selectors";
 import { Wrapper, Content, Text, Close } from "./styles";
 
-const Alert: React.FC = () => {
-  const text = useSelector(getAlertText);
-  const type = useSelector(getAlertType);
-  const isNotClose = useSelector(getAlertIsNotClose);
+const AlertComponent: React.FC = () => {
+  const { text, type, isNotClose } = useSelector(getAlertInfo);
 
   const dispatch = useDispatch();
 
@@ -29,7 +23,7 @@ const Alert: React.FC = () => {
   if (!text) return null;
 
   return (
-    <Wrapper>
+    <Wrapper data-testid="alert">
       <Content type={type}>
         <Close onClick={hideHandler} />
         <Text>{text}</Text>
@@ -38,4 +32,4 @@ const Alert: React.FC = () => {
   );
 };
 
-export default Alert;
+export const Alert = memo(AlertComponent);

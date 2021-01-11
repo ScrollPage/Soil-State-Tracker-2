@@ -27,6 +27,7 @@ export const AccountActivationContainer: React.FC<AccountActivationContainerProp
       });
     }, 3000);
   }, []);
+
   return (
     <Wrapper>
       <Title>Активация аккаунта</Title>

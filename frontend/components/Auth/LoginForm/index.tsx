@@ -1,8 +1,8 @@
-import React from "react";
+import React, { memo } from "react";
 import { Wrapper } from "./styles";
 import { Formik, Form, FormikProps } from "formik";
 import { SButton } from "@/components/UI/Button";
-import Input from "@/components/UI/Input";
+import { Input } from "@/components/UI/Input";
 import { object, string } from "yup";
 
 const validationSchema = object().shape({
@@ -19,7 +19,7 @@ interface LoginFormProps {
   handleSubmit: (values: LoginFormValues) => void;
 }
 
-const LoginForm: React.FC<LoginFormProps> = ({ handleSubmit }) => {
+const LoginFormComponent: React.FC<LoginFormProps> = ({ handleSubmit }) => {
   return (
     <Wrapper>
       <Formik
@@ -54,4 +54,4 @@ const LoginForm: React.FC<LoginFormProps> = ({ handleSubmit }) => {
   );
 };
 
-export default LoginForm;
+export const LoginForm = memo(LoginFormComponent);

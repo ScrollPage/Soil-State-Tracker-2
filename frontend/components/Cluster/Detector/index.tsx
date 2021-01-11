@@ -9,7 +9,10 @@ interface DetectorProps {
   showHandler: (id: number) => void;
 }
 
-const Detector: React.FC<DetectorProps> = ({ detector, showHandler }) => {
+const DetectorComponent: React.FC<DetectorProps> = ({
+  detector,
+  showHandler,
+}) => {
   return (
     <Wrapper>
       <ImgWrapper>
@@ -27,4 +30,4 @@ const Detector: React.FC<DetectorProps> = ({ detector, showHandler }) => {
   );
 };
 
-export default memo(Detector);
+export const Detector = memo(DetectorComponent);

@@ -7,7 +7,7 @@ interface ipProps {
   name: string;
 }
 
-const Tooltip: React.FC<ipProps> = ({ id, name }) => {
+const TooltipComponent: React.FC<ipProps> = ({ id, name }) => {
   return (
     <Wrapper>
       {id === 0 ? null : (
@@ -19,4 +19,4 @@ const Tooltip: React.FC<ipProps> = ({ id, name }) => {
   );
 };
 
-export default memo(Tooltip);
+export const ToolTip = memo(TooltipComponent);

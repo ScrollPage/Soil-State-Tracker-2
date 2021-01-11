@@ -1,9 +1,9 @@
-import React from "react";
+import React, { memo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Wrapper, Nav, NavLink, Settings } from "./styles";
 
-export const ControlHeader = () => {
+const ControlHeaderComponent = () => {
   return (
     <Wrapper>
       <Nav>
@@ -25,3 +25,5 @@ export const ControlHeader = () => {
     </Wrapper>
   );
 };
+
+export const ControlHeader = memo(ControlHeaderComponent);

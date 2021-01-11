@@ -1,15 +1,11 @@
 import { AppStateType } from './reducers/rootReducer';
 
-export const getAlertType = (state: AppStateType) => {
-  return state.alert.typeOf
-}
-
-export const getAlertText = (state: AppStateType) => {
-  return state.alert.text
-}
-
-export const getAlertIsNotClose = (state: AppStateType) => {
-  return state.alert.IsNotClose
+export const getAlertInfo = (state: AppStateType) => {
+  return {
+    text: state.alert.text,
+    type: state.alert.typeOf,
+    isNotClose: state.alert.IsNotClose
+  }
 }
 
 export const getModalName = (state: AppStateType) => {

@@ -1,5 +1,5 @@
 import React from "react";
-import AddForm from "./index";
+import { AddForm } from "./index";
 import { render, waitFor, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 

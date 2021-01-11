@@ -2,7 +2,7 @@ import { ensureAuth } from "@/utils.ts/ensure";
 import { GetServerSideProps } from "next";
 import React from "react";
 import Head from "next/head";
-import ControlLayout from "@/components/Layout/ControlLayout";
+import { ControlLayout } from "@/components/Layout/ControlLayout";
 import cookies from "next-cookies";
 import { SecureContainer } from "@/containers/secure";
 

@@ -1,6 +1,7 @@
-import { Stepper } from "@/components/UI/Stepper";
 import { MyPartic } from "@/components/UI/MyPartic";
-import RegisterForm, {
+import { Stepper } from "@/components/UI/Stepper";
+import {
+  RegisterForm,
   RegisterFormValues,
 } from "@/components/Auth/RegisterForm";
 import Link from "next/link";

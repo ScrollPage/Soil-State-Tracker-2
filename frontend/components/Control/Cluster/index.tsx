@@ -4,11 +4,11 @@ import { ItemTypes } from "@/utils.ts/items";
 import React, { memo } from "react";
 import { useDrop } from "react-dnd";
 import { useDispatch } from "react-redux";
-import ToolTip from "../Tooltip";
-import RenderControlItems from "../RenderControlItems";
+import { ToolTip } from "../Tooltip";
+import { RenderControlItems } from "../RenderControlItems";
 import { Wrapper, Main } from "./styles";
 
-const Cluster: React.FC<ICluster> = ({
+const ClusterComponent: React.FC<ICluster> = ({
   cluster_detectors: detectors,
   name,
   id,
@@ -36,4 +36,4 @@ const Cluster: React.FC<ICluster> = ({
   );
 };
 
-export default memo(Cluster);
+export const Cluster = memo(ClusterComponent);

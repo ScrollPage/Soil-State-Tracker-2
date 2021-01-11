@@ -2,7 +2,7 @@ import React, { memo } from "react";
 import { Wrapper, Title } from "./styles";
 import { Formik, Form, FormikProps } from "formik";
 import { SButton } from "@/components/UI/Button";
-import Input from "@/components/UI/Input";
+import { Input } from "@/components/UI/Input";
 import { object, string } from "yup";
 
 const validationSchema = object().shape({
@@ -21,7 +21,10 @@ interface AddFormProps {
   handleSubmit: (name: string) => void;
 }
 
-const AddForm: React.FC<AddFormProps> = ({ setClose, handleSubmit }) => {
+const AddFormComponent: React.FC<AddFormProps> = ({
+  setClose,
+  handleSubmit,
+}) => {
   return (
     <Wrapper>
       <Formik
@@ -56,4 +59,4 @@ const AddForm: React.FC<AddFormProps> = ({ setClose, handleSubmit }) => {
   );
 };
 
-export default memo(AddForm);
+export const AddForm = memo(AddFormComponent);

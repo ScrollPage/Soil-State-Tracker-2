@@ -1,9 +1,9 @@
-import React from "react";
+import React, { memo } from "react";
 import { Wrapper, Title } from "./styles";
 import useSWR from "swr";
-import ErrorMessage from "@/components/UI/ErrorMessage";
-import LoadingSpinner from "@/components/UI/LoadingSpinner";
-import EmptyMessage from "@/components/UI/EmptyMessage";
+import { ErrorMessage } from "@/components/UI/ErrorMessage";
+import { LoadingSpinner } from "@/components/UI/LoadingSpinner";
+import { EmptyMessage } from "@/components/UI/EmptyMessage";
 import { Chart } from "@/components/Chart";
 
 export interface IDetectorDataModalProps {
@@ -15,7 +15,7 @@ interface IDetectorDataModal extends IDetectorDataModalProps {
   setClose: () => void;
 }
 
-const DetectorDataModal: React.FC<IDetectorDataModal> = ({
+const DetectorDataModalComponent: React.FC<IDetectorDataModal> = ({
   id,
   setClose,
   clusterId,
@@ -41,4 +41,4 @@ const DetectorDataModal: React.FC<IDetectorDataModal> = ({
   );
 };
 
-export default DetectorDataModal;
+export const DetectorDataModal = memo(DetectorDataModalComponent);

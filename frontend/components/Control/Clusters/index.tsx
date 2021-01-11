@@ -1,16 +1,16 @@
-import ErrorMessage from "@/components/UI/ErrorMessage";
-import LoadingSpinner from "@/components/UI/LoadingSpinner";
+import { ErrorMessage } from "@/components/UI/ErrorMessage";
+import { LoadingSpinner } from "@/components/UI/LoadingSpinner";
 import { ICluster } from "@/types/cluster";
 import React, { memo } from "react";
 import useSWR from "swr";
-import Cluster from "../Cluster";
+import { Cluster } from "../Cluster";
 import { Wrapper, Title, Main } from "./styles";
 
 interface ClusterProps {
   clusters: ICluster[] | null;
 }
 
-const Clusters: React.FC<ClusterProps> = ({ clusters }) => {
+const ClustersComponent: React.FC<ClusterProps> = ({ clusters }) => {
   const { data: clusterData, error: clusterError } = useSWR("/api/cluster/", {
     initialData: clusters,
   });
@@ -42,4 +42,4 @@ const Clusters: React.FC<ClusterProps> = ({ clusters }) => {
   );
 };
 
-export default memo(Clusters);
+export const Clusters = memo(ClustersComponent);
