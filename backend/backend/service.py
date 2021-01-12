@@ -5,6 +5,7 @@ from django.urls import reverse
 from .bot import bot
 
 def exception_handler(exc, context):
+    '''Отправляет все исключения в телеграм'''
     # msg = f'An exception occured: {str(exc)}\n'
     # msg += traceback.format_exc() + '\n'
     # request = context['request']

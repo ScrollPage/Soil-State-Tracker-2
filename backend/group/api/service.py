@@ -10,11 +10,11 @@ from cacheops import cached_as
 from backend.service import SerializerMixin
 from detector.models import Detector, DetectorData
 
-class PSListCreateViewSet(SerializerMixin,
-                          GenericViewSet,
-                          ListModelMixin,
-                          UpdateModelMixin,
-                          CreateModelMixin
+class SListCreateViewSet(SerializerMixin,
+                         GenericViewSet,
+                         ListModelMixin,
+                         UpdateModelMixin,
+                         CreateModelMixin
                         ):
     '''
     Переопредение методов определения прав доступа и сериализатора

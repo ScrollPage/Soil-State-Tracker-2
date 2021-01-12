@@ -8,7 +8,7 @@ from cacheops import invalidate_model
 
 from .serializers import ClusterSerializer, ClusterDetectorSerializer
 from .service import (
-    PSListCreateViewSet, 
+    SListCreateViewSet, 
     PaginationData, 
     slice_data_by_timestamp,
     queryset_mean,
@@ -17,7 +17,7 @@ from detector.api.serializers import DetectorSerializer, DetectorDataSerializer
 from group.models import Cluster
 from detector.models import DetectorData
 
-class ClusterViewSet(PSListCreateViewSet):
+class ClusterViewSet(SListCreateViewSet):
     '''
     Список кластеров
     '''
@@ -55,7 +55,6 @@ class ClusterViewSet(PSListCreateViewSet):
         serializer = self.get_serializer(resulting_queryset, many=True)
         return Response(data=serializer.data, status=status.HTTP_200_OK)
         
-
     @action(detail=False, methods=['post'])
     def add_detector(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)

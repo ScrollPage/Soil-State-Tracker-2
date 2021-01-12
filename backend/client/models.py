@@ -11,11 +11,12 @@ from django.contrib.auth.models import (
 from random import randint
 
 from .tasks import send_activation_email
+from .service import create_code 
 
 class ClientManager(BaseUserManager):
     '''Мэнэджер кастомного пользователя'''
 
-    def create_user(self, email, first_name, last_name, password = None):
+    def create_user(self, email, first_name, last_name, password=None):
         user = self.model(
             email=self.normalize_email(email),
             first_name=first_name.capitalize(),
@@ -27,14 +28,8 @@ class ClientManager(BaseUserManager):
 
         return user
 
-    def create_superuser(self, email, first_name, last_name, password = None):
-        user = self.model(
-            email=self.normalize_email(email),
-            first_name=first_name,
-            last_name=last_name,
-        )
-
-        user.set_password(password)
+    def create_superuser(self, email, first_name, last_name, password=None):
+        user = self.create_user(email, first_name, last_name, password)
 
         user.is_manager = True
         user.is_superuser = True
@@ -69,10 +64,31 @@ class Client(AbstractBaseUser, PermissionsMixin):
     def get_full_name(self):
         return self.last_name + ' ' + self.first_name
 
+class AuthCode(models.Model):
+    '''Код авторизации для телеграма'''
+    code = models.CharField(null=False, unique=True, max_length=6)
+    user = models.ForeignKey(Client, verbose_name='Пользователь', null=False, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = 'Код авторизации'
+        verbose_name_plural = 'Коды авторизации'
+
+    @classmethod
+    def create_unique_code(cls, user):
+        code = create_code()
+        while cls.objects.filter(code=code):
+            code = create_code()
+        cls.objects.create(code=code, user=user)
+
 @receiver(post_save, sender=Client)
 def send_conf_mail(sender, instance=None, created=False, **kwargs):
     '''Отправляет письмо с подтверждением'''
-    if created:
-        if not instance.is_superuser:
-            token = Token.objects.create(user=instance)
-            send_activation_email.delay(instance.email, token.key)
+    if created and not instance.is_superuser:
+        token = Token.objects.create(user=instance)
+        send_activation_email.delay(instance.email, token.key)
+
+@receiver(post_save, sender=Client)
+def create_private_auth_code(sender, instance=None, created=False, **kwargs):
+    '''Создает индивидульный код авторизации в телеграме'''
+    if created and not instance.is_superuser:
+        AuthCode.create_unique_code(instance)

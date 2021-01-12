@@ -4,7 +4,10 @@ from telebot import types
 from aiogram.types import ReplyKeyboardRemove, \
     ReplyKeyboardMarkup, KeyboardButton, \
     InlineKeyboardMarkup, InlineKeyboardButton
-from client.models import CLient
+    
+from client.models import CLient, AuthCode
+from detector.models import Detector
+from group.models import Cluster
 
 bot = telebot.TeleBot('1467374444:AAHuKNmwn6GgzXR0nS2WFZHksy1kuWtpOco');
 print('connecting to Telegram Bot...')
@@ -102,34 +105,27 @@ Stickers_thanks = [
     "CAACAgIAAxkBAAEHkYhf9IZ_6XKks8OODmpPaYBKuBlMAgACGgADz5TEBrITlNY3yHYyHgQ"
 ]
 
-blacklist = [
-    "дурак", "идиот", "придурок", "тупой", "мразь", "тварь", 
-    "гавно", "даун", "кривой", "аутист", "неадекватный", "бля", "залупа",
-    "пидор", "пидр", "гандо", "Пидор", "Пидр", "Гандо","хуй", "пизд",
-    "пидар", "сука", "суки", "Дурак", "Идиот", "Придурок", "Залупа",
-    "Тупой", "Мразь", "Тварь", "Гавно", "Даун", "Кривой", "Аутист",
-    "Неадекватный", "Бля", "Хуй", "Пизд", "Пидар", "Сука", "Суки"
-]
 
-#DataStorage = 'C:/Users/papat/Downloads/Data.txt'
-#path = 'C:/Users/papat/Downloads/Downloaded'
+def auth(message):
+    msg = bot.send_message(message.chat.id, "Введите код: ")
+    bot.register_next_step_handler(msg, code_authorization)   
+
+def code_authorization(message):
+    try:
+        code = AuthCode.objects.get(code=message.text)
+    except AuthCode.DoesNotExist:
+        bot.send_message(message.chat.id, "Неверный код! Попробуйте авторизоваться еще раз!")
+    else:
+        user = code.user
+        user.chat_id = message.chat.id
+        user.save()
+        bot.send_message(
+            message.chat.id, 
+            f"Авторизация выполнена! Добро пожаловать, {user.get_full_name()}!"
+        )
 
 @bot.message_handler(content_types=['text', 'document', 'audio', 'photo', 'video', 'voice', 'sticker', 'location', 'poll', 'contact'])
-def get_various_messages(message):   
-    #try:
-        warn = False
-        angry = False
-        for x in blacklist:
-            if x in message.text: 
-                print('Bot received expletive!Reacting...')
-                revenge = x
-                if angry:
-                    bot.send_message(message.chat.id, "Ты это заслужил!")
-                    bot.send_sticker(message.chat.id, 'CAACAgIAAxkBAAEHa0hf5KyLXfcVhctjiD8GYtlmFcEcmgACnQADPzXyBNFqL9q7maP_HgQ')
-                else:
-                    bot.send_message(message.chat.id, "Кто как обзывается, тот так и называется! Сам ты " + revenge + "!")
-                    angry = True
-                warn = True                     
+def get_various_messages(message):              
         if message.text in ("приветики","привет",
                             "привет!","приветики!",
                             "Приветики","Привет",
@@ -140,6 +136,7 @@ def get_various_messages(message):
             start_menu.row('Авторизация')
             start_menu.row('Пришли показания', 'Спасибо!', 'Help')
             bot.send_message(message.chat.id, 'Привет, чем я могу тебе помочь?', reply_markup=start_menu)
+
         elif message.text in ("здравствуйте!", "здравствуй!",
                               "здравствуйте", "здравствуй",
                               "Здравствуйте!", "Здравствуй!",
@@ -150,6 +147,7 @@ def get_various_messages(message):
             start_menu.row('Авторизация')
             start_menu.row('Пришли показания', 'Спасибо!', 'Help')
             bot.send_message(message.chat.id, 'И вам не хворать! Чем я могу помочь?', reply_markup=start_menu)
+
         elif message.text in ("Hello", "Hi", "Hi!", "Hello!", "/start"):
             print('Bot received start message.Reacting...')
             start_menu = types.ReplyKeyboardMarkup(True, True)
@@ -161,25 +159,13 @@ def get_various_messages(message):
                               "Залогиниться","Логин","авторизация", "авторизоваться",
                               "войти","вход","залогиниться","логин"):
             try:
-                CLient.objects.get(chat_id=message.chat.id)
-                bot.send_message(message.chat.id, "Авторизация выполнена!")
+                user = CLient.objects.get(chat_id=message.chat.id)
             except Client.DoesNotExist:
-            bot.send_message(message.chat.id, "Пожалуйста, авторизуйтесь.")
-            def auth(message):
-                msg = bot.send_message(message.chat.id, "Введите код: ")
-                bot.register_next_step_handler(msg, getCode_finish)    
-            def getCode_finish(message):
-                try:
-                    CLient.objects.get(code=message.text)  # Здесь нужно проверить наличие присланнного пользователем кода в БД
-                    ChatId = message.chat.id
-                    #
-                    # Здесь ты добавляешь этот ChatId к соответствующему пользователю в БД
-                    #
-                print('New user authorized!')
-                bot.send_message(message.chat.id, "Авторизация выполнена!")
-                except Client.DoesNotExist:
-                    bot.send_message(message.chat.id, "Неверный код! Запустите авторизацию снова и попытайтесь ещё раз.")
-            auth(message)                
+                bot.send_message(message.chat.id, "Пожалуйста, авторизуйтесь.")
+                auth(message)            
+            else:
+                bot.send_message(message.chat.id, f"Вы уже авторизованы, {user.get_full_name()}")
+
         elif message.text in ("дай показания","пришли показания",
                               "пришли данные","дай данные",
                               "пришли отчёт","дай отчёт",
@@ -188,22 +174,15 @@ def get_various_messages(message):
                               "Пришли отчёт","Дай отчёт"):
             print('Bot received data request.Reacting...')
             try:
-                CLient.objects.get(chat_id=message.chat.id)
-                bot.send_message(message.chat.id, "Выберите, какие данные нужно прислать: ")
-                #
-                #
-                #
-                # bot.send_message(message.chat.id, "Актуальные показания приборов собраны в следующий файл: ")
-                
-                # bot.send_document(message.chat.id, data_file)
-                # data_file.close()
+                client = CLient.objects.get(chat_id=message.chat.id)
             except Client.DoesNotExist:
                 bot.send_message(message.chat.id, "Вы не авторизовались!")
-                bot.send_sticker(message.chat.id, "CAACAgIAAxkBAAEHkYxf9Ib2WyuepvLCAVMycSZJCgpLdgAC4RIAAulVBRiX_Jvp9ZY2sh4E")
+                auth(message)
+            else:
                 start_menu = types.ReplyKeyboardMarkup(True, True)
-                start_menu.row('Авторизация')
                 start_menu.row('Пришли показания', 'Спасибо!', 'Help')
                 bot.send_message(message.chat.id, 'Что будем делать?', reply_markup=start_menu)
+
         elif message.text in ("Спасибо!","спасибо!",
                               "спасибо","Спасибо",
                               "Благодарю!","Благодарю",
@@ -214,6 +193,7 @@ def get_various_messages(message):
             start_menu.row('Авторизация', 'Привет!', 'Здравствуй!')
             start_menu.row('Пришли показания', 'Спасибо!', 'Help')
             bot.send_message(message.chat.id, 'Всегда пожалуйста! Если ещё что-нибудь будет нужно - пиши, не стесняйся!', reply_markup=start_menu)
+
         elif message.text in ("/help","help","Help","помоги",
                               "помогите","Помоги","Помогите"):
             print('Bot received "help" message.Reacting...')
@@ -222,75 +202,11 @@ def get_various_messages(message):
             start_menu.row('Авторизация', 'Привет!', 'Здравствуй!')
             start_menu.row('Пришли показания', 'Спасибо!', 'Help')
             bot.send_message(message.chat.id, 'Или просто воспользуйтесь клавишами:', reply_markup=start_menu)
+
         elif not warn:
             print('Bot received incorrect message!Reacting...')    
             bot.send_message(message.chat.id, "Я вас не понимаю. Напишите help.")
             bot.send_sticker(message.chat.id, random.choice(Stickers_help))       
-    # except Exception as skip:
-    #     if message.document:
-    #         print('Bot received file.Reacting...')
-    #         file_info = bot.get_file(message.document.file_id)
-    #         downloaded_file = bot.download_file(file_info.file_path)
-    #         src = path + message.document.file_name;
-    #         with open(src, 'wb') as new_file:
-    #             new_file.write(downloaded_file)
-    #         bot.send_message(message.chat.id, "Файл? Возьму его себе, спасибо!")
-    #         bot.send_sticker(message.chat.id, random.choice(Stickers_thanks))
-    #     elif message.audio:
-    #         print('Bot received audio.Reacting...')
-    #         file_info = bot.get_file(message.audio.file_id)
-    #         downloaded_file = bot.download_file(file_info.file_path)
-    #         src =path + message.audio.title + ".mp3";
-    #         with open(src, 'wb') as new_file:
-    #             new_file.write(downloaded_file) 
-    #         bot.send_message(message.chat.id, "О, музончик! Классный трек! Наверное. Ушей-то у меня нет... Но я его себе всё равно сохраню.")
-    #         bot.send_sticker(message.chat.id, random.choice(Stickers_thanks))
-    #     elif message.photo:
-    #         print('Bot received photo.Reacting...')
-    #         file_info = bot.get_file(message.photo[len(message.photo) - 1].file_id)
-    #         downloaded_file = bot.download_file(file_info.file_path)
-    #         src =path + message.photo[1].file_id + ".png";
-    #         with open(src, 'wb') as new_file:
-    #             new_file.write(downloaded_file)
-    #         bot.send_message(message.chat.id, "Прикольная картинка! Возьму её себе, спасибо! Надеюсь, меня за неё не посадят...")
-    #         bot.send_sticker(message.chat.id, random.choice(Stickers_thanks))
-    #     elif message.video:
-    #         print('Bot received video.Reacting...')
-    #         file_info = bot.get_file(message.video.file_id)
-    #         downloaded_file = bot.download_file(file_info.file_path)
-    #         src = path + message.video.file_id + ".mp4";
-    #         with open(src, 'wb') as new_file:
-    #             new_file.write(downloaded_file)
-    #         bot.send_message(message.chat.id, "Зачётный видос! Сохраню его себе, спасибо! Надеюсь, меня за это не посадят...")
-    #         bot.send_sticker(message.chat.id, random.choice(Stickers_thanks))
-    #     elif message.voice:
-    #         print('Bot received voice message.Reacting...')
-    #         file_info = bot.get_file(message.voice.file_id)
-    #         downloaded_file = bot.download_file(file_info.file_path)
-    #         src = path + message.voice.file_id + ".ogg";
-    #         with open(src, 'wb') as new_file:
-    #             new_file.write(downloaded_file)
-    #         bot.send_message(message.from_user.id, "Хочешь поболтать? ТОГДА НАЙДИ СЕБЕ ЖИВОГО СОБЕСЕДНИКА! А голос я твой сохраню. Так, на всякий случай...")
-    #     elif message.location:
-    #         print('Bot received location message.Reacting...')
-    #         bot.send_message(message.chat.id, "Точка на карте. Интересно, что там? Обязательно схожу туда... если мой создатель сделает мне тело!")
-    #         bot.send_sticker(message.chat.id, random.choice(Stickers_thanks))
-    #     elif message.contact:
-    #         print('Bot received contact message.Reacting...')
-    #         try:
-    #             bot.send_message(message.chat.id, "Хочешь, чтобы я позвонил вот этому абоненту: " + message.contact.first_name + " " + message.contact.last_name + "?")
-    #             bot.send_message(message.chat.id, "Извини, но мне кажется, что у тебя это получиться лучше. Главное, не стесняйся!")
-    #         except:
-    #             bot.send_message(message.chat.id, "Хочешь, чтобы я позвонил вот этому абоненту: " + message.contact.first_name + "?")
-    #             bot.send_message(message.chat.id, "Извини, но мне кажется, что у тебя это получиться лучше. Главное, не стесняйся!")    
-    #     elif message.sticker:
-    #         print('Bot received sticker.Reacting...')
-    #         bot.send_message(message.chat.id, "Классный стикер! Держи в ответ!")
-    #         bot.send_sticker(message.chat.id, random.choice(Stickers))
-    #     elif message.poll:
-    #         print('Bot received poll message.Reacting...')
-    #         bot.send_message(message.chat.id, "Какой интересный вопрос: " + message.poll.question)
-    #         bot.send_message(message.chat.id, "Опрос, значит. Увы, меня не наделили правом голоса...")
                
 print('successfully connected!')
 
