@@ -47,7 +47,7 @@ class Client(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
     is_active = models.BooleanField(default=False)
-    chat_id = models.SmallIntegerField(default=0)
+    chat_id = models.IntegerField(null=True, default=None)
     
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name']
@@ -63,6 +63,14 @@ class Client(AbstractBaseUser, PermissionsMixin):
 
     def get_full_name(self):
         return self.last_name + ' ' + self.first_name
+
+    def get_detector_ids(self):
+        detectors = self.detectors.all()
+        return ''.join(f'| {detector.id} ' for detector in detectors) + '|'
+
+    def get_cluster_names(self):
+        clusters = self.clusters.all()
+        return ''.join(f'| {cluster} ' for cluster in clusters) + '|'
 
 class AuthCode(models.Model):
     '''Код авторизации для телеграма'''
