@@ -28,8 +28,6 @@ def get_simple_menu(message):
         Client.objects.get(chat_id=message.chat.id)
     except Client.DoesNotExist:
         s_menu.row('Авторизация')
-    else:
-        s_menu.row('Выход')
     return s_menu  
 
 def get_menu(message):
@@ -37,8 +35,7 @@ def get_menu(message):
     try:
         Client.objects.get(chat_id=message.chat.id)
     except Client.DoesNotExist:
-        auth_button = types.InlineKeyboardButton(text="Авторизация", callback_data="Auth")
-        menu.add(auth_button)
+        print('Oops!')
     else:
         exit_button = types.InlineKeyboardButton(text="Выход", callback_data="Exit")
         menu.add(exit_button)
@@ -71,30 +68,11 @@ def code_authorization(message):
 
 @bot.callback_query_handler(func=lambda call: True)
 def callback_inline(call):
-    if call.data == "Auth":
-        try:
-            user = Client.objects.get(chat_id=message.chat.id)
-        except Client.DoesNotExist:
-            menu = get_menu(message)
-            bot.send_message(
-                message.chat.id, 
-                'Пожалуйста, авторизуйтесь.', 
-                reply_markup=menu
-            )
-            auth(message)            
-        else:
-            menu = get_menu(message)
-            bot.send_message(
-                message.chat.id, 
-                f'Вы уже авторизованы, {user.get_full_name()}. Выберите одно из возможных действий:',
-                reply_markup=menu    
-            )
-
     if call.data == "Exit":
         user = Client.objects.get(chat_id=message.chat.id)
         user.chat_id = None
         user.save()
-        menu = get_menu(message)
+        menu = get_simple_menu(message)
         bot.send_message(message.chat.id, 'Вы успешно вышли.', reply_markup=menu)
 
     if call.data == "Detectors":
