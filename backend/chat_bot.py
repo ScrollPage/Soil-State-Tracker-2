@@ -56,6 +56,21 @@ def code_authorization(message):
             reply_markup=menu
         )
 
+@bot.callback_query_handler(func=lambda call: True)
+def callback_inline(call):
+    if call.data == "half_year":
+        menu = get_menu(message)
+        bot.send_message(message.chat.id, 'Здесь должен быть график за полгода:') 
+    if call.data == "3_months":
+        menu = get_menu(message)
+        bot.send_message(message.chat.id, 'Здесь должен быть график за 3 месяца:')
+    if call.data == "month":
+        menu = get_menu(message)
+        bot.send_message(message.chat.id, 'Здесь должен быть график за 1 месяц:')
+    if call.data == "week":
+        menu = get_menu(message)
+        bot.send_message(message.chat.id, 'Здесь должен быть график за неделю:')
+
 @bot.message_handler(content_types=['text'])
 def get_various_messages(message):    
 
@@ -99,12 +114,15 @@ def get_various_messages(message):
             menu = get_menu(message)
             bot.send_message(message.chat.id, 'Вы не авторизовались!', reply_markup=menu)
         else:
+            keyboard = types.InlineKeyboardMarkup()
+            btn1 = types.InlineKeyboardButton('Полгода', callback_data='half_year')
+            btn2 = types.InlineKeyboardButton('3 месяца', callback_data='3_months')
+            btn3 = types.InlineKeyboardButton('месяц', callback_data='month')
+            btn4 = types.InlineKeyboardButton('неделя', callback_data='week')
+            keyboard.add(btn1, btn2, btn3, btn4)
             menu = get_menu(message)
-            bot.send_message(
-                message.chat.id, 
-                f'Список кластеров: {user.get_cluster_names()}', 
-                reply_markup=menu
-            )
+            bot.send_message(message.chat.id, f'Список кластеров: {user.get_cluster_names()}')   
+            bot.send_message(message.chat.id, 'Пожалуйста, выберите, за какой временной промежуток вывести график:', reply_markup=keyboard)
             
     elif message.text == '/start':
         menu = get_menu(message)
