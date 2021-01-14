@@ -29,7 +29,7 @@ class PaginationData(PageNumberPagination):
     def get_paginated_response(self, data):
         return Response(data)
 
-def slice_data_by_timestamp(queryset):
+def slice_data_by_timestamp(queryset, multiplier, begin_date=None):
     res = list()
     i = 0
     time = datetime.now().date()
@@ -45,10 +45,14 @@ def slice_data_by_timestamp(queryset):
 
     detector_data_queryset = _get_detector_data()
 
-    min_timestamp = timestamp_aggregation['min_timestamp']
     max_timestamp = timestamp_aggregation['max_timestamp']
+    if begin_date is not None:
+        min_timestamp = max_timestamp - begin_date
+    else:
+        min_timestamp = timestamp_aggregation['min_timestamp']
+
     if min_timestamp and max_timestamp:
-        while min_timestamp + timedelta(days=i) <= max_timestamp:
+        while min_timestamp + timedelta(days=i*multiplier) <= max_timestamp:
             date_sliced_queryset = detector_data_queryset.filter(
                 timestamp=min_timestamp+timedelta(days=i)
             )

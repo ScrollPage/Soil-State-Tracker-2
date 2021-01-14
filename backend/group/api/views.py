@@ -50,7 +50,7 @@ class ClusterViewSet(SListCreateViewSet):
                         .defer('detector')
                 )
             )
-        sliced_data = slice_data_by_timestamp(detectors)
+        sliced_data = slice_data_by_timestamp(detectors, 1)
         resulting_queryset = queryset_mean(sliced_data, detectors)
         serializer = self.get_serializer(resulting_queryset, many=True)
         return Response(data=serializer.data, status=status.HTTP_200_OK)
