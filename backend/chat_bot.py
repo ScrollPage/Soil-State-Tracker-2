@@ -52,7 +52,7 @@ def code_authorization(message):
         menu = get_menu(message)
         bot.send_message(
             message.chat.id, 
-            f'Авторизация выполнена! Добро пожаловать, {user.get_full_name()}!',
+            f'Авторизация выполнена! Добро пожаловать, {user.get_full_name()}! ',
             reply_markup=menu
         )
 
@@ -74,7 +74,7 @@ def get_various_messages(message):
             menu = get_menu(message)
             bot.send_message(
                 message.chat.id, 
-                f'Вы уже авторизованы, {user.get_full_name()}',
+                f'Вы уже авторизованы, {user.get_full_name()}. Выберите одно из возможных действий на клавиатуре.',
                 reply_markup=menu    
             )
 
@@ -108,18 +108,18 @@ def get_various_messages(message):
             
     elif message.text == '/start':
         menu = get_menu(message)
-        bot.send_message(message.chat.id, 'Добро пожаловать!', reply_markup=menu)
+        bot.send_message(message.chat.id, 'Добро пожаловать! Выберите одно из возможных действий на клавиатуре.', reply_markup=menu)
 
     elif message.text == 'Выход':
         user = Client.objects.get(chat_id=message.chat.id)
         user.chat_id = None
         user.save()
         menu = get_menu(message)
-        bot.send_message(message.chat.id, 'Вы успешно вышли', reply_markup=menu)
+        bot.send_message(message.chat.id, 'Вы успешно вышли.', reply_markup=menu)
 
     else:   
         menu = get_menu(message)
-        bot.send_message(message.chat.id, 'Я вас не понимаю.', reply_markup=menu)  
+        bot.send_message(message.chat.id, 'Я вас не понимаю. Выберите одно из возможных действий на клавиатуре.', reply_markup=menu)  
         
 print('Compiled')
 
