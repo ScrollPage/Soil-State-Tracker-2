@@ -56,20 +56,49 @@ def code_authorization(message):
             reply_markup=menu
         )
 
+def get_cluster(call):
+    '''Получает кластер через call.data'''
+    user = Client.objects.get(chat_id=call.message.chat.id)
+    cluster = user.clusters.get(name=call.data.split(';')[1])
+    return cluster
+
 @bot.callback_query_handler(func=lambda call: True)
 def callback_inline(call):
-    if call.data == "half_year":
-        menu = get_menu(message)
-        bot.send_message(message.chat.id, 'Здесь должен быть график за полгода:') 
-    if call.data == "3_months":
-        menu = get_menu(message)
-        bot.send_message(message.chat.id, 'Здесь должен быть график за 3 месяца:')
-    if call.data == "month":
-        menu = get_menu(message)
-        bot.send_message(message.chat.id, 'Здесь должен быть график за 1 месяц:')
-    if call.data == "week":
-        menu = get_menu(message)
-        bot.send_message(message.chat.id, 'Здесь должен быть график за неделю:')
+    '''
+    Подсказка. 
+    Если выбирается промежуток времени, то в call.data после ; идет имя кластера
+    '''
+
+    if 'half_year' in call.data:
+        cluster = get_cluster(call)
+        bot.send_message(call.message.chat.id, 'Здесь должен быть график за полгода:') 
+
+    elif '3_months' in call.data:
+        cluster = get_cluster(call)
+        bot.send_message(call.message.chat.id, 'Здесь должен быть график за 3 месяца:')
+
+    elif 'month' in call.data:
+        cluster = get_cluster(call)
+        bot.send_message(call.message.chat.id, 'Здесь должен быть график за 1 месяц:')
+
+    elif 'week' in call.data:
+        cluster = get_cluster(call)
+        bot.send_message(call.message.chat.id, 'Здесь должен быть график за неделю:')
+
+    elif 'cluster_' in call.data :
+        cluster_name = call.data.split('cluster_')[1]
+        keyboard = types.InlineKeyboardMarkup()
+        keyboard.add(
+            types.InlineKeyboardButton('Полгода', callback_data=f'half_year;{cluster_name}'), 
+            types.InlineKeyboardButton('3 месяца', callback_data=f'3_months;{cluster_name}'), 
+            types.InlineKeyboardButton('месяц', callback_data=f'month;{cluster_name}'), 
+            types.InlineKeyboardButton('неделя', callback_data=f'week;{cluster_name}')
+        )
+        bot.send_message(
+            call.message.chat.id, 
+            f'Выберите помежуток времени, чтобы получить данные по кластеру {cluster_name}', 
+            reply_markup=keyboard
+        )
 
 @bot.message_handler(content_types=['text'])
 def get_various_messages(message):    
@@ -115,18 +144,21 @@ def get_various_messages(message):
             bot.send_message(message.chat.id, 'Вы не авторизовались!', reply_markup=menu)
         else:
             keyboard = types.InlineKeyboardMarkup()
-            btn1 = types.InlineKeyboardButton('Полгода', callback_data='half_year')
-            btn2 = types.InlineKeyboardButton('3 месяца', callback_data='3_months')
-            btn3 = types.InlineKeyboardButton('месяц', callback_data='month')
-            btn4 = types.InlineKeyboardButton('неделя', callback_data='week')
-            keyboard.add(btn1, btn2, btn3, btn4)
             menu = get_menu(message)
-            bot.send_message(message.chat.id, f'Список кластеров: {user.get_cluster_names()}')   
-            bot.send_message(message.chat.id, 'Пожалуйста, выберите, за какой временной промежуток вывести график:', reply_markup=keyboard)
+            bot.send_message(message.chat.id, f'Список кластеров: ')   
+            for cluster_name in user.get_cluster_names():
+                keyboard.add(types.InlineKeyboardButton(
+                    f'Кластер {cluster_name}', callback_data=f'cluster_{cluster_name}')
+                )
+            bot.send_message(
+                message.chat.id, 
+                'Пожалуйста, выберите кластер.', 
+                reply_markup=keyboard
+            )
             
     elif message.text == '/start':
         menu = get_menu(message)
-        bot.send_message(message.chat.id, 'Добро пожаловать! Выберите одно из возможных действий на клавиатуре.', reply_markup=menu)
+        bot.send_message(message.chat.id, 'Добро пожаловать! Авторизуйтесь, пожалуйста.', reply_markup=menu)
 
     elif message.text == 'Выход':
         user = Client.objects.get(chat_id=message.chat.id)

@@ -69,8 +69,7 @@ class Client(AbstractBaseUser, PermissionsMixin):
         return ''.join(f'| {detector.id} ' for detector in detectors) + '|'
 
     def get_cluster_names(self):
-        clusters = self.clusters.all()
-        return ''.join(f'| {cluster} ' for cluster in clusters) + '|'
+        return [cluster.name for cluster in self.clusters.all()]
 
 class AuthCode(models.Model):
     '''Код авторизации для телеграма'''

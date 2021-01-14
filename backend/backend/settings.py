@@ -102,7 +102,7 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': os.environ.get('SQL_ENGINE', 'django.db.backends.postgresql'),
-        'NAME': os.environ.get('SQL_DATABASE', 'Soil-State-Tracker-2'),
+        'NAME': os.environ.get('SQL_DATABASE', 'postgres'),
         'USER': os.environ.get('SQL_USER', 'postgres'),
         'PASSWORD': os.environ.get('SQL_PASSWORD', 'pass'),
         'HOST': os.environ.get('SQL_HOST', '127.0.0.1'),
