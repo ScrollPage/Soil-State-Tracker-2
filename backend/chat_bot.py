@@ -14,8 +14,9 @@ django.setup()
 from client.models import Client, AuthCode
 from detector.models import Detector
 from group.models import Cluster
+from backend.local import CHAT_BOT_TOKEN
 
-bot = telebot.TeleBot('1467374444:AAHuKNmwn6GgzXR0nS2WFZHksy1kuWtpOco')
+bot = telebot.TeleBot(CHAT_BOT_TOKEN)
 print('Connecting to Telegram Bot...')
 
 def auth(message):
@@ -30,9 +31,9 @@ def get_menu(message):
         menu.row('Авторизация')
     else:
         menu.row('Выход')
-    finally:
         menu.row('Список датчиков', 'Список кластеров')
-    return menu
+    finally:
+        return menu
 
 def code_authorization(message):
     try:
@@ -85,7 +86,11 @@ def get_various_messages(message):
             bot.send_message(message.chat.id, 'Вы не авторизовались!', reply_markup=menu)
         else:
             menu = get_menu(message)
-            bot.send_message(message.chat.id, f'Список датчиков: {user.get_detector_ids()}', reply_markup=menu)
+            bot.send_message(
+                message.chat.id, 
+                f'Список датчиков: {user.get_detector_ids()}', 
+                reply_markup=menu
+            )
 
     elif message.text == "Список кластеров":
         try:
@@ -95,7 +100,11 @@ def get_various_messages(message):
             bot.send_message(message.chat.id, 'Вы не авторизовались!', reply_markup=menu)
         else:
             menu = get_menu(message)
-            bot.send_message(message.chat.id, f'Список кластеров: {user.get_cluster_names()}', reply_markup=menu)
+            bot.send_message(
+                message.chat.id, 
+                f'Список кластеров: {user.get_cluster_names()}', 
+                reply_markup=menu
+            )
             
     elif message.text == '/start':
         menu = get_menu(message)
