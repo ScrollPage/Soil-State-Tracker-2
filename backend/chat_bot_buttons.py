@@ -20,7 +20,17 @@ print('Connecting to Telegram Bot...')
 
 def auth(message):
     msg = bot.send_message(message.chat.id, 'Введите код: ')
-    bot.register_next_step_handler(msg, code_authorization)   
+    bot.register_next_step_handler(msg, code_authorization) 
+
+def get_simple_menu(message):
+    s_menu = types.ReplyKeyboardMarkup(True, True)
+    try:
+        Client.objects.get(chat_id=message.chat.id)
+    except Client.DoesNotExist:
+        s_menu.row('Авторизация')
+    else:
+        s_menu.row('Выход')
+    return s_menu  
 
 def get_menu(message):
     menu = types.InlineKeyboardMarkup()
@@ -30,7 +40,7 @@ def get_menu(message):
         auth_button = types.InlineKeyboardButton(text="Авторизация", callback_data="Auth")
         menu.add(auth_button)
     else:
-        exit_button = types.InlineKeyboardButton(text="Авторизация", callback_data="Exit")
+        exit_button = types.InlineKeyboardButton(text="Выход", callback_data="Exit")
         menu.add(exit_button)
     finally:
         detectors_button = types.InlineKeyboardButton(text="Список датчиков", callback_data="Detectors")
@@ -42,7 +52,7 @@ def code_authorization(message):
     try:
         code = AuthCode.objects.get(code=message.text)
     except AuthCode.DoesNotExist:
-        menu = get_menu(message)
+        menu = get_simple_menu(message)
         bot.send_message(
             message.chat.id, 
             'Неверный код! Попробуйте авторизоваться еще раз!',
@@ -129,12 +139,29 @@ def callback_inline(call):
 
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
-menu = get_menu(message)
+menu = get_simple_menu(message)
 bot.send_message(message.chat.id, 'Добро пожаловать! Выберите одно из возможных действий:', reply_markup=menu)
 
 @bot.message_handler(content_types=['text'])
-def get_various_messages(message):    
-    bot.send_message(message.chat.id, 'Я вас не понимаю. Выберите одно из возможных действий:', reply_markup=menu)  
+def get_various_messages(message): 
+    if message.text == 'Авторизация':
+        try:
+            user = Client.objects.get(chat_id=message.chat.id)
+        except Client.DoesNotExist:
+            bot.send_message(
+                message.chat.id, 
+                'Пожалуйста, авторизуйтесь.'
+            )
+            auth(message)            
+        else:
+            menu = get_menu(message)
+            bot.send_message(
+                message.chat.id, 
+                f'Вы уже авторизованы, {user.get_full_name()}. Выберите одно из возможных действий:',
+                reply_markup=menu    
+            )
+    else:
+        bot.send_message(message.chat.id, 'Я вас не понимаю. Выберите одно из возможных действий:', reply_markup=menu)  
         
 print('Compiled and successfully connected!')
 
