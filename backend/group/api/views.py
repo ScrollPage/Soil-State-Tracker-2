@@ -47,7 +47,7 @@ class ClusterViewSet(SListCreateViewSet):
                 Prefetch(
                     'data',
                     queryset=DetectorData.objects.all() \
-                        .defer('detector')
+                        .only('timestamp')
                 )
             )
         sliced_data = slice_data_by_timestamp(detectors, 1)

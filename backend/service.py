@@ -5,6 +5,7 @@ from aiogram.types import ReplyKeyboardRemove, \
     InlineKeyboardMarkup, InlineKeyboardButton
 from quickchart import QuickChart
 from datetime import timedelta
+import numpy as np
 
 import os
 import django
@@ -77,24 +78,11 @@ def get_none_value(d, key):
             return val 
 
 def detect_non_none_values(arr):
-    i = 0
-    while i < len(arr):
-        if arr[i] is not None:
-            break
-        i += 1
-    return arr[i:]
+    indices = np.where(np.array(arr)!=None)[0]
+    return arr[indices[0]:indices[-1]+1]
 
-def divide_queryset(resulting_queryset):
-    first_temp_arr = [get_none_value(d, 'first_temp') for d in resulting_queryset]
-    second_temp_arr = [get_none_value(d, 'second_temp') for d in resulting_queryset]
-    third_temp_arr = [get_none_value(d, 'third_temp') for d in resulting_queryset]
-    humidity_arr = [get_none_value(d, 'humidity') for d in resulting_queryset]
-    lightning_arr = [get_none_value(d, 'lightning') for d in resulting_queryset]
-    pH_arr = [get_none_value(d, 'pH') for d in resulting_queryset]
-    timestamp_arr = [get_none_value(d, 'timestamp') for d in resulting_queryset]
-
-    return first_temp_arr, second_temp_arr, third_temp_arr, \
-        humidity_arr, lightning_arr, pH_arr, timestamp_arr
+def divide_queryset(resulting_queryset, attribute_arr):
+    return ([get_none_value(d, attr) for d in resulting_queryset] for attr in attribute_arr)
 
 def time_correction(date):
     try:
@@ -123,24 +111,31 @@ def send_chart_data(mean_data, timestamp_arr, attribute):
     return qc.get_url()
 
 def get_pictures_url(time_interval, time_frequency, cluster):
-    attribute_arr = [
+    attribute_arr_ru = [
         'Первая температура', 'Вторая температура', 'Третья температура',
         'Влажность', 'Освещенность', 'Кислотность', 'Время'
+    ]
+    attribute_arr_eng = [
+        'first_temp', 'second_temp', 'third_temp',
+        'humidity', 'lightning', 'pH', 'timestamp'
     ]
     detectors = cluster.cluster_detectors.all() \
             .prefetch_related(
                 Prefetch(
                     'data',
                     queryset=DetectorData.objects.all() \
-                        .defer('detector')
+                        .only('timestamp')
                 )
             )
         
     sliced_data = slice_data_by_timestamp(detectors, time_frequency, time_interval)
     resulting_queryset = queryset_mean(sliced_data, detectors)
 
-    data_arr = list(map(detect_non_none_values, list(map(list, divide_queryset(resulting_queryset)))))
+    data_arr = list(map(detect_non_none_values, 
+            map(list, divide_queryset(resulting_queryset, attribute_arr_eng))
+        )
+    )
     data_arr[-1] = time_arr_correction(data_arr[-1])
-    data_arr = list(zip(data_arr, attribute_arr))
+    data_arr = list(zip(data_arr, attribute_arr_ru))
 
-    return list(map(lambda data_slice: send_chart_data(data_slice[0], data_arr[-1], data_slice[1]), data_arr[:-1]))
+    return map(lambda data_slice: send_chart_data(data_slice[0], data_arr[-1], data_slice[1]), data_arr[:-1])

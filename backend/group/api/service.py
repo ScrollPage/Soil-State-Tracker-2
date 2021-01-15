@@ -34,16 +34,12 @@ def slice_data_by_timestamp(queryset, multiplier, begin_date=None):
     i = 0
     time = datetime.now().date()
 
-    @cached_as(queryset)
-    def _get_detector_data():
-        return DetectorData.objects.filter(detector__in=queryset).nocache()
-
     timestamp_aggregation = queryset.aggregate(
             min_timestamp=Min('data__timestamp'),
             max_timestamp=Max('data__timestamp')
         )
 
-    detector_data_queryset = _get_detector_data()
+    detector_data_queryset = DetectorData.objects.filter(detector__in=queryset)
 
     max_timestamp = timestamp_aggregation['max_timestamp']
     if begin_date is not None and max_timestamp is not None:
