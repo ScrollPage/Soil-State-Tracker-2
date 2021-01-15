@@ -29,7 +29,7 @@ def auth(message):
     bot.register_next_step_handler(msg, code_authorization)   
 
 def get_menu(message):
-    menu = types.ReplyKeyboardMarkup(True, True)
+    menu = types.ReplyKeyboardMarkup(True, one_time_keyboard=True)
     try:
         Client.objects.get(chat_id=message.chat.id)
     except Client.DoesNotExist:
