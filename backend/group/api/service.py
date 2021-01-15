@@ -46,15 +46,16 @@ def slice_data_by_timestamp(queryset, multiplier, begin_date=None):
     detector_data_queryset = _get_detector_data()
 
     max_timestamp = timestamp_aggregation['max_timestamp']
-    if begin_date is not None:
+    if begin_date is not None and max_timestamp is not None:
         min_timestamp = max_timestamp - begin_date
     else:
         min_timestamp = timestamp_aggregation['min_timestamp']
 
     if min_timestamp and max_timestamp:
-        while min_timestamp + timedelta(days=i*multiplier) <= max_timestamp:
+        while min_timestamp + timedelta(days=(i+1)*multiplier) <= max_timestamp:
             date_sliced_queryset = detector_data_queryset.filter(
-                timestamp=min_timestamp+timedelta(days=i)
+                timestamp__gte=min_timestamp+timedelta(days=i*multiplier),
+                timestamp__lte=min_timestamp+timedelta(days=(i+1)*multiplier)
             )
             i += 1
             res.append(date_sliced_queryset)
