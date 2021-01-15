@@ -6,6 +6,7 @@ from aiogram.types import ReplyKeyboardRemove, \
 from quickchart import QuickChart
 from datetime import timedelta
 import numpy as np
+import requests
 
 import os
 import django
@@ -78,8 +79,8 @@ def get_none_value(d, key):
             return val 
 
 def detect_non_none_values(arr):
-    indices = np.where(np.array(arr)!=None)[0]
-    return arr[indices[0]:indices[-1]+1]
+    arr = np.array(arr)
+    return list(arr[arr!=None])
 
 def divide_queryset(resulting_queryset, attribute_arr):
     return ([get_none_value(d, attr) for d in resulting_queryset] for attr in attribute_arr)
@@ -93,7 +94,7 @@ def time_correction(date):
 def time_arr_correction(timestamp_arr):
     return list(map(time_correction, timestamp_arr))
 
-def send_chart_data(mean_data, timestamp_arr, attribute):
+def get_chart_url(mean_data, timestamp_arr, attribute):
     qc = QuickChart()
     qc.width = 500
     qc.height = 300
@@ -101,7 +102,7 @@ def send_chart_data(mean_data, timestamp_arr, attribute):
     qc.config = {
         "type": "line",
         "data": {
-            "labels": timestamp_arr[0],
+            "labels": timestamp_arr,
             "datasets": [{
                 "label": attribute,
                 "data": mean_data
@@ -113,7 +114,7 @@ def send_chart_data(mean_data, timestamp_arr, attribute):
 def get_pictures_url(time_interval, time_frequency, cluster):
     attribute_arr_ru = [
         'Первая температура', 'Вторая температура', 'Третья температура',
-        'Влажность', 'Освещенность', 'Кислотность', 'Время'
+        'Влажность', 'Освещенность', 'Кислотность'
     ]
     attribute_arr_eng = [
         'first_temp', 'second_temp', 'third_temp',
@@ -135,7 +136,10 @@ def get_pictures_url(time_interval, time_frequency, cluster):
             map(list, divide_queryset(resulting_queryset, attribute_arr_eng))
         )
     )
-    data_arr[-1] = time_arr_correction(data_arr[-1])
-    data_arr = list(zip(data_arr, attribute_arr_ru))
+    timestamp_arr = time_arr_correction(data_arr[-1])
+    data_arr = data_arr[:-1]
 
-    return map(lambda data_slice: send_chart_data(data_slice[0], data_arr[-1], data_slice[1]), data_arr[:-1])
+    return map(
+        lambda data_slice, attr: get_chart_url(data_slice, timestamp_arr, attr), 
+        data_arr, attribute_arr_ru
+    )
