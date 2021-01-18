@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'chat',
     'client',
     'detector',
+    'detector_data',
     'group',
     'payment',
 ]

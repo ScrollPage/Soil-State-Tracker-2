@@ -3,14 +3,16 @@ from rest_framework.mixins import ListModelMixin, CreateModelMixin, UpdateModelM
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from django.db.models import Min, Max, Avg
+from django.utils import timezone
 
-from datetime import datetime, timedelta
-from cacheops import cached_as
+import numpy as np
+from datetime import timedelta
 
 from backend.service import SerializerMixin
-from detector.models import Detector, DetectorData
+from detector.models import Detector
+from detector_data.models import DetectorData
 
-class SListCreateViewSet(SerializerMixin,
+class SListCreateUpdateViewSet(SerializerMixin,
                          GenericViewSet,
                          ListModelMixin,
                          UpdateModelMixin,
@@ -29,64 +31,26 @@ class PaginationData(PageNumberPagination):
     def get_paginated_response(self, data):
         return Response(data)
 
-def slice_data_by_timestamp(queryset, multiplier, begin_date=None):
-    res = list()
-    i = 0
-    time = datetime.now().date()
-
-    timestamp_aggregation = queryset.aggregate(
-            min_timestamp=Min('data__timestamp'),
-            max_timestamp=Max('data__timestamp')
+def get_aggregated_data(queryset, multiplier, begin_date):
+    ranges = (begin_date, timezone.now())
+    detector_data_queryset = DetectorData.timescale.filter(timestamp__range=ranges, detector__in=queryset) \
+        .time_bucket_gapfill('timestamp', f'{multiplier} day', ranges[0], ranges[1], datapoints=1) \
+        .annotate(
+            Avg('first_temp'), Avg('second_temp'), Avg('third_temp'), 
+            Avg('lightning'), Avg('humidity'), Avg('pH')
         )
 
-    detector_data_queryset = DetectorData.objects.filter(detector__in=queryset)
-
-    max_timestamp = timestamp_aggregation['max_timestamp']
-    if begin_date is not None and max_timestamp is not None:
-        min_timestamp = max_timestamp - begin_date
-    else:
-        min_timestamp = timestamp_aggregation['min_timestamp']
-
-    if min_timestamp and max_timestamp:
-        while min_timestamp + timedelta(days=(i+1)*multiplier) <= max_timestamp:
-            date_sliced_queryset = detector_data_queryset.filter(
-                timestamp__gte=min_timestamp+timedelta(days=i*multiplier),
-                timestamp__lte=min_timestamp+timedelta(days=(i+1)*multiplier)
-            )
-            i += 1
-            res.append(date_sliced_queryset)
+    res = list()
+    for data in detector_data_queryset:
+        if data['first_temp__avg'] is not None:
+            res.append(dict(
+            first_temp=data['first_temp__avg'],
+            second_temp=data['second_temp__avg'],
+            third_temp=data['third_temp__avg'],
+            humidity=data['humidity__avg'],
+            lightning=data['lightning__avg'],
+            pH=data['pH__avg'],
+            timestamp=data['bucket'],
+        ))
 
     return res
-
-def queryset_mean(queryset, detectors):
-
-    def map_slicing_func(queryset, detectors=detectors):
-        if not queryset:
-            return
-
-        @cached_as(queryset, extra=detectors)
-        def _get_aggregation(queryset=queryset):
-            return queryset \
-                .aggregate(
-                    mean_first_temp=Avg('first_temp'),
-                    mean_second_temp =Avg('second_temp'),
-                    mean_third_temp=Avg('third_temp'),
-                    mean_humidity=Avg('humidity'),
-                    mean_lightning=Avg('lightning'),
-                    mean_pH=Avg('pH'),
-                    mean_timestamp=Min('timestamp'),
-                )
-
-        aggregated_data = _get_aggregation()
-
-        return dict(
-            first_temp = aggregated_data['mean_first_temp'],
-            second_temp = aggregated_data['mean_second_temp'],
-            third_temp = aggregated_data['mean_third_temp'],
-            humidity = aggregated_data['mean_humidity'],
-            lightning = aggregated_data['mean_lightning'],
-            pH = aggregated_data['mean_pH'],
-            timestamp = aggregated_data['mean_timestamp'],
-        )
-    
-    return list(map(map_slicing_func, queryset))

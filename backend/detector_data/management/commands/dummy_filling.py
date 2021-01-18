@@ -1,6 +1,7 @@
 from django.core.management.base import BaseCommand
 
-from detector.models import Detector, DetectorData
+from detector.models import Detector
+from detector_data.models import DetectorData
 
 class Command(BaseCommand):
     help = 'Creates a random DetectorData with the ability of possible date deviation'

@@ -17,10 +17,11 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'backend.settings')
 django.setup()
     
 from client.models import Client, AuthCode
-from detector.models import Detector, DetectorData
+from detector.models import Detector
+from detector_data.models import DetectorData
 from group.models import Cluster
 from backend.local import CHAT_BOT_TOKEN
-from group.api.service import slice_data_by_timestamp, queryset_mean
+from group.api.service import get_aggregated_data
 
 bot = telebot.TeleBot(CHAT_BOT_TOKEN)
 
@@ -64,35 +65,21 @@ def code_authorization(message):
 def get_cluster(call):
     '''Получает кластер через call.data'''
     user = Client.objects.get(chat_id=call.message.chat.id)
-    cluster = user.clusters.get(name=call.data.split(';')[1])
+    cluster = user.clusters.get(name=call.data.split(':')[1])
     return cluster
 
 def get_none_value(d, key):
-    try:
-        val = d[key]
+    val = d[key]
+    try: 
+        return float(val)
     except TypeError:
-        return None
-    else:
-        try: 
-            return float(val)
-        except TypeError:
-            return val 
-
-def detect_non_none_values(arr):
-    arr = np.array(arr)
-    return list(arr[arr!=None])
+        return val
 
 def divide_queryset(resulting_queryset, attribute_arr):
     return ([get_none_value(d, attr) for d in resulting_queryset] for attr in attribute_arr)
 
 def time_correction(date):
-    try:
-        return f'{date.year}-{date.month}-{date.day}'
-    except AttributeError:
-        return 
-
-def time_arr_correction(timestamp_arr):
-    return list(map(time_correction, timestamp_arr))
+    return f'{date.year}-{date.month}-{date.day}'
 
 def get_chart_url(mean_data, timestamp_arr, attribute):
     qc = QuickChart()
@@ -111,35 +98,25 @@ def get_chart_url(mean_data, timestamp_arr, attribute):
     }
     return qc.get_url()
 
-def get_pictures_url(time_interval, time_frequency, cluster):
+def get_pictures_url(cluster, multiplier, begin_date):
     attribute_arr_ru = [
         'Первая температура', 'Вторая температура', 'Третья температура',
         'Влажность', 'Освещенность', 'Кислотность'
     ]
     attribute_arr_eng = [
         'first_temp', 'second_temp', 'third_temp',
-        'humidity', 'lightning', 'pH', 'timestamp'
+        'humidity', 'lightning', 'pH'
     ]
-    detectors = cluster.cluster_detectors.all() \
-            .prefetch_related(
-                Prefetch(
-                    'data',
-                    queryset=DetectorData.objects.all() \
-                        .only('timestamp')
-                )
-            )
+    detectors = cluster.cluster_detectors.all()
         
-    sliced_data = slice_data_by_timestamp(detectors, time_frequency, time_interval)
-    resulting_queryset = queryset_mean(sliced_data, detectors)
-
-    data_arr = list(map(detect_non_none_values, 
-            map(list, divide_queryset(resulting_queryset, attribute_arr_eng))
-        )
+    resulting_queryset = get_aggregated_data(detectors, multiplier, begin_date)
+    timestamp_arr = list(
+        [time_correction(data['timestamp'].date()) for data in resulting_queryset]
     )
-    timestamp_arr = time_arr_correction(data_arr[-1])
-    data_arr = data_arr[:-1]
+    print(timestamp_arr)
+    resulting_queryset = divide_queryset(resulting_queryset, attribute_arr_eng)
 
     return map(
         lambda data_slice, attr: get_chart_url(data_slice, timestamp_arr, attr), 
-        data_arr, attribute_arr_ru
+        resulting_queryset, attribute_arr_ru
     )

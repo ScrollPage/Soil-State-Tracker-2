@@ -1,23 +1,25 @@
 from rest_framework import permissions, status
 from rest_framework.response import Response 
 from rest_framework.decorators import action
-from django.db.models import Count, Prefetch, Avg
+from django.db.models import Count, Prefetch, Avg, Min
+from django.utils import timezone
 
 from cacheops import cached_as
 from cacheops import invalidate_model
+import datetime as dt
 
 from .serializers import ClusterSerializer, ClusterDetectorSerializer
 from .service import (
-    SListCreateViewSet, 
+    SListCreateUpdateViewSet, 
     PaginationData, 
-    slice_data_by_timestamp,
-    queryset_mean,
+    get_aggregated_data,
 )
-from detector.api.serializers import DetectorSerializer, DetectorDataSerializer
+from detector.api.serializers import DetectorSerializer
+from detector_data.api.serializers import DetectorDataSerializer
 from group.models import Cluster
-from detector.models import DetectorData
+from detector_data.models import DetectorData
 
-class ClusterViewSet(SListCreateViewSet):
+class ClusterViewSet(SListCreateUpdateViewSet):
     '''
     Список кластеров
     '''
@@ -39,19 +41,24 @@ class ClusterViewSet(SListCreateViewSet):
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
 
+    def get_query_params_date(self):
+        begin_date = self.request.query_params.get('begin_date', None)
+        currency = self.request.query_params.get('currency', '1')
+        if begin_date is None:
+            begin_date = timezone.now()
+        else:
+            begin_date = dt.datetime.strptime(begin_date, '%Y-%m-%d').date()
+        currency = int(currency)
+        return begin_date, currency
+
     @action(detail=False, methods=['get'])
     def get_mean_data(self, request, *args, **kwargs):
         cluster = self.get_object()
-        detectors = cluster.cluster_detectors.all() \
-            .prefetch_related(
-                Prefetch(
-                    'data',
-                    queryset=DetectorData.objects.all() \
-                        .only('timestamp')
-                )
-            )
-        sliced_data = slice_data_by_timestamp(detectors, 1)
-        resulting_queryset = queryset_mean(sliced_data, detectors)
+        detectors = cluster.cluster_detectors.all()
+
+        begin_date, currency = self.get_query_params_date()
+        resulting_queryset = get_aggregated_data(detectors, currency, begin_date)
+
         serializer = self.get_serializer(resulting_queryset, many=True)
         return Response(data=serializer.data, status=status.HTTP_200_OK)
         

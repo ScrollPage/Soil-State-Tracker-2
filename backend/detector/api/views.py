@@ -3,7 +3,8 @@ from rest_framework import permissions, status
 from rest_framework.response import Response
 
 from .service import PSListViewSet
-from .serializers import DetectorSerializer, DetectorDataSerializer
+from .serializers import DetectorSerializer
+from detector_data.api.serializers import DetectorDataSerializer
 from detector.models import Detector
 
 class DetectorViewSet(PSListViewSet):

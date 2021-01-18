@@ -10,7 +10,7 @@ class ClusterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Cluster
-        fields = ['id', 'name', 'num_detectors', 'cluster_detectors']
+        fields = ['id', 'name', 'num_detectors', 'cluster_detectors', 'title']
         read_only_fields = ['id']
 
 class ClusterDetectorSerializer(serializers.Serializer):

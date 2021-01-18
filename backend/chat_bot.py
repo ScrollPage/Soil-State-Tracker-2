@@ -3,7 +3,7 @@ from telebot import types
 from aiogram.types import ReplyKeyboardRemove, \
     ReplyKeyboardMarkup, KeyboardButton, \
     InlineKeyboardMarkup, InlineKeyboardButton
-from datetime import timedelta
+import datetime as dt
 
 import os
 import django
@@ -20,37 +20,37 @@ print('Connecting to Telegram Bot...')
 def callback_inline(call):
     '''
     Подсказка. 
-    Если выбирается промежуток времени, то в call.data после ; идет имя кластера
+    Если выбирается промежуток времени, то в call.data после : идет имя кластера
     '''
 
     if 'half_year' in call.data:
         cluster = get_cluster(call)
-        for url in get_pictures_url(timedelta(days=162), 36, cluster):
+        for url in get_pictures_url(cluster, 24, dt.datetime.now().date()-dt.timedelta(days=162)):
             bot.send_photo(call.message.chat.id, url) 
 
     elif '3_months' in call.data:
         cluster = get_cluster(call)
-        for url in get_pictures_url(timedelta(days=91), 12, cluster):
+        for url in get_pictures_url(cluster, 12, dt.datetime.now().date()-dt.timedelta(days=91)):
             bot.send_photo(call.message.chat.id, url)
 
     elif 'month' in call.data:
         cluster = get_cluster(call)
-        for url in get_pictures_url(timedelta(days=31), 4, cluster):
+        for url in get_pictures_url(cluster, 4, dt.datetime.now().date()-dt.timedelta(days=31)):
             bot.send_photo(call.message.chat.id, url)
 
     elif 'week' in call.data:
         cluster = get_cluster(call)
-        for url in get_pictures_url(timedelta(days=7), 1, cluster):
+        for url in get_pictures_url(cluster, 1, dt.datetime.now().date()-dt.timedelta(days=7)):
             bot.send_photo(call.message.chat.id, url)
 
     elif 'cluster_' in call.data :
         cluster_name = call.data.split('cluster_')[1]
         keyboard = types.InlineKeyboardMarkup()
         keyboard.add(
-            types.InlineKeyboardButton('Полгода', callback_data=f'half_year;{cluster_name}'), 
-            types.InlineKeyboardButton('3 месяца', callback_data=f'3_months;{cluster_name}'), 
-            types.InlineKeyboardButton('месяц', callback_data=f'month;{cluster_name}'), 
-            types.InlineKeyboardButton('неделя', callback_data=f'week;{cluster_name}')
+            types.InlineKeyboardButton('Полгода', callback_data=f'half_year:{cluster_name}'), 
+            types.InlineKeyboardButton('3 месяца', callback_data=f'3_months:{cluster_name}'), 
+            types.InlineKeyboardButton('месяц', callback_data=f'month:{cluster_name}'), 
+            types.InlineKeyboardButton('неделя', callback_data=f'week:{cluster_name}')
         )
         bot.send_message(
             call.message.chat.id, 

@@ -11,6 +11,7 @@ class Cluster(models.Model):
         on_delete=models.CASCADE,
         related_name='clusters'
     )
+    title = models.TextField(max_length=5000, default='')
 
     def __str__(self):
         return self.name
