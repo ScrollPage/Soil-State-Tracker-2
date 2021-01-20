@@ -40,16 +40,6 @@ class ClusterViewSet(SListCreateUpdateViewSet):
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
 
-    def get_query_params_date(self):
-        begin_date = self.request.query_params.get('begin_date', None)
-        currency = self.request.query_params.get('currency', '1')
-        if begin_date is None:
-            begin_date = timezone.now()
-        else:
-            begin_date = dt.datetime.strptime(begin_date, '%Y-%m-%d').date()
-        currency = int(currency)
-        return begin_date, currency
-
     @action(detail=False, methods=['get'])
     def get_mean_data(self, request, *args, **kwargs):
         cluster = self.get_object()

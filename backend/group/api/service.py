@@ -8,19 +8,21 @@ from django.utils import timezone
 import numpy as np
 from datetime import timedelta
 
-from backend.service import SerializerMixin
+from backend.service import SerializerMixin, QueryDate
 from detector.models import Detector
 from detector_data.models import DetectorData
 
 class SListCreateUpdateViewSet(SerializerMixin,
-                         GenericViewSet,
-                         ListModelMixin,
-                         UpdateModelMixin,
-                         CreateModelMixin
-                        ):
+                               GenericViewSet,
+                               ListModelMixin,
+                               UpdateModelMixin,
+                               CreateModelMixin,
+                               QueryDate
+                            ):
     '''
     Переопредение методов определения прав доступа и сериализатора
     Методы: list create
+    Метод get_query_params_date
     '''
     pass
 

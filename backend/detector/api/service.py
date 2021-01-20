@@ -1,10 +1,11 @@
 from rest_framework.viewsets import GenericViewSet
 from rest_framework.mixins import ListModelMixin
-from backend.service import SerializerMixin
+from backend.service import SerializerMixin, QueryDate
 
 class PSListViewSet(SerializerMixin,
                     GenericViewSet,
-                    ListModelMixin
+                    ListModelMixin,
+                    QueryDate
                 ):
     '''
     Переопредение методов определения прав доступа и сериализатора

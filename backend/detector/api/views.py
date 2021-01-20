@@ -6,6 +6,7 @@ from .service import PSListViewSet
 from .serializers import DetectorSerializer
 from detector_data.api.serializers import DetectorDataSerializer
 from detector.models import Detector
+from group.api.service import get_aggregated_data
 
 class DetectorViewSet(PSListViewSet):
     '''
@@ -29,6 +30,9 @@ class DetectorViewSet(PSListViewSet):
     @action(detail=False, methods=['get'])
     def get_detector_data(self, request, *args, **kwargs):
         detector = self.get_object()
-        detector_data = detector.data.all()
-        serializer = self.get_serializer(detector_data, many=True)
+        
+        begin_date, currency = self.get_query_params_date()
+        resulting_queryset = get_aggregated_data([detector], currency, begin_date)
+
+        serializer = self.get_serializer(resulting_queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
