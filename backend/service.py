@@ -75,6 +75,12 @@ def get_detector(call):
     detector = user.detectors.get(id=int(call.data.split(':')[2]))
     return detector
 
+def get_cluster_name(call):
+    return call.data.split(':')[2]
+
+def get_detector_id(call):
+    return call.data.split(':')[1]
+
 def get_none_value(d, key):
     val = d[key]
     try: 

@@ -14,8 +14,8 @@ django.setup()
     
 from client.models import Client
 from service import (
-    auth, get_pictures_url, bot, get_menu, 
-    get_cluster, get_detector, get_time_keyboard
+    auth, get_pictures_url, bot, get_menu, get_cluster_name,
+    get_cluster, get_detector, get_time_keyboard, get_detector_id
 )
 
 print('Connecting to Telegram Bot...')
@@ -78,7 +78,7 @@ def callback_inline(call):
             )
 
     elif 'detector' in call.data:
-        detector_id = call.data.split(':')[1]
+        detector_id = get_detector_id(call)
         keyboard = get_time_keyboard('detector', detector_id)
         bot.send_message(
             call.message.chat.id, 
