@@ -56,7 +56,7 @@ def callback_inline(call):
 
 
     elif 'cluster' in call.data:
-        cluster_name = call.data.split(':')[2]
+        cluster_name = get_cluster_name(call)
         if 'info' in call.data:
             keyboard = get_time_keyboard('cluster', cluster_name)
             bot.send_message(
