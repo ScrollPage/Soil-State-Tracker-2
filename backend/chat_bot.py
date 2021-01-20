@@ -25,7 +25,7 @@ def callback_inline(call):
 
     if 'half_year' in call.data:
         cluster = get_cluster(call)
-        for url in get_pictures_url(cluster, 24, dt.datetime.now().date()-dt.timedelta(days=162)):
+        for url in get_pictures_url(cluster, 24, dt.datetime.now().date()-dt.timedelta(days=182)):
             bot.send_photo(call.message.chat.id, url) 
 
     elif '3_months' in call.data:
@@ -35,7 +35,7 @@ def callback_inline(call):
 
     elif 'month' in call.data:
         cluster = get_cluster(call)
-        for url in get_pictures_url(cluster, 4, dt.datetime.now().date()-dt.timedelta(days=31)):
+        for url in get_pictures_url(cluster, 4, dt.datetime.now().date()-dt.timedelta(days=30)):
             bot.send_photo(call.message.chat.id, url)
 
     elif 'week' in call.data:

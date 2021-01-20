@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'cacheops',
+    # 'channels',
     'corsheaders',
     'djoser',
     'drf_yasg',
@@ -102,7 +103,7 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': os.environ.get('SQL_ENGINE', 'django.db.backends.postgresql'),
+        'ENGINE': os.environ.get('SQL_ENGINE', 'timescale.db.backends.postgresql'),
         'NAME': os.environ.get('SQL_DATABASE', 'postgres'),
         'USER': os.environ.get('SQL_USER', 'postgres'),
         'PASSWORD': os.environ.get('SQL_PASSWORD', 'pass'),

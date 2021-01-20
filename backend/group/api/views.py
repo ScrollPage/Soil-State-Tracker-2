@@ -1,11 +1,10 @@
 from rest_framework import permissions, status
 from rest_framework.response import Response 
 from rest_framework.decorators import action
-from django.db.models import Count, Prefetch, Avg, Min
+from django.db.models import Count, Prefetch
 from django.utils import timezone
 
 from cacheops import cached_as
-from cacheops import invalidate_model
 import datetime as dt
 
 from .serializers import ClusterSerializer, ClusterDetectorSerializer
