@@ -19,3 +19,6 @@ class Cluster(models.Model):
     class Meta:
         verbose_name = 'Кластер'
         verbose_name_plural = 'Кластеры'
+        
+    def get_detector_ids(self):
+        return [detector.id for detector in self.cluster_detectors.all()]

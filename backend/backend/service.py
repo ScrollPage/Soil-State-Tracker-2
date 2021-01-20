@@ -59,7 +59,7 @@ class PermissionSerializerMixin(PermissionMixin, SerializerMixin):
     pass
 
 class QueryDate:
-
+    '''Позволяет получать 2 query параметра: begin_date, currency'''
     def get_query_params_date(self):
         begin_date = self.request.query_params.get('begin_date', None)
         currency = self.request.query_params.get('currency', '1')

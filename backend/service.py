@@ -12,6 +12,7 @@ import os
 import django
 
 from django.db.models import Prefetch
+from django.utils import timezone
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'backend.settings')
 django.setup()
@@ -65,8 +66,14 @@ def code_authorization(message):
 def get_cluster(call):
     '''Получает кластер через call.data'''
     user = Client.objects.get(chat_id=call.message.chat.id)
-    cluster = user.clusters.get(name=call.data.split(':')[1])
+    cluster = user.clusters.get(name=call.data.split(':')[2])
     return cluster
+
+def get_detector(call):
+    '''Получает датчик через call.data'''
+    user = Client.objects.get(chat_id=call.message.chat.id)
+    detector = user.detectors.get(id=int(call.data.split(':')[2]))
+    return detector
 
 def get_none_value(d, key):
     val = d[key]
@@ -98,7 +105,7 @@ def get_chart_url(mean_data, timestamp_arr, attribute):
     }
     return qc.get_url()
 
-def get_pictures_url(cluster, multiplier, begin_date):
+def get_pictures_url(detectors, multiplier, begin_date):
     attribute_arr_ru = [
         'Первая температура', 'Вторая температура', 'Третья температура',
         'Влажность', 'Освещенность', 'Кислотность'
@@ -107,16 +114,24 @@ def get_pictures_url(cluster, multiplier, begin_date):
         'first_temp', 'second_temp', 'third_temp',
         'humidity', 'lightning', 'pH'
     ]
-    detectors = cluster.cluster_detectors.all()
         
     resulting_queryset = get_aggregated_data(detectors, multiplier, begin_date)
     timestamp_arr = list(
         [time_correction(data['timestamp'].date()) for data in resulting_queryset]
     )
-    print(timestamp_arr)
     resulting_queryset = divide_queryset(resulting_queryset, attribute_arr_eng)
 
     return map(
         lambda data_slice, attr: get_chart_url(data_slice, timestamp_arr, attr), 
         resulting_queryset, attribute_arr_ru
     )
+
+def get_time_keyboard(instance_type, instance):
+    keyboard = types.InlineKeyboardMarkup()
+    keyboard.add(
+        types.InlineKeyboardButton('Полгода', callback_data=f'{instance_type}:half_year:{instance}:data'), 
+        types.InlineKeyboardButton('3 месяца', callback_data=f'{instance_type}:3_months:{instance}:data'), 
+        types.InlineKeyboardButton('месяц', callback_data=f'{instance_type}:month:{instance}:data'), 
+        types.InlineKeyboardButton('неделя', callback_data=f'{instance_type}:week:{instance}:data')
+    )
+    return keyboard
