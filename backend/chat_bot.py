@@ -29,7 +29,7 @@ def callback_inline(call):
 
     if 'data' in call.data:
         if 'half_year' in call.data:
-            begin_date = timezone.now() - dt.timedelta(days=181)
+            begin_date = timezone.now() - dt.timedelta(days=182)
             currency = 24
 
         elif '3_months' in call.data:
