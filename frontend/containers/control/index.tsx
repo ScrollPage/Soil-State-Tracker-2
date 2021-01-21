@@ -1,44 +1,26 @@
 import React from "react";
-import { Transfers } from "@/components/Control/Transfers";
-import { Clusters } from "@/components/Control/Clusters";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
-import { Add } from "@/components/Control/Add";
 import Container from "@/components/UI/Container";
-import {
-  Wrapper,
-  Title,
-  Main,
-  TransferWrapper,
-  ClusterWrapper,
-} from "./styles";
-import { IDetector } from "@/types/detector";
-import { ICluster } from "@/types/cluster";
+import { Wrapper, Title, Main } from "./styles";
+import { SideBar } from "@/components/Control/SideBar/index.";
+import ChooseProvider from "@/context/control";
+import { Info } from "@/components/Control/Info/index";
+import { ResizePanel } from "@/components/Control/ResizePanel";
 
-interface ControlContainerProps {
-  detectors: IDetector[] | null;
-  clusters: ICluster[] | null;
-}
+interface ControlContainerProps {}
 
-export const ControlContainer: React.FC<ControlContainerProps> = ({
-  detectors,
-  clusters,
-}) => {
+export const ControlContainer: React.FC<ControlContainerProps> = ({}) => {
   return (
     <Container>
       <Wrapper>
         <Title>Управление</Title>
-        <Main>
-          <DndProvider backend={HTML5Backend}>
-            <TransferWrapper>
-              <Transfers detectors={detectors} />
-            </TransferWrapper>
-            <ClusterWrapper>
-              <Clusters clusters={clusters} />
-              <Add />
-            </ClusterWrapper>
-          </DndProvider>
-        </Main>
+        <ChooseProvider>
+          <Main>
+            <ResizePanel>
+              <SideBar />
+              <Info />
+            </ResizePanel>
+          </Main>
+        </ChooseProvider>
       </Wrapper>
     </Container>
   );

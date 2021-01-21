@@ -4,22 +4,10 @@ import { createGlobalStyle } from "styled-components";
 export const GlobalStyle = createGlobalStyle`
   ${normalize}
   * {
-    text-decoration: none;
     box-sizing: border-box;
   }
-  html {
-    height: 100%;
-    width: 100%;
-  }
-  #__next {
-    height: 100%;
-  }
   body {
-    overscroll-behavior: none;
-    overflow-x: hidden;
-    &.no-scroll {
-      overflow-y: hidden;
-    }
+    /* scroll-bar */
     &::-webkit-scrollbar {
         width: 5px;
         background-color: #f5f5f5;
@@ -40,5 +28,15 @@ export const GlobalStyle = createGlobalStyle`
   p {
     margin: 0;
   }
-
 `;
+
+export const globalTheme = {
+  blue: "#2F3F53",
+  lightBlue: "#F5F9FF",
+  green: "#60CFBF",
+  red: "#CF6060",
+  yellow: "#CFBD60",
+  white: "#FFF",
+  orange: "#E86900",
+  blueBgc: "#E5E5E5",
+};

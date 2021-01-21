@@ -1,7 +1,7 @@
 import { ReactNode, useState } from "react";
 import { createContext, Dispatch, SetStateAction } from "react";
 
-export function createCtx<A>(defaultValue: A) {
+export function useStateContext<A>(defaultValue: A) {
   type UpdateType = Dispatch<SetStateAction<typeof defaultValue>>;
   const defaultUpdate: UpdateType = () => defaultValue;
   const ctx = createContext({ state: defaultValue, update: defaultUpdate });

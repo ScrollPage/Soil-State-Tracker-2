@@ -23,7 +23,7 @@ export const SideLink = styled.div<{ active?: boolean }>`
   align-items: center;
   margin-bottom: 30px;
   background-color: ${({ active }) => active ? "#F6F6F6" : "#FFFFFF"};
-  border-left: 10px solid ${({ active, theme }) => active ? theme.orange : "#FFFFFF"};
+  border-left: 10px solid ${({ active, theme }) => active ? theme.green : "#FFFFFF"};
   > a {
     transition: all .2s ease;
     &:hover {

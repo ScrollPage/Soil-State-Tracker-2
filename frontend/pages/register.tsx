@@ -1,6 +1,6 @@
 import Head from "next/head";
 import React from "react";
-import { ensureRedirectToData } from "@/utils.ts/ensure";
+import { ensureRedirectToData } from "@/utils/ensure";
 import { GetServerSideProps } from "next";
 import { AuthLayout } from "@/components/Layout/AuthLayout";
 import { RegisterContainer } from "@/containers/register";

@@ -1,60 +1,59 @@
 import { IDetectorData } from "@/types/detector";
-import React, { memo, useState } from "react";
-import { Wrapper, MySelect } from "./styles";
-import { Line } from "react-chartjs-2";
-import Select from "react-select";
+import React, { memo } from "react";
+import { Wrapper } from "./styles";
+import { ResponsiveLine } from "@nivo/line";
 
 interface ChartProps {
   detectorData: IDetectorData[];
-}
-
-interface ISelectOption {
   value: string;
   label: string;
 }
 
-const options: ISelectOption[] = [
-  { value: "first_temp", label: "Температура 1.0" },
-  { value: "second_temp", label: "Температура 2.0" },
-  { value: "third_temp", label: "Температура 3.0" },
-  { value: "humidity", label: "Влажность" },
-  { value: "pH", label: "Водородный показатель" },
-];
-
-const ChartComponent: React.FC<ChartProps> = ({ detectorData }) => {
-  const [param, setParam] = useState(options[0]);
-
-  const changeHandler = (param: any) => {
-    setParam(param);
-  };
-
+const ChartComponent: React.FC<ChartProps> = ({
+  detectorData,
+  value,
+  label,
+}) => {
   return (
     <Wrapper>
-      <MySelect>
-        <Select
-          defaultValue={options[0]}
-          options={options}
-          onChange={changeHandler}
-        />
-      </MySelect>
-      <Line
-        data={{
-          labels: detectorData.map((item) => item.timestamp),
-          datasets: [
-            {
-              label: param.label,
-              data: detectorData.map((item, index) => ({
-                // @ts-ignore
-                y: item?.[param.value],
-                x: index + 1,
-              })),
-              borderColor: "#E86900",
-              backgroundColor: "transparent",
-            },
-          ],
+      <ResponsiveLine
+        data={[
+          {
+            id: label,
+            data: detectorData.map((item, index) => ({
+              // @ts-ignore
+              y: item?.[value],
+              x: index + 1,
+              // x: item.timestamp.slice(0, 10),
+            })),
+          },
+        ]}
+        colors="#60CFBF"
+        pointColor="#60CFBF"
+        margin={{ top: 10, right: 10, bottom: 50, left: 30 }}
+        yScale={{
+          type: "linear",
+          min: "auto",
+          max: "auto",
+          stacked: true,
+          reverse: false,
         }}
-        height={300}
-        width={500}
+        axisTop={null}
+        axisRight={null}
+        axisBottom={{
+          orient: "bottom",
+          tickSize: 5,
+          tickPadding: 5,
+          tickRotation: 0,
+          legend: "Дата",
+          legendOffset: 36,
+          legendPosition: "middle",
+        }}
+        pointSize={10}
+        pointBorderWidth={2}
+        pointBorderColor="#ffffff"
+        useMesh={true}
+        theme={{}}
       />
     </Wrapper>
   );

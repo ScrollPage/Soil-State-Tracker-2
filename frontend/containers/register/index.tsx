@@ -1,4 +1,3 @@
-import { MyPartic } from "@/components/UI/MyPartic";
 import { Stepper } from "@/components/UI/Stepper";
 import {
   RegisterForm,
@@ -21,7 +20,6 @@ export const RegisterContainer = () => {
 
   return (
     <Wrapper>
-      <MyPartic />
       <Container>
         <Stepper step={formStep} />
         <Inner>

@@ -1,11 +1,39 @@
 import styled, { css } from 'styled-components';
 
-export const SButton = styled.button<{ myType: "white" | "blue" | "orange", small?: boolean }>`
+export const SButton = styled.button<{ myType: "white" | "blue" | "orange" | "green", small?: boolean }>`
   box-sizing: border-box;
   outline: none;
   cursor: pointer;
   font-style: normal;
   pointer-events: auto;
+
+  ${({ myType, theme }) => myType === 'green' && css`
+    text-align: left !important;
+    padding: 17px 21px;
+    min-width: 244px;
+    background-color: ${theme.green};
+    color: #fff;
+    box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.08);
+    border-radius: 20px;
+    border: none;
+    position: relative;
+    &:hover {
+      box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.2);
+    }
+    &:after, &:before {
+      content: '';
+      position: absolute;
+      right: 25px;
+      top: 50%;
+      transform: translateY(-50%);
+      height: 25px;
+      width: 5px;
+      background-color: #fff;
+    }
+    &:before {
+      transform: translateY(-50%) rotate(90deg);
+    }
+  `};
 
   ${({ myType, small }) => myType === 'white' && css`
     height: 60px;

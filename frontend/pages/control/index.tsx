@@ -1,26 +1,32 @@
 import { instanceWithSSR } from "@/api";
 import { IDetector } from "@/types/detector";
-import { ensureAuth } from "@/utils.ts/ensure";
+import { ensureAuth } from "@/utils/ensure";
 import { GetServerSideProps } from "next";
-import React from "react";
+import React, { createContext } from "react";
 import { ICluster } from "@/types/cluster";
 import { ControlLayout } from "@/components/Layout/ControlLayout";
 import Head from "next/head";
 import { ControlContainer } from "@/containers/control";
 
-interface ControlProps {
+export interface ControlProps {
   detectors: IDetector[] | null;
   clusters: ICluster[] | null;
 }
 
+export const ControlContext = createContext<ControlProps | undefined>(
+  undefined
+);
+
 const Control = ({ detectors, clusters }: ControlProps) => {
   return (
-    <ControlLayout>
-      <Head>
-        <title>Управление</title>
-      </Head>
-      <ControlContainer detectors={detectors} clusters={clusters} />
-    </ControlLayout>
+    <ControlContext.Provider value={{ detectors, clusters }}>
+      <ControlLayout>
+        <Head>
+          <title>Управление</title>
+        </Head>
+        <ControlContainer />
+      </ControlLayout>
+    </ControlContext.Provider>
   );
 };
 

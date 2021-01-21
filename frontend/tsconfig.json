@@ -36,5 +36,5 @@
 		"gatsby-browser.js",
 		"next-env.d.ts",
 		"next.config.js"
-	]
+, "utils"	]
 }
