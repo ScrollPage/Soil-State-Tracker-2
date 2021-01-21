@@ -64,10 +64,6 @@ class Client(AbstractBaseUser, PermissionsMixin):
     def get_full_name(self):
         return self.last_name + ' ' + self.first_name
 
-    def get_detector_ids(self):
-        detectors = self.detectors.all()
-        return ''.join(f'| {detector.id} ' for detector in detectors) + '|'
-
     def get_cluster_names(self):
         return [cluster.name for cluster in self.clusters.all()]
 

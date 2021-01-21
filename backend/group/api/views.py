@@ -1,7 +1,7 @@
 from rest_framework import permissions, status
 from rest_framework.response import Response 
 from rest_framework.decorators import action
-from django.db.models import Count, Prefetch
+from django.db.models import Count, Prefetch, Min
 from django.utils import timezone
 
 from cacheops import cached_as
@@ -35,20 +35,11 @@ class ClusterViewSet(SListCreateUpdateViewSet):
     def get_queryset(self):
         return Cluster.objects.filter(user=self.request.user) \
             .annotate(num_detectors=Count('cluster_detectors')) \
+            .annotate(minimum_date=Min('cluster_detectors__last_change')) \
             .order_by('id')
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
-
-    def get_query_params_date(self):
-        begin_date = self.request.query_params.get('begin_date', None)
-        currency = self.request.query_params.get('currency', '1')
-        if begin_date is None:
-            begin_date = timezone.now()
-        else:
-            begin_date = dt.datetime.strptime(begin_date, '%Y-%m-%d').date()
-        currency = int(currency)
-        return begin_date, currency
 
     @action(detail=False, methods=['get'])
     def get_mean_data(self, request, *args, **kwargs):

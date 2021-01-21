@@ -20,6 +20,7 @@ class Detector(models.Model):
         on_delete=models.SET_NULL, 
         related_name='detectors'
     )
+    last_change = models.DateField(auto_now=True)
 
     def __str__(self):
         return f'датчик {self.id}'
