@@ -26,7 +26,7 @@ const SideBarContainer: React.FC<SideBarProps> = () => {
           <Clusters />
           <Footer>
             <SButton myType="green" onClick={showHandler}>
-              Добавить кластер
+              Добавить группу
             </SButton>
           </Footer>
         </DndProvider>

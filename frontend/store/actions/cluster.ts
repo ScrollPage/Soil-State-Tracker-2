@@ -4,7 +4,7 @@ import { ThunkType } from '@/types/thunk';
 import { show } from '@/store/actions/alert';
 import { instance } from '@/api';
 import Cookie from 'js-cookie';
-import { deleteClusterMutate, addClusterMutate, changeClusterMutate } from '@/mutates/cluster';
+import { deleteClusterMutate, addClusterMutate, changeClusterMutate, changeClusterInfoMutate } from '@/mutates/cluster';
 import { AddFormValues } from '@/components/Control/AddForm';
 
 export const changeCluster = (from: number, to: number, detector: IDetector): ThunkType => async dispatch => {
@@ -37,7 +37,7 @@ export const changeCluster = (from: number, to: number, detector: IDetector): Th
 
 export const addCluster = (values: AddFormValues): ThunkType => async dispatch => {
   const clusterUrl = '/api/cluster/';
-  addClusterMutate(clusterUrl, values.name, values.title);
+  addClusterMutate(clusterUrl, values);
   const token = Cookie.get('token');
   await instance(token)
     .post(clusterUrl, {
@@ -53,13 +53,31 @@ export const addCluster = (values: AddFormValues): ThunkType => async dispatch =
   trigger(clusterUrl);
 };
 
+export const changeClusterInfo = (id: number, values: AddFormValues): ThunkType => async dispatch => {
+  const clusterUrl = '/api/cluster/';
+  changeClusterInfoMutate(clusterUrl, id, values);
+  const token = Cookie.get('token');
+  await instance(token)
+    .put(`${clusterUrl}${id}/`, {
+      name: values.name,
+      title: values.title
+    })
+    .then(() => {
+      dispatch(show('Вы успешно изменили информацию о группе!', 'success'));
+    })
+    .catch(() => {
+      dispatch(show('Ошибка при изменении информации о группе!', 'warning'));
+    });
+  trigger(clusterUrl);
+};
+
 export const deleteCluster = (id: number): ThunkType => async dispatch => {
   const clusterUrl = '/api/cluster/';
   const detectorUrl = '/api/detector/';
   deleteClusterMutate(clusterUrl, detectorUrl, id);
   const token = Cookie.get('token');
   await instance(token)
-    .delete(`${clusterUrl}${id}`)
+    .delete(`${clusterUrl}${id}/`)
     .then(() => {
       dispatch(show('Вы успешно удалили группу!', 'success'));
     })

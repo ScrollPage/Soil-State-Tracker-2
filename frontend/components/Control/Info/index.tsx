@@ -16,6 +16,7 @@ import { SButton } from "@/components/UI/Button";
 import { useDispatch } from "react-redux";
 import { modalShow } from "@/store/actions/modal";
 import { IDeleteClusterModalProps } from "@/components/Modal/DeleteClusterModal";
+import { IAddClusterModalProps } from "@/components/Modal/AddClusterModal";
 
 const { Option } = Select;
 
@@ -31,7 +32,7 @@ const renderCases = (data: IDetectorData[]) => {
 
 const InfoComponent = () => {
   const dispatch = useDispatch();
-  const { id, kind, title, choose } = useChooseContext();
+  const { id, kind, title, name, choose } = useChooseContext();
   const [date, setDate] = useState("2021-01-20");
   const [currency, setCurrency] = useState("1");
 
@@ -46,8 +47,8 @@ const InfoComponent = () => {
   );
 
   const infoTitle = useMemo(
-    () => (kind === "detector" ? "Датчик " : "Кластер ") + id,
-    [kind, id]
+    () => (kind === "detector" ? `Датчик ${id}` : name),
+    [kind, id, name]
   );
 
   const { data, error } = useSWR(chooseApi);
@@ -60,16 +61,30 @@ const InfoComponent = () => {
     setCurrency(value);
   };
 
-  const showHandler = () => {
-    if (id) {
-      dispatch(
-        modalShow<IDeleteClusterModalProps>("DELETE_CLUSTER_MODAL", {
-          id,
-          onChoose: () => {
-            choose(0, "cluster", null);
-          },
-        })
-      );
+  const showHandler = (type: "delete" | "add") => {
+    if (type === "add") {
+      if (name && title && id) {
+        dispatch(
+          modalShow<IAddClusterModalProps>("ADD_CLUSTER_MODAL", {
+            initialValues: {
+              name,
+              title,
+            },
+            id,
+          })
+        );
+      }
+    } else {
+      if (id) {
+        dispatch(
+          modalShow<IDeleteClusterModalProps>("DELETE_CLUSTER_MODAL", {
+            id,
+            onChoose: () => {
+              choose(0, "cluster", null, null);
+            },
+          })
+        );
+      }
     }
   };
 
@@ -103,24 +118,23 @@ const InfoComponent = () => {
           </Select>
         </DateWrapper>
       </Header>
-      {error && <ErrorMessage message="Ошибка вывода информации о датчике" />}
-      {!data && !error && <LoadingSpinner />}
-      {data?.length === 0 && (
-        <EmptyMessage message={`Нет информации по ${infoTitle}`} />
+      {kind === "cluster" && (
+        <Case label="Описание">
+          <Text>{title === "" ? "отсутствует" : title}</Text>
+        </Case>
       )}
-      {!error && data?.length !== 0 && data && (
-        <>
-          {renderCases(data)}
-          {kind === "cluster" && (
-            <Case label="Описание">
-              <Text>{title === "" ? "отсутствует" : title}</Text>
-            </Case>
-          )}
-        </>
+      {error ? (
+        <ErrorMessage message="Ошибка вывода информации о датчике" />
+      ) : !data ? (
+        <LoadingSpinner />
+      ) : data.length === 0 ? null : ( // <EmptyMessage message={`Нет информации по ${infoTitle}`} />
+        renderCases(data)
       )}
       <Footer>
-        <SButton myType="green">Редактировать</SButton>
-        <SButton onClick={showHandler} myType="red" />
+        <SButton onClick={() => showHandler("add")} myType="green">
+          Редактировать
+        </SButton>
+        <SButton onClick={() => showHandler("delete")} myType="red" />
       </Footer>
     </Wrapper>
   );

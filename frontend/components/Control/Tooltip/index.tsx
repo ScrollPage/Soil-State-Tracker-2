@@ -10,7 +10,8 @@ interface ipProps {
   onChoose: (
     id: number,
     kind: "detector" | "cluster",
-    title: string | null
+    title: string | null,
+    name: string | null
   ) => void;
 }
 
@@ -28,7 +29,7 @@ const TooltipComponent: React.FC<ipProps> = ({
   };
 
   const chooseHandler = () => {
-    onChoose(id, "cluster", title);
+    onChoose(id, "cluster", title, name);
   };
 
   return (

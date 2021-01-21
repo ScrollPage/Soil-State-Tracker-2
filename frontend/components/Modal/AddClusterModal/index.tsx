@@ -1,25 +1,40 @@
 import { AddForm, AddFormValues } from "@/components/Control/AddForm";
 import React, { memo } from "react";
 import { useDispatch } from "react-redux";
-import { addCluster } from "@/store/actions/cluster";
+import { addCluster, changeClusterInfo } from "@/store/actions/cluster";
 import { Wrapper } from "./styles";
 
-export interface IAddClusterModalProps {}
+export interface IAddClusterModalProps {
+  initialValues?: AddFormValues;
+  id?: number;
+}
 
 interface IAddClusterModal extends IAddClusterModalProps {
   setClose: () => void;
 }
 
-const AddClusterModalComponent: React.FC<IAddClusterModal> = ({ setClose }) => {
+const AddClusterModalComponent: React.FC<IAddClusterModal> = ({
+  setClose,
+  initialValues,
+  id,
+}) => {
   const dispatch = useDispatch();
 
   const onSubmit = (values: AddFormValues) => {
-    dispatch(addCluster(values));
+    if (id) {
+      dispatch(changeClusterInfo(id, values));
+    } else {
+      dispatch(addCluster(values));
+    }
   };
 
   return (
     <Wrapper>
-      <AddForm setClose={setClose} handleSubmit={onSubmit} />
+      <AddForm
+        setClose={setClose}
+        handleSubmit={onSubmit}
+        initialValues={initialValues}
+      />
     </Wrapper>
   );
 };

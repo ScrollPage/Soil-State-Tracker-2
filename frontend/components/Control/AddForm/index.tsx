@@ -4,6 +4,7 @@ import { Formik, Form, FormikProps } from "formik";
 import { SButton } from "@/components/UI/Button";
 import { Input } from "@/components/UI/Input";
 import { object, string } from "yup";
+import { TextArea } from "@/components/UI/TextArea";
 
 const validationSchema = object().shape({
   name: string()
@@ -20,18 +21,20 @@ export interface AddFormValues {
 interface AddFormProps {
   setClose: () => void;
   handleSubmit: (values: AddFormValues) => void;
+  initialValues?: AddFormValues;
 }
 
 const AddFormComponent: React.FC<AddFormProps> = ({
   setClose,
   handleSubmit,
+  initialValues,
 }) => {
   return (
     <Wrapper>
       <Formik
         initialValues={{
-          name: "",
-          title: "",
+          name: initialValues?.name ?? "",
+          title: initialValues?.title ?? "",
         }}
         validationSchema={validationSchema}
         onSubmit={(values, { setSubmitting, resetForm }) => {
@@ -44,19 +47,16 @@ const AddFormComponent: React.FC<AddFormProps> = ({
       >
         {(props: FormikProps<AddFormValues>) => (
           <Form>
-            <Title>Создать группу</Title>
+            <Title>
+              {initialValues ? "Редактировать группу" : "Добавить группу"}
+            </Title>
             <Input
               src="padlock"
               type="text"
               name="name"
               placeholder="Введите название группы"
             />
-            <Input
-              src="padlock"
-              type="text"
-              name="title"
-              placeholder="Введите описание группы"
-            />
+            <TextArea name="title" placeholder="Введите описание группы" />
             <SButton type="submit" myType="orange">
               Подтвердить
             </SButton>

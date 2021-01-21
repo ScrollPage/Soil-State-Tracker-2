@@ -7,7 +7,13 @@ interface ChooseContextData {
   id: number | null;
   kind: KindType | null;
   title: string | null;
-  choose: (id: number, kind: KindType, title: string | null) => void;
+  name: string | null;
+  choose: (
+    id: number,
+    kind: KindType,
+    title: string | null,
+    name: string | null
+  ) => void;
 }
 
 const ChooseContext = createContext<ChooseContextData | undefined>(undefined);
@@ -26,21 +32,24 @@ const useChooseContextValue = () => {
   const [id, setId] = useState<number | null>(null);
   const [kind, setKind] = useState<KindType | null>(null);
   const [title, setTitle] = useState<string | null>(null);
+  const [name, setName] = useState<string | null>(null);
 
   const choose = useCallback(
-    (id: number, kind: KindType, title: string | null) => {
+    (id: number, kind: KindType, title: string | null, name: string | null) => {
       setId(id);
       setKind(kind);
       setTitle(title);
+      setName(name);
     },
-    [id, kind, title, setId, setKind, setTitle]
+    [id, kind, title, name, setId, setKind, setTitle, setName]
   );
 
-  return useMemo(() => ({ id, kind, title, choose }), [
+  return useMemo(() => ({ id, kind, title, name, choose }), [
     id,
     kind,
     title,
     choose,
+    name,
   ]);
 };
 
