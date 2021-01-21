@@ -1,5 +1,5 @@
 from rest_framework.viewsets import GenericViewSet
-from rest_framework.mixins import ListModelMixin, CreateModelMixin, UpdateModelMixin
+from rest_framework.mixins import ListModelMixin, CreateModelMixin, UpdateModelMixin, DestroyModelMixin
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from django.db.models import Min, Max, Avg
@@ -17,6 +17,7 @@ class SListCreateUpdateViewSet(SerializerMixin,
                                ListModelMixin,
                                UpdateModelMixin,
                                CreateModelMixin,
+                               DestroyModelMixin,
                                QueryDate
                             ):
     '''
