@@ -15,6 +15,7 @@ export const GlobalStyle = createGlobalStyle`
     height: 100%;
   }
   body {
+    height: 100%;
     overscroll-behavior: none;
     overflow-x: hidden;
     &.no-scroll {

@@ -11,6 +11,9 @@ import { Alert } from "@/components/UI/Alert";
 import { RootModal } from "@/components/Modal";
 import { GlobalStyle } from "@/someData/globalStyles";
 import { SWRProvider } from "@/utils.ts/test-swr";
+import { ConfigProvider } from "antd";
+import stylesheet from "antd/dist/antd.min.css";
+import ruRU from "antd/lib/locale/ru_RU";
 
 NProgress.configure({
   showSpinner: false,
@@ -24,6 +27,7 @@ Router.events.on("routeChangeError", () => NProgress.done());
 const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
     <ThemeProvider theme={theme}>
+      <style dangerouslySetInnerHTML={{ __html: stylesheet }} />
       <style dangerouslySetInnerHTML={{ __html: nprogress }} />
       <Head>
         <meta
@@ -33,13 +37,15 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
         <link rel="stylesheet" href="/fonts/fonts.css" />
       </Head>
       <GlobalStyle />
-      <SWRProvider>
-        <Provider store={store}>
-          <Alert />
-          <RootModal />
-          <Component {...pageProps} />
-        </Provider>
-      </SWRProvider>
+      <ConfigProvider locale={ruRU}>
+        <SWRProvider>
+          <Provider store={store}>
+            <Alert />
+            <RootModal />
+            <Component {...pageProps} />
+          </Provider>
+        </SWRProvider>
+      </ConfigProvider>
     </ThemeProvider>
   );
 };

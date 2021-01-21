@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useUser } from "@/hooks/useUser";
 import { useRouter } from "next/router";
 import { Wrapper, Side, Rectangle, Circle, SideLink, Name } from "./styles";
+import { Avatar } from "@/components/UI/Avatar";
 
 const ControlSideBarComponent = () => {
   const { firstName, lastName } = useUser();
@@ -10,7 +11,7 @@ const ControlSideBarComponent = () => {
   return (
     <Wrapper>
       <Rectangle>
-        <Circle />
+        <Avatar />
         <Name>
           {firstName} <br /> {lastName}
         </Name>

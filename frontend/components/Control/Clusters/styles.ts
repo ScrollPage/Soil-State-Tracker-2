@@ -6,16 +6,6 @@ export const Main = styled.div`
   flex-direction: column;
 `
 
-export const Title = styled.div`
-  font-family: Play;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 36px;
-  line-height: 42px;
-  color: #000000;
-  margin-bottom: 39px;
-`
-
 export const Wrapper = styled.div`
   margin-bottom: 28px;
   display: flex;

@@ -4,11 +4,9 @@ import { getModalName, getModalProps } from "@/store/selectors";
 import { modalHide } from "@/store/actions/modal";
 import { BackDrop, Wrapper, Close } from "./styles";
 
-import { DetectorDataModal } from "./DetectorDataModal";
 import { AddClusterModal } from "./AddClusterModal";
 
 const MODAL_COMPONENTS = {
-  DETECTOR_DATA_MODAL: DetectorDataModal,
   ADD_CLUSTER_MODAL: AddClusterModal,
 };
 

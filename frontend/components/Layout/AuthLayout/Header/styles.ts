@@ -19,11 +19,10 @@ export const Content = styled.div`
   display: flex;
   position: absolute;
   left: 50%;
-  transform: translateX(-337px);
+  transform: translateX(-50%);
 `;
 
 export const Title = styled.h1`
-  margin-left: 50px;
   > a {
     font-family: "Montserrat";
     font-style: normal;

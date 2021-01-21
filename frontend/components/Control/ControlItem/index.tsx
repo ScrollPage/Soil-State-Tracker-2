@@ -1,7 +1,7 @@
+import { useChooseContext } from "@/context/control";
 import { IDetector } from "@/types/detector";
 import { ItemTypes } from "@/utils.ts/items";
-import Image from "next/image";
-import React, { memo } from "react";
+import React, { memo, useMemo } from "react";
 import { useDrag } from "react-dnd";
 import { Wrapper, Text } from "./styles";
 
@@ -11,6 +11,17 @@ const ControlItemComponent: React.FC<IDetector & { clusterId: number }> = ({
   x,
   y,
 }) => {
+  const { choose, id: chooseId, kind } = useChooseContext();
+
+  const chooseHandler = () => {
+    choose(id, "detector");
+  };
+
+  const isChoose = useMemo(() => id === chooseId && kind === "detector", [
+    chooseId,
+    kind,
+  ]);
+
   const [{ isDragging }, drag] = useDrag({
     item: {
       type: ItemTypes.Item,
@@ -28,10 +39,15 @@ const ControlItemComponent: React.FC<IDetector & { clusterId: number }> = ({
 
   return (
     <>
-      <Wrapper ref={drag} isDragging={isDragging} data-testid="controlItem">
-        <Image src="/control/detector.png" height={70} width={70} />
+      <Wrapper
+        onClick={chooseHandler}
+        ref={drag}
+        isDragging={isDragging}
+        data-testid="controlItem"
+        isChoose={isChoose}
+      >
         <Text>
-          <span>id:</span>&nbsp;{id}
+          <span>Детектор -</span>&nbsp;{id}
         </Text>
       </Wrapper>
     </>

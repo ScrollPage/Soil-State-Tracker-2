@@ -1,18 +1,6 @@
 import styled from 'styled-components';
-import Container from "@/components/UI/Container";
 
 export const Wrapper = styled.div`
-  ${Container} {
-    pointer-events: none;
-  }
-  background-color: #000;
-  #tsparticles {
-    height: 100vh;
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-  }
   flex: 1;
   padding: 328px 0 110px 0;
 `;

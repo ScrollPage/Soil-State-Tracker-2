@@ -7,7 +7,6 @@ import { ErrorMessage } from "@/components/UI/ErrorMessage";
 import { LoadingSpinner } from "@/components/UI/LoadingSpinner";
 import { IDetector } from "@/types/detector";
 import { modalShow } from "@/store/actions/modal";
-import { IDetectorDataModalProps } from "@/components/Modal/DetectorDataModal";
 import { useDispatch } from "react-redux";
 import { useSWRInfinite } from "swr";
 import { Wrapper, Title, Main, Header, NextPage } from "./styles";
@@ -32,17 +31,6 @@ interface ClusterContainerProps {
 export const ClusterContainer: React.FC<ClusterContainerProps> = ({
   clusterId,
 }) => {
-  const dispatch = useDispatch();
-
-  const showHandler = (id: number | undefined) => {
-    dispatch(
-      modalShow<IDetectorDataModalProps>("DETECTOR_DATA_MODAL", {
-        clusterId,
-        id,
-      })
-    );
-  };
-
   const PAGE_SIZE = 5;
 
   const getKey = (pageIndex: number, previousPageData: any) => {
@@ -74,17 +62,11 @@ export const ClusterContainer: React.FC<ClusterContainerProps> = ({
       <Wrapper>
         <Header>
           <Title>{data?.[0]?.[0]?.cluster}</Title>
-          {!isEmpty && (
-            <SButton onClick={() => showHandler(undefined)} myType="blue">
-              Статистика по кластеру
-            </SButton>
-          )}
         </Header>
         <Main>
           {error && <ErrorMessage message="Ошибка вывода датчиков" />}
           {isLoadingInitialData && <LoadingSpinner />}
           {isEmpty && <EmptyMessage message="В данной группе нет датчиков" />}
-          {renderCluster(detectors, showHandler)}
         </Main>
         {!isEmpty && (
           <NextPage>
