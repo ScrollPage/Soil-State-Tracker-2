@@ -19,11 +19,7 @@ const { Option } = Select;
 const renderCases = (data: IDetectorData[]) => {
   return caseOptions.map((item, index) => {
     return (
-      <Case
-        index={index + 1}
-        key={`case__key__${index}__${item.label}`}
-        label={item.label}
-      >
+      <Case key={`case__key__${index}__${item.label}`} label={item.label}>
         <Chart label={item.label} value={item.value} detectorData={data} />
       </Case>
     );

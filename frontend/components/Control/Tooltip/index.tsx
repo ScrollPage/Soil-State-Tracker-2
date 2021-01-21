@@ -1,5 +1,5 @@
 import React, { Dispatch, memo, SetStateAction } from "react";
-import { Wrapper } from "./styles";
+import { Wrapper, Arrow } from "./styles";
 
 interface ipProps {
   id: number;
@@ -30,9 +30,7 @@ const TooltipComponent: React.FC<ipProps> = ({
       <span onClick={chooseHandler}>
         {id === 0 ? "Свободные датчики" : name}
       </span>
-      <div onClick={showHandler}>
-        {isShow ? <p>&#9650;</p> : <p>&#9660;</p>}
-      </div>
+      <Arrow onClick={showHandler} isShow={isShow} />
     </Wrapper>
   );
 };

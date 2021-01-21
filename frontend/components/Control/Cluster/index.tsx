@@ -41,13 +41,7 @@ const ClusterComponent: React.FC<ICluster> = ({
   });
 
   return (
-    <Wrapper
-      ref={drop}
-      isOver={isOver}
-      canDrop={canDrop}
-      isMain={id === 0}
-      isChoose={isChoose}
-    >
+    <Wrapper ref={drop} isOver={isOver} canDrop={canDrop} isChoose={isChoose}>
       <ToolTip
         id={id}
         name={name}

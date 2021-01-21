@@ -46,9 +46,7 @@ const ControlItemComponent: React.FC<IDetector & { clusterId: number }> = ({
         data-testid="controlItem"
         isChoose={isChoose}
       >
-        <Text>
-          <span>Детектор -</span>&nbsp;{id}
-        </Text>
+        <Text>Детектор - {id}</Text>
       </Wrapper>
     </>
   );

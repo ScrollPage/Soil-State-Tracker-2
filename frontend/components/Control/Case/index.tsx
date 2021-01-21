@@ -3,11 +3,10 @@ import { Wrapper, Title, Main, Header, Arrow } from "./styles";
 
 interface CaseProps {
   label: string;
-  index: number;
   children: React.ReactNode;
 }
 
-const CaseComponent: React.FC<CaseProps> = ({ index, label, children }) => {
+const CaseComponent: React.FC<CaseProps> = ({ label, children }) => {
   const [isShow, setIsShow] = useState(false);
 
   const showHandler = () => {
@@ -17,7 +16,7 @@ const CaseComponent: React.FC<CaseProps> = ({ index, label, children }) => {
   return (
     <Wrapper>
       <Header>
-        <Title>{`${index}. ${label}`}</Title>
+        <Title>{label}</Title>
         <Arrow onClick={showHandler} isShow={isShow} />
       </Header>
       {isShow && <Main>{children}</Main>}
