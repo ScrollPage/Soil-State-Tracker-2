@@ -29,3 +29,14 @@ export const GlobalStyle = createGlobalStyle`
     margin: 0;
   }
 `;
+
+export const globalTheme = {
+  blue: "#2F3F53",
+  lightBlue: "#F5F9FF",
+  green: "#60CFBF",
+  red: "#CF6060",
+  yellow: "#CFBD60",
+  white: "#FFF",
+  orange: "#E86900",
+  blueBgc: "#E5E5E5",
+};

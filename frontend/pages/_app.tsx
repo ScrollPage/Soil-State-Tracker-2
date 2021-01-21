@@ -9,12 +9,13 @@ import store from "@/store/store";
 import App, { AppContext, AppProps } from "next/app";
 import { Alert } from "@/components/UI/Alert";
 import { RootModal } from "@/components/Modal";
-import { GlobalStyle } from "@/utils/globalStyles";
+import { GlobalStyle, globalTheme } from "@/utils/globalStyles";
 import { SWRProvider } from "@/utils/test-swr";
 import { ConfigProvider } from "antd";
-import stylesheet from "antd/dist/antd.min.css";
+import antd from "antd/dist/antd.min.css";
 import ruRU from "antd/lib/locale/ru_RU";
 
+// set nprogress
 NProgress.configure({
   showSpinner: false,
   trickleSpeed: 300,
@@ -26,14 +27,14 @@ Router.events.on("routeChangeError", () => NProgress.done());
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
-    <ThemeProvider theme={theme}>
-      <style dangerouslySetInnerHTML={{ __html: stylesheet }} />
-      <style dangerouslySetInnerHTML={{ __html: nprogress }} />
+    <ThemeProvider theme={globalTheme}>
       <Head>
         <meta
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width"
         />
+        <style dangerouslySetInnerHTML={{ __html: antd }} />
+        <style dangerouslySetInnerHTML={{ __html: nprogress }} />
         <link rel="stylesheet" href="/fonts/fonts.css" />
       </Head>
       <GlobalStyle />
@@ -65,14 +66,3 @@ const makestore = () => store;
 const wrapper = createWrapper(makestore);
 
 export default wrapper.withRedux(MyApp);
-
-const theme = {
-  blue: "#2F3F53",
-  lightBlue: "#F5F9FF",
-  green: "#60CFBF",
-  red: "#CF6060",
-  yellow: "#CFBD60",
-  white: "#FFF",
-  orange: "#E86900",
-  blueBgc: "#E5E5E5",
-};
