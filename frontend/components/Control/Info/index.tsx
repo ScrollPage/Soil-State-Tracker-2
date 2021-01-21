@@ -41,6 +41,11 @@ const InfoComponent = () => {
     [id, kind, date, currency]
   );
 
+  const infoTitle = useMemo(
+    () => (kind === "detector" ? "Датчик " : "Кластер ") + id,
+    [kind]
+  );
+
   const { data, error } = useSWR(chooseApi);
 
   const onChange = (date: any, dateString: string) => {
@@ -62,9 +67,7 @@ const InfoComponent = () => {
   return (
     <Wrapper>
       <Header>
-        <Title>
-          {kind === "detector" ? "Датчик" : "Кластер"} {id}
-        </Title>
+        <Title>{infoTitle}</Title>
         <DateWrapper>
           <DatePicker
             format={"YYYY-MM-DD"}
@@ -86,9 +89,9 @@ const InfoComponent = () => {
       {error && <ErrorMessage message="Ошибка вывода информации о датчике" />}
       {!data && !error && <LoadingSpinner />}
       {data?.length === 0 && (
-        <EmptyMessage message="Нет информации по датчику" />
+        <EmptyMessage message={`Нет информации по ${infoTitle}`} />
       )}
-      {data && renderCases(data)}
+      {!error && data?.length !== 0 && data && renderCases(data)}
       <Footer>
         <SButton myType="green">Добавить комментарий</SButton>
       </Footer>

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const Main = styled.div`
   display: flex;
   flex-direction: column;
+  padding-left: 20px;
 `
 
 export const Wrapper = styled.div<{ isOver: boolean, canDrop: boolean, isChoose: boolean }>`

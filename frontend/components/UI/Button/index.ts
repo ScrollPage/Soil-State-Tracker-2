@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-export const SButton = styled.button<{ myType: "white" | "blue" | "orange" | "green", small?: boolean }>`
+export const SButton = styled.button<{ myType: "white" | "blue" | "orange" | "green" | "red", small?: boolean }>`
   box-sizing: border-box;
   outline: none;
   cursor: pointer;
@@ -9,8 +9,9 @@ export const SButton = styled.button<{ myType: "white" | "blue" | "orange" | "gr
 
   ${({ myType, theme }) => myType === 'green' && css`
     text-align: left !important;
-    padding: 17px 21px;
+    padding: 0 21px;
     min-width: 244px;
+    height: 50px;
     background-color: ${theme.green};
     color: #fff;
     box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.08);
@@ -32,6 +33,33 @@ export const SButton = styled.button<{ myType: "white" | "blue" | "orange" | "gr
     }
     &:before {
       transform: translateY(-50%) rotate(90deg);
+    }
+  `};
+
+  ${({ myType, theme }) => myType === 'red' && css`
+    text-align: left !important;
+    width: 50px;
+    height: 50px;
+    background-color: ${theme.red};
+    box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.08);
+    border-radius: 20px;
+    border: none;
+    position: relative;
+    &:hover {
+      box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.2);
+    }
+    &:after, &:before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translateY(-50%) translateX(-50%) rotate(45deg);
+      height: 25px;
+      width: 5px;
+      background-color: #fff;
+    }
+    &:before {
+      transform: translateY(-50%) translateX(-50%) rotate(-45deg);
     }
   `};
 

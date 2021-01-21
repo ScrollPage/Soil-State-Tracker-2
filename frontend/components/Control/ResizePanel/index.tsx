@@ -1,8 +1,10 @@
-import React, { memo, useEffect, useRef, useState } from "react";
+import React, { memo, useEffect, useMemo, useRef, useState } from "react";
 import { Wrapper, Left, Right, Resize, Closable } from "./styles";
 
 interface ResizePanelProps {
   children: React.ReactNode;
+  leftMin?: number;
+  rightMin?: number;
 }
 
 interface WidthType {
@@ -11,7 +13,11 @@ interface WidthType {
   main: number | null;
 }
 
-const ResizePanelComponent: React.FC<ResizePanelProps> = ({ children }) => {
+const ResizePanelComponent: React.FC<ResizePanelProps> = ({
+  children,
+  leftMin = 310,
+  rightMin = 320,
+}) => {
   const childrenArray = React.Children.toArray(
     children
   ) as React.ReactElement[];
@@ -66,21 +72,32 @@ const ResizePanelComponent: React.FC<ResizePanelProps> = ({ children }) => {
   const showHandler = () => {
     setIsShow((e) => !e);
   };
+
+  const currentWidth = useMemo(() => (width.left ? width.left + delta : null), [
+    width,
+    delta,
+  ]);
+
+  const isChowClosable = useMemo(
+    () => width.left && (width.left + delta === 310 || !isShow),
+    [width, isShow]
+  );
+
   return (
     <Wrapper>
       {isShow && (
-        <Left ref={leftRef} width={width.left ? width.left + delta : null}>
+        <Left leftMin={leftMin} ref={leftRef} width={currentWidth}>
           {childrenArray[0]}
         </Left>
       )}
       <Resize onMouseDown={mouseDownHandler} isActive={inspectMouse}>
-        {width.left && (width.left + delta === 300 || !isShow) && (
+        {isChowClosable && (
           <Closable isActive={isShow} onClick={showHandler}>
             {isShow ? "Закрыть" : "Открыть"}
           </Closable>
         )}
       </Resize>
-      <Right>{childrenArray[1]}</Right>
+      <Right rightMin={rightMin}>{childrenArray[1]}</Right>
     </Wrapper>
   );
 };
