@@ -11,6 +11,8 @@ export const Wrapper = styled.div<{ isOver: boolean, canDrop: boolean, isChoose:
   color: ${({ theme, isChoose }) => isChoose ? theme.orange : '#000'};
   padding: 10px 0;
   width: 100%;
+  margin-left: 5px;
 `;
+
 
 

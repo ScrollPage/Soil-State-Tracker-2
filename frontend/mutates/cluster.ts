@@ -2,16 +2,35 @@ import { IDetector } from '@/types/detector';
 import { ICluster } from "@/types/cluster"
 import { mutate } from "swr"
 
-export const addClusterMutate = (url: string, name: string) => {
+export const addClusterMutate = (url: string, name: string, title: string) => {
   mutate(url, async (clusters: ICluster[]) => {
     if (clusters) {
       const cluster: ICluster = {
-        id: clusters[clusters.length - 1].id + 1,
+        id: (clusters[clusters.length - 1]?.id + 1) ?? 0,
         name,
+        title: title,
         cluster_detectors: [],
       };
       const newClusters = [...clusters, cluster];
       return newClusters;
+    }
+  }, false)
+}
+
+export const deleteClusterMutate = (url: string, detectorUrl: string, id: number) => {
+  mutate(url, async (clusters: ICluster[]) => {
+    if (clusters) {
+      const cluster = clusters
+        .find(cluster => cluster.id === id);
+      if (cluster && cluster.cluster_detectors.length !== 0) {
+        mutate(detectorUrl, async (detectors: IDetector[]) => {
+          if (detectors) {
+            return [...detectors, ...cluster.cluster_detectors];
+          }
+        }, false);
+      }
+      return clusters
+        .filter(cluster => cluster.id !== id);
     }
   }, false)
 }
@@ -32,7 +51,8 @@ export const changeClusterMutate = (clusterUrl: string, detectorUrl: string, fro
         const newClusters = clusters.map(cluster => {
           let newCluster = { ...cluster };
           if (cluster.id === from) {
-            newCluster.cluster_detectors = cluster.cluster_detectors.filter(p => p.id !== detector.id)
+            newCluster.cluster_detectors = cluster.cluster_detectors
+              .filter(p => p.id !== detector.id)
           }
           return newCluster;
         })
@@ -44,7 +64,8 @@ export const changeClusterMutate = (clusterUrl: string, detectorUrl: string, fro
     if (from === 0) {
       mutate(detectorUrl, async (detectors: IDetector[]) => {
         if (detectors) {
-          const newDetectors = detectors.filter(p => p.id !== detector.id);
+          const newDetectors = detectors
+            .filter(p => p.id !== detector.id);
           return newDetectors;
         }
       }, false)
@@ -67,7 +88,8 @@ export const changeClusterMutate = (clusterUrl: string, detectorUrl: string, fro
           const newClusters = clusters.map(cluster => {
             let newCluster = { ...cluster };
             if (cluster.id === from) {
-              newCluster.cluster_detectors = cluster.cluster_detectors.filter(p => p.id !== detector.id)
+              newCluster.cluster_detectors = cluster.cluster_detectors
+                .filter(p => p.id !== detector.id)
             }
             if (cluster.id === to) {
               newCluster.cluster_detectors = [...cluster.cluster_detectors, detector];

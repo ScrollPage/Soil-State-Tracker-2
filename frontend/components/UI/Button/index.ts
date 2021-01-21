@@ -18,6 +18,11 @@ export const SButton = styled.button<{ myType: "white" | "blue" | "orange" | "gr
     border-radius: 20px;
     border: none;
     position: relative;
+    font-family: Play;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 14px;
     &:hover {
       box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.2);
     }
@@ -36,10 +41,10 @@ export const SButton = styled.button<{ myType: "white" | "blue" | "orange" | "gr
     }
   `};
 
-  ${({ myType, theme }) => myType === 'red' && css`
+  ${({ myType, theme, small }) => myType === 'red' && css`
     text-align: left !important;
-    width: 50px;
-    height: 50px;
+    width: ${small ? "20px" : "50px"};
+    height: ${small ? "20px" : "50px"};
     background-color: ${theme.red};
     box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.08);
     border-radius: 20px;
@@ -54,8 +59,8 @@ export const SButton = styled.button<{ myType: "white" | "blue" | "orange" | "gr
       left: 50%;
       top: 50%;
       transform: translateY(-50%) translateX(-50%) rotate(45deg);
-      height: 25px;
-      width: 5px;
+      width: ${small ? "1px" : "5px"};
+      height: ${small ? "10px" : "25px"};
       background-color: #fff;
     }
     &:before {

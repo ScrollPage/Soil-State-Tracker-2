@@ -10,7 +10,6 @@ export const Wrapper = styled.div<{ isDragging?: boolean, isChoose: boolean }>`
 `;
 
 export const Text = styled.div`
-  user-select: none;
   font-family: Montserrat;
   font-style: normal;
   font-weight: 300;

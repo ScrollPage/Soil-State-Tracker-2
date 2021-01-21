@@ -14,7 +14,7 @@ const ControlItemComponent: React.FC<IDetector & { clusterId: number }> = ({
   const { choose, id: chooseId, kind } = useChooseContext();
 
   const chooseHandler = () => {
-    choose(id, "detector");
+    choose(id, "detector", null);
   };
 
   const isChoose = useMemo(() => id === chooseId && kind === "detector", [

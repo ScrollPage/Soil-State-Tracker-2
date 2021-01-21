@@ -5,7 +5,7 @@ import { LoadingSpinner } from "@/components/UI/LoadingSpinner";
 import { useChooseContext } from "@/context/control";
 import React, { memo, useMemo, useState } from "react";
 import useSWR from "swr";
-import { Wrapper, Title, Header, DateWrapper, Footer } from "./styles";
+import { Wrapper, Title, Header, DateWrapper, Footer, Text } from "./styles";
 import { DatePicker } from "antd";
 import { Select } from "antd";
 import { Case } from "../Case";
@@ -13,6 +13,9 @@ import { caseOptions } from "@/someData/caseData";
 import { IDetectorData } from "@/types/detector";
 import moment from "moment";
 import { SButton } from "@/components/UI/Button";
+import { useDispatch } from "react-redux";
+import { modalShow } from "@/store/actions/modal";
+import { IDeleteClusterModalProps } from "@/components/Modal/DeleteClusterModal";
 
 const { Option } = Select;
 
@@ -27,7 +30,8 @@ const renderCases = (data: IDetectorData[]) => {
 };
 
 const InfoComponent = () => {
-  const { id, kind } = useChooseContext();
+  const dispatch = useDispatch();
+  const { id, kind, title, choose } = useChooseContext();
   const [date, setDate] = useState("2021-01-20");
   const [currency, setCurrency] = useState("1");
 
@@ -43,7 +47,7 @@ const InfoComponent = () => {
 
   const infoTitle = useMemo(
     () => (kind === "detector" ? "Датчик " : "Кластер ") + id,
-    [kind]
+    [kind, id]
   );
 
   const { data, error } = useSWR(chooseApi);
@@ -54,6 +58,19 @@ const InfoComponent = () => {
 
   const handleChange = (value: string) => {
     setCurrency(value);
+  };
+
+  const showHandler = () => {
+    if (id) {
+      dispatch(
+        modalShow<IDeleteClusterModalProps>("DELETE_CLUSTER_MODAL", {
+          id,
+          onChoose: () => {
+            choose(0, "cluster", null);
+          },
+        })
+      );
+    }
   };
 
   if (!id) {
@@ -91,9 +108,19 @@ const InfoComponent = () => {
       {data?.length === 0 && (
         <EmptyMessage message={`Нет информации по ${infoTitle}`} />
       )}
-      {!error && data?.length !== 0 && data && renderCases(data)}
+      {!error && data?.length !== 0 && data && (
+        <>
+          {renderCases(data)}
+          {kind === "cluster" && (
+            <Case label="Описание">
+              <Text>{title === "" ? "отсутствует" : title}</Text>
+            </Case>
+          )}
+        </>
+      )}
       <Footer>
-        <SButton myType="green">Добавить комментарий</SButton>
+        <SButton myType="green">Редактировать</SButton>
+        <SButton onClick={showHandler} myType="red" />
       </Footer>
     </Wrapper>
   );

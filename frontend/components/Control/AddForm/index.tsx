@@ -12,13 +12,14 @@ const validationSchema = object().shape({
     .required("Введите название группы"),
 });
 
-interface FormValues {
+export interface AddFormValues {
   name: string;
+  title: string;
 }
 
 interface AddFormProps {
   setClose: () => void;
-  handleSubmit: (name: string) => void;
+  handleSubmit: (values: AddFormValues) => void;
 }
 
 const AddFormComponent: React.FC<AddFormProps> = ({
@@ -30,17 +31,18 @@ const AddFormComponent: React.FC<AddFormProps> = ({
       <Formik
         initialValues={{
           name: "",
+          title: "",
         }}
         validationSchema={validationSchema}
         onSubmit={(values, { setSubmitting, resetForm }) => {
           setSubmitting(true);
-          handleSubmit(values.name);
+          handleSubmit(values);
           setSubmitting(false);
           resetForm();
           setClose();
         }}
       >
-        {(props: FormikProps<FormValues>) => (
+        {(props: FormikProps<AddFormValues>) => (
           <Form>
             <Title>Создать группу</Title>
             <Input
@@ -48,6 +50,12 @@ const AddFormComponent: React.FC<AddFormProps> = ({
               type="text"
               name="name"
               placeholder="Введите название группы"
+            />
+            <Input
+              src="padlock"
+              type="text"
+              name="title"
+              placeholder="Введите описание группы"
             />
             <SButton type="submit" myType="orange">
               Подтвердить

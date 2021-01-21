@@ -25,7 +25,12 @@ const TransfersComponent: React.FC<TransferProps> = () => {
 
   return (
     <Wrapper>
-      <Cluster id={0} name="Мои датчики" cluster_detectors={detectorData} />
+      <Cluster
+        id={0}
+        name="Мои датчики"
+        cluster_detectors={detectorData}
+        title={null}
+      />
     </Wrapper>
   );
 };

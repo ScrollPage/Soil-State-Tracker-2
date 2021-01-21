@@ -28,7 +28,6 @@ const SideBarContainer: React.FC<SideBarProps> = () => {
             <SButton myType="green" onClick={showHandler}>
               Добавить кластер
             </SButton>
-            <SButton myType="red" />
           </Footer>
         </DndProvider>
       </Inner>

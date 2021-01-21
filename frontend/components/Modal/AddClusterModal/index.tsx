@@ -1,4 +1,4 @@
-import { AddForm } from "@/components/Control/AddForm";
+import { AddForm, AddFormValues } from "@/components/Control/AddForm";
 import React, { memo } from "react";
 import { useDispatch } from "react-redux";
 import { addCluster } from "@/store/actions/cluster";
@@ -13,8 +13,8 @@ interface IAddClusterModal extends IAddClusterModalProps {
 const AddClusterModalComponent: React.FC<IAddClusterModal> = ({ setClose }) => {
   const dispatch = useDispatch();
 
-  const onSubmit = (name: string) => {
-    dispatch(addCluster(name));
+  const onSubmit = (values: AddFormValues) => {
+    dispatch(addCluster(values));
   };
 
   return (

@@ -4,6 +4,7 @@ export const clustersData: ICluster[] = [
   {
     id: 1,
     name: "1cluster",
+    title: "some",
     cluster_detectors: [
       {
         cluster: "1cluster",
@@ -22,6 +23,7 @@ export const clustersData: ICluster[] = [
   {
     id: 2,
     name: "2cluster",
+    title: "some2",
     cluster_detectors: [
       {
         cluster: "2cluster",

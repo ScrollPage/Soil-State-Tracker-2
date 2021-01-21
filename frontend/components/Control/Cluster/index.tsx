@@ -1,7 +1,7 @@
 import { changeCluster } from "@/store/actions/cluster";
 import { ICluster } from "@/types/cluster";
 import { ItemTypes } from "@/utils/items";
-import React, { memo, useMemo, useState } from "react";
+import React, { memo, useMemo } from "react";
 import { useDrop } from "react-dnd";
 import { useDispatch } from "react-redux";
 import { ToolTip } from "../Tooltip";
@@ -14,6 +14,7 @@ const ClusterComponent: React.FC<ICluster> = ({
   cluster_detectors: detectors,
   name,
   id,
+  title,
 }) => {
   const dispatch = useDispatch();
 
@@ -45,6 +46,7 @@ const ClusterComponent: React.FC<ICluster> = ({
       <ToolTip
         id={id}
         name={name}
+        title={title}
         setIsShow={setShowDetectors}
         isShow={showDetectors}
         onChoose={choose}

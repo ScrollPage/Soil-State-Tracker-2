@@ -15,11 +15,7 @@ export const Closeable = styled.div<{ height: number | null }>`
 
 export const Footer = styled.div`
   display: flex;
-  ${SButton} {
-    &:first-of-type {
-      margin-right: 10px;
-    }
-  }
+  margin-top: 30px;
 `;
 export const Inner = styled.div`
   display: flex;
