@@ -5,6 +5,12 @@ interface ResizePanelProps {
   children: React.ReactNode;
 }
 
+interface WidthType {
+  left: number | null;
+  right: number | null;
+  main: number | null;
+}
+
 const ResizePanelComponent: React.FC<ResizePanelProps> = ({ children }) => {
   const childrenArray = React.Children.toArray(
     children
@@ -14,11 +20,11 @@ const ResizePanelComponent: React.FC<ResizePanelProps> = ({ children }) => {
   const [delta, setDelta] = useState(0);
   const [inspectMouse, setInspectMouse] = useState(false);
   const [initial, setInitial] = useState<number | null>(null);
-  const [width, setWidth] = useState<{
-    left: number | null;
-    right: number | null;
-    main: number | null;
-  }>({ left: null, right: null, main: null });
+  const [width, setWidth] = useState<WidthType>({
+    left: null,
+    right: null,
+    main: null,
+  });
   const leftRef = useRef<HTMLDivElement>(null);
 
   const mouseDownHandler = (

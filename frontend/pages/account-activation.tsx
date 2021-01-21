@@ -1,6 +1,6 @@
 import React from "react";
-import { getAsString } from "@/utils.ts/getAsString";
-import { ensureRedirectToData } from "@/utils.ts/ensure";
+import { getAsString } from "@/utils/getAsString";
+import { ensureRedirectToData } from "@/utils/ensure";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { AccountActivationContainer } from "@/containers/accountactiovation";

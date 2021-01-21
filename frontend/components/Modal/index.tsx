@@ -1,6 +1,6 @@
-import React, { memo } from "react";
+import React, { memo, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getModalName, getModalProps } from "@/store/selectors";
+import { getModalInfo } from "@/store/selectors";
 import { modalHide } from "@/store/actions/modal";
 import { BackDrop, Wrapper, Close } from "./styles";
 
@@ -12,26 +12,33 @@ const MODAL_COMPONENTS = {
 
 const RootModalComponent: React.FC = () => {
   const dispatch = useDispatch();
-
-  const modalProps = useSelector(getModalProps);
-  const modalName = useSelector(getModalName);
+  const { props, name } = useSelector(getModalInfo);
 
   const setClose = () => {
     dispatch(modalHide());
   };
 
-  if (!modalName) {
+  useEffect(() => {
+    if (name) {
+      document.body.style.overflow = "hidden";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [name]);
+
+  if (!name) {
     return null;
   }
 
-  const SpecificModal = MODAL_COMPONENTS[modalName];
+  const SpecificModal = MODAL_COMPONENTS[name];
 
   return (
     <>
       <Wrapper>
         <div>
           <Close onClick={setClose} />
-          <SpecificModal {...modalProps} setClose={setClose} />
+          <SpecificModal {...props} setClose={setClose} />
         </div>
       </Wrapper>
       <BackDrop onClick={() => setClose()} />

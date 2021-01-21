@@ -1,6 +1,6 @@
 import { instanceWithSSR } from "@/api";
 import { IDetector } from "@/types/detector";
-import { ensureAuth } from "@/utils.ts/ensure";
+import { ensureAuth } from "@/utils/ensure";
 import { GetServerSideProps } from "next";
 import React, { createContext } from "react";
 import { ICluster } from "@/types/cluster";

@@ -8,11 +8,11 @@ export const getAlertInfo = (state: AppStateType) => {
   }
 }
 
-export const getModalName = (state: AppStateType) => {
-  return state.modal.modalName
+export const getModalInfo = (state: AppStateType) => {
+  return {
+    name: state.modal.modalName,
+    props: state.modal.modalProps
+  }
 }
 
-export const getModalProps = (state: AppStateType) => {
-  return state.modal.modalProps
-}
 

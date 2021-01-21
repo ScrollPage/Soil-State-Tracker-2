@@ -23,12 +23,6 @@ export const Wrapper = styled.div`
         padding: 40px;
         border-radius: 5px;
         border: 1px solid #d9d9d9;
-        .root-modal__close {
-            position: absolute;
-            right: 10px;
-            top: 10px;
-            cursor: pointer;
-        }
     }
 `;
 

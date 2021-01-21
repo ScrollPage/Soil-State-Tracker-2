@@ -1,7 +1,7 @@
 import { ControlLayout } from "@/components/Layout/ControlLayout";
 import { ClusterContainer } from "@/containers/cluster";
-import { ensureAuth } from "@/utils.ts/ensure";
-import { getAsString } from "@/utils.ts/getAsString";
+import { ensureAuth } from "@/utils/ensure";
+import { getAsString } from "@/utils/getAsString";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 

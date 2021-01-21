@@ -1,4 +1,4 @@
-import { render, screen } from "@/utils.ts/test-swr";
+import { render, screen } from "@/utils/test-swr";
 // import { Clusters } from "./index";
 // import "whatwg-fetch";
 // import { clustersData as data } from "@/someData/testData";

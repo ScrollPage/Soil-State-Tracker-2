@@ -1,6 +1,6 @@
 import { changeCluster } from "@/store/actions/cluster";
 import { ICluster } from "@/types/cluster";
-import { ItemTypes } from "@/utils.ts/items";
+import { ItemTypes } from "@/utils/items";
 import React, { memo, useMemo, useState } from "react";
 import { useDrop } from "react-dnd";
 import { useDispatch } from "react-redux";

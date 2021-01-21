@@ -1,6 +1,6 @@
 import { useChooseContext } from "@/context/control";
 import { IDetector } from "@/types/detector";
-import { ItemTypes } from "@/utils.ts/items";
+import { ItemTypes } from "@/utils/items";
 import React, { memo, useMemo } from "react";
 import { useDrag } from "react-dnd";
 import { Wrapper, Text } from "./styles";

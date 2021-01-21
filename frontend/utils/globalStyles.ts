@@ -4,23 +4,10 @@ import { createGlobalStyle } from "styled-components";
 export const GlobalStyle = createGlobalStyle`
   ${normalize}
   * {
-    text-decoration: none;
     box-sizing: border-box;
   }
-  html {
-    height: 100%;
-    width: 100%;
-  }
-  #__next {
-    height: 100%;
-  }
   body {
-    height: 100%;
-    overscroll-behavior: none;
-    overflow-x: hidden;
-    &.no-scroll {
-      overflow-y: hidden;
-    }
+    /* scroll-bar */
     &::-webkit-scrollbar {
         width: 5px;
         background-color: #f5f5f5;
@@ -41,5 +28,4 @@ export const GlobalStyle = createGlobalStyle`
   p {
     margin: 0;
   }
-
 `;

@@ -1,4 +1,4 @@
-import { ensureAuth } from "@/utils.ts/ensure";
+import { ensureAuth } from "@/utils/ensure";
 import { GetServerSideProps } from "next";
 import React from "react";
 import Head from "next/head";
