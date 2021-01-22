@@ -62,8 +62,7 @@ export const authLogin = (values: LoginFormValues): ThunkType => async dispatch 
 };
 
 export const authInfo = (): ThunkType => async dispatch => {
-  const token = Cookie.get('token');
-  await instance(token)
+  await instance()
     .get('/auth/users/me/')
     .then(res => {
       Cookie.set('firstName', res.data.first_name);

@@ -5,7 +5,15 @@ import { LoadingSpinner } from "@/components/UI/LoadingSpinner";
 import { useChooseContext } from "@/context/control";
 import React, { memo, useMemo, useState } from "react";
 import useSWR from "swr";
-import { Wrapper, Title, Header, DateWrapper, Footer, Text, Main } from "./styles";
+import {
+  Wrapper,
+  Title,
+  Header,
+  DateWrapper,
+  Footer,
+  Text,
+  Main,
+} from "./styles";
 import { DatePicker } from "antd";
 import { Select } from "antd";
 import { Case } from "../Case";
@@ -91,7 +99,7 @@ const InfoComponent = () => {
   if (!id) {
     return (
       <Wrapper>
-        <EmptyMessage message="Выберите Датчик или Кластер для просмотра информации" />
+        <EmptyMessage message="Выберите Группу или Детектор для просмотра информации" />
       </Wrapper>
     );
   }

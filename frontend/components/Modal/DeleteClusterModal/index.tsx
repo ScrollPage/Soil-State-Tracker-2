@@ -28,7 +28,7 @@ const DeleteClusterModalComponent: React.FC<IDeleteClusterModal> = ({
 
   return (
     <Wrapper>
-      <Text>Вы действительно хотите удалить кластер?</Text>
+      <Text>Вы действительно хотите удалить группу?</Text>
       <Footer>
         <SButton onClick={onSubmit} myType="orange">
           Да
