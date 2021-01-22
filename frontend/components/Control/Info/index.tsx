@@ -5,7 +5,7 @@ import { LoadingSpinner } from "@/components/UI/LoadingSpinner";
 import { useChooseContext } from "@/context/control";
 import React, { memo, useMemo, useState } from "react";
 import useSWR from "swr";
-import { Wrapper, Title, Header, DateWrapper, Footer, Text } from "./styles";
+import { Wrapper, Title, Header, DateWrapper, Footer, Text, Main } from "./styles";
 import { DatePicker } from "antd";
 import { Select } from "antd";
 import { Case } from "../Case";
@@ -118,18 +118,20 @@ const InfoComponent = () => {
           </Select>
         </DateWrapper>
       </Header>
-      {kind === "cluster" && (
-        <Case label="Описание">
-          <Text>{title === "" ? "отсутствует" : title}</Text>
-        </Case>
-      )}
-      {error ? (
-        <ErrorMessage message="Ошибка вывода информации о датчике" />
-      ) : !data ? (
-        <LoadingSpinner />
-      ) : data.length === 0 ? null : ( // <EmptyMessage message={`Нет информации по ${infoTitle}`} />
-        renderCases(data)
-      )}
+      <Main>
+        {kind === "cluster" && (
+          <Case label="Описание">
+            <Text>{title === "" ? "отсутствует" : title}</Text>
+          </Case>
+        )}
+        {error ? (
+          <ErrorMessage message="Ошибка вывода информации о датчике" />
+        ) : !data ? (
+          <LoadingSpinner />
+        ) : data.length === 0 ? null : ( // <EmptyMessage message={`Нет информации по ${infoTitle}`} />
+          renderCases(data)
+        )}
+      </Main>
       <Footer>
         <SButton onClick={() => showHandler("add")} myType="green">
           Редактировать

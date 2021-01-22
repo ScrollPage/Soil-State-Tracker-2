@@ -7,7 +7,7 @@ export const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
   html, body, #__next {
-    heigth: 100%;
+    height: 100% !important;
   }
   body {
     overflow-x: hidden;

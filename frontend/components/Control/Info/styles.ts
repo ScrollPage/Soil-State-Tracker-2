@@ -7,6 +7,10 @@ export const Wrapper = styled.div`
   height: 100%;
 `;
 
+export const Main = styled.div`
+  flex: 1;
+`
+
 export const Footer = styled.div`
   margin-top: 30px;  
   display: flex;

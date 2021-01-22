@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.div`
   padding-top: 20px;
-  flex: 1;
 `;
 
 export const Main = styled.div`
