@@ -2,10 +2,14 @@ from rest_framework import status
 from rest_framework.authtoken.models import Token
 from rest_framework.test import APITestCase
 from django.conf import settings
+from django.utils import timezone
+
+import json
 
 from client.models import Client
 from group.models import Cluster
-from detector.models import Detector, DetectorData
+from detector.models import Detector
+from detector_data.models import DetectorData
 from backend.service import get_response
 
 class TestViews(APITestCase):
@@ -21,7 +25,10 @@ class TestViews(APITestCase):
          
         self.free_detector = Detector.objects.create(user=self.user1, x=1, y=2)
 
-        self.cluster_detector = Detector.objects.create(user=self.user1, x=1, y=1, cluster=self.cluster)
+        self.cluster_detector = Detector.objects.create(
+            user=self.user1, x=1, 
+            y=1, cluster=self.cluster
+        )
         self.todays_data_first = DetectorData.create_random(self.cluster_detector)
         self.todays_data_second = DetectorData.create_random(self.cluster_detector)
 
@@ -36,14 +43,33 @@ class TestViews(APITestCase):
         self.assertEqual(len(response.data[0]['cluster_detectors']), 1)
 
     def test_cluster_detectors_list(self):
-        response = get_response('cluster-detectors', 'get', self.user1, kwargs={'pk': self.cluster.id})
+        response = get_response(
+            'cluster-detectors', 'get', 
+            self.user1, kwargs={'pk': self.cluster.id}
+        )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 1)
         self.assertEqual(response.data[0]['id'], self.cluster_detector.id)
 
     def test_cluster_detectors_list_wrong_cluster(self):
-        response = get_response('cluster-detectors', 'get', self.user1, kwargs={'pk': 999})
+        response = get_response('cluster-detectors', 'get', self.user1, kwargs={'pk': 0})
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_cluster_delete(self):
+        response = get_response(
+            'cluster-detectors', 'delete', 
+            self.user1, kwargs={'pk': self.cluster.id}
+        )
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+
+    def test_cluster_update(self):
+        data = {'name': '123123'}
+        response = get_response(
+            'cluster-detectors', 'put', 
+            self.user1, data, {'pk': self.cluster.id}
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(json.loads(response.content)['name'], '123123')
 
     def test_cluster_detectors_add(self):
         response = get_response(
@@ -51,7 +77,10 @@ class TestViews(APITestCase):
             {"detectors": [self.free_detector.id]}, {'pk': self.cluster.id},
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        response = get_response('cluster-detectors', 'get', self.user1, kwargs={'pk': self.cluster.id})
+        response = get_response(
+            'cluster-detectors', 'get', 
+            self.user1, kwargs={'pk': self.cluster.id}
+        )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 2)
         self.assertEqual(response.data[0]['id'], self.free_detector.id)
@@ -62,12 +91,23 @@ class TestViews(APITestCase):
             self.user1, {"detectors": [self.cluster_detector.id]}
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        response = get_response('cluster-detectors', 'get', self.user1, kwargs={'pk': self.cluster.id})
+        response = get_response(
+            'cluster-detectors', 'get', 
+            self.user1, kwargs={'pk': self.cluster.id}
+        )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 0)
 
     def test_cluster_mean_data(self):
-        response = get_response('cluster-mean-data', 'get', self.user1, kwargs={'pk': self.cluster.id})
+        date = timezone.now().date()
+        query_params = {
+            'begin_date': f'{date.year}-{date.month}-{date.day}',
+            'currency':  1
+        }
+        response = get_response(
+            'cluster-mean-data', 'get', self.user1, 
+            kwargs={'pk': self.cluster.id}, query_params=query_params
+        )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 1)
         self.assertEqual(

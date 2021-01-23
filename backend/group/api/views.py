@@ -35,7 +35,6 @@ class ClusterViewSet(SListCreateUpdateViewSet):
     def get_queryset(self):
         return Cluster.objects.filter(user=self.request.user) \
             .annotate(num_detectors=Count('cluster_detectors')) \
-            .annotate(minimum_date=Min('cluster_detectors__last_change')) \
             .order_by('id')
 
     def perform_create(self, serializer):

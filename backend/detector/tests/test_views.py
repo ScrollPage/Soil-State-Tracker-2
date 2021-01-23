@@ -3,11 +3,13 @@ from rest_framework.authtoken.models import Token
 from rest_framework.test import APITestCase
 from django.conf import settings
 from django.test import override_settings
+from django.utils import timezone
 
 from client.models import Client
 from group.models import Cluster
-from detector.models import Detector, DetectorData
+from detector.models import Detector
 from backend.service import get_response
+from detector_data.models import DetectorData
 
 class TestViews(APITestCase):
 
@@ -38,7 +40,15 @@ class TestViews(APITestCase):
         self.assertEqual(response.data[0]['id'], self.free_detector.id)
 
     def test_detector_data_auth(self):
-        response = get_response('detector-data', 'get', self.user1, kwargs={'pk': self.free_detector.id})
+        date = timezone.now()
+        query_params = {
+            'begin_date': f'{date.year}-{date.month}-{date.day}',
+            'currency':  1
+        }
+        response = get_response(
+            'detector-data', 'get', self.user1, 
+            kwargs={'pk': self.free_detector.id}, query_params=query_params
+        )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), self.free_detector.data.count())
 
