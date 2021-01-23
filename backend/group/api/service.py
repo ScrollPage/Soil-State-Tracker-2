@@ -9,7 +9,6 @@ import numpy as np
 from datetime import timedelta
 
 from backend.service import SerializerMixin, QueryDate
-from detector.models import Detector
 from detector_data.models import DetectorData
 
 class SListCreateUpdateViewSet(SerializerMixin,
@@ -36,8 +35,12 @@ class PaginationData(PageNumberPagination):
 
 def get_aggregated_data(queryset, multiplier, begin_date):
     ranges = (begin_date, timezone.now())
-    detector_data_queryset = DetectorData.timescale.filter(timestamp__range=ranges, detector__in=queryset) \
-        .time_bucket_gapfill('timestamp', f'{multiplier} day', ranges[0], ranges[1], datapoints=1) \
+    detector_data_queryset = DetectorData.timescale \
+        .filter(timestamp__range=ranges, detector__in=queryset) \
+        .time_bucket_gapfill(
+            'timestamp', f'{multiplier} day', 
+            ranges[0], ranges[1], datapoints=1
+        ) \
         .annotate(
             Avg('first_temp'), Avg('second_temp'), Avg('third_temp'), 
             Avg('lightning'), Avg('humidity'), Avg('pH')

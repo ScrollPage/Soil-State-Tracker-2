@@ -21,13 +21,19 @@ def exception_handler(exc, context):
     # bot.send_message(text=msg, chat_id=local.EXCEPTION_BOT_CHAT_ID)
     return drf_exception_handler(exc, context)
 
-def get_response(url, method, user=None, data=None, kwargs=None, format=None):
+def get_response(url, method, user=None, data=None, kwargs=None, format=None, query_params=None):
     client = APIClient()
 
     if user:
         client.force_authenticate(user)
 
     url = reverse(url, kwargs=kwargs)
+
+    if query_params:
+        # for k, v in query_params.items():
+        url += '?'
+        url += ''.join(f'{k}={v}&' for k, v in query_params.items())
+        print(url)
 
     method_dict = {
         'post': client.post,
@@ -66,6 +72,6 @@ class QueryDate:
         if begin_date is None:
             begin_date = timezone.now()
         else:
-            begin_date = dt.datetime.strptime(begin_date, '%Y-%m-%d').date()
+            begin_date = dt.datetime.strptime(begin_date, '%Y-%m-%d')
         currency = int(currency)
         return begin_date, currency
