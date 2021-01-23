@@ -34,6 +34,7 @@ const ClustersComponent: React.FC<ClusterProps> = () => {
             name={cluster.name}
             cluster_detectors={cluster.cluster_detectors}
             id={cluster.id}
+            title={cluster.title}
           />
         ))}
       </Main>

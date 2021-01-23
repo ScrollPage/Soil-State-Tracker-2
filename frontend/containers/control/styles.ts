@@ -28,6 +28,7 @@ export const Main = styled.div`
   margin-top: 30px;
   height: 100%;
   position: relative;
+  min-height: 600px;
   @media (max-width: 1199.98px) {
     flex-direction: column;
   }

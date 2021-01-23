@@ -2,17 +2,18 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.div`
   display: flex;
-  width: 100%;
+  flex: 1;
+  max-width: 100%;
 `;
 
-export const Left = styled.div<{ width: number | null }>`
+export const Left = styled.div<{ width: number | null, leftMin: number }>`
   width: ${({ width }) => width ? `${width}px` : "auto"};
-  min-width: 300px;
+  min-width: ${({ leftMin }) => leftMin}px;
   margin-right: 25px;
 `
 
-export const Right = styled.div`
-  min-width: 320px;
+export const Right = styled.div<{ rightMin: number }>`
+  min-width: ${({ rightMin }) => rightMin}px;
   flex: 1;
   margin-left: 25px;
 `

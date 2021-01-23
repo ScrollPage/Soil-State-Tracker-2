@@ -1,17 +1,51 @@
 import { IDetector } from '@/types/detector';
 import { ICluster } from "@/types/cluster"
 import { mutate } from "swr"
+import { AddFormValues } from '@/components/Control/AddForm';
 
-export const addClusterMutate = (url: string, name: string) => {
+export const addClusterMutate = (url: string, values: AddFormValues) => {
   mutate(url, async (clusters: ICluster[]) => {
     if (clusters) {
       const cluster: ICluster = {
-        id: clusters[clusters.length - 1].id + 1,
-        name,
+        id: (clusters[clusters.length - 1]?.id + 1) ?? 0,
+        name: values.name,
+        title: values.title,
         cluster_detectors: [],
       };
       const newClusters = [...clusters, cluster];
       return newClusters;
+    }
+  }, false)
+}
+
+export const changeClusterInfoMutate = (url: string, id: number, values: AddFormValues) => {
+  mutate(url, async (clusters: ICluster[]) => {
+    if (clusters) {
+      const newClusters = clusters.map(cluster => {
+        let newCluster = { ...cluster };
+        if (cluster.id === id) {
+          newCluster.name = values.name;
+          newCluster.title = values.title;
+        }
+        return newCluster;
+      })
+      return newClusters;
+    }
+  }, false)
+}
+
+export const deleteClusterMutate = (url: string, detectorUrl: string, id: number) => {
+  mutate(url, async (clusters: ICluster[]) => {
+    if (clusters) {
+      const cluster = clusters.find(cluster => cluster.id === id);
+      if (cluster && cluster.cluster_detectors.length !== 0) {
+        mutate(detectorUrl, async (detectors: IDetector[]) => {
+          if (detectors) {
+            return [...detectors, ...cluster.cluster_detectors];
+          }
+        }, false);
+      }
+      return clusters.filter(cluster => cluster.id !== id);
     }
   }, false)
 }

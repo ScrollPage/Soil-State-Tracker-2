@@ -5,9 +5,11 @@ import { modalHide } from "@/store/actions/modal";
 import { BackDrop, Wrapper, Close } from "./styles";
 
 import { AddClusterModal } from "./AddClusterModal";
+import { DeleteClusterModal } from "./DeleteClusterModal";
 
 const MODAL_COMPONENTS = {
   ADD_CLUSTER_MODAL: AddClusterModal,
+  DELETE_CLUSTER_MODAL: DeleteClusterModal
 };
 
 const RootModalComponent: React.FC = () => {

@@ -6,11 +6,14 @@ export const GlobalStyle = createGlobalStyle`
   * {
     box-sizing: border-box;
   }
+  html, body, #__next {
+    height: 100% !important;
+  }
   body {
+    overflow-x: hidden;
     /* scroll-bar */
     &::-webkit-scrollbar {
         width: 5px;
-        background-color: #f5f5f5;
         @media (max-width: 575.98px) {
             width: 0px;
         }
@@ -19,11 +22,11 @@ export const GlobalStyle = createGlobalStyle`
         height: 90%;
     }
     &::-webkit-scrollbar-thumb {
-        background-color: #E86900;
+        background-color: #60CFBF;
     }
   }
   #nprogress .bar {
-    background: #E86900 !important;
+    background: #60CFBF !important;
   }
   p {
     margin: 0;

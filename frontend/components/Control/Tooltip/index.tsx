@@ -6,7 +6,13 @@ interface ipProps {
   name: string;
   setIsShow: Dispatch<SetStateAction<boolean>>;
   isShow: boolean;
-  onChoose: (id: number, kind: "detector" | "cluster") => void;
+  title: string | null;
+  onChoose: (
+    id: number,
+    kind: "detector" | "cluster",
+    title: string | null,
+    name: string | null
+  ) => void;
 }
 
 const TooltipComponent: React.FC<ipProps> = ({
@@ -15,6 +21,7 @@ const TooltipComponent: React.FC<ipProps> = ({
   setIsShow,
   isShow,
   onChoose,
+  title,
 }) => {
   const showHandler = () => {
     chooseHandler();
@@ -22,7 +29,7 @@ const TooltipComponent: React.FC<ipProps> = ({
   };
 
   const chooseHandler = () => {
-    onChoose(id, "cluster");
+    onChoose(id, "cluster", title, name);
   };
 
   return (

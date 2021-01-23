@@ -4,6 +4,7 @@ import { Formik, Form, FormikProps } from "formik";
 import { SButton } from "@/components/UI/Button";
 import { Input } from "@/components/UI/Input";
 import { object, string } from "yup";
+import { TextArea } from "@/components/UI/TextArea";
 
 const validationSchema = object().shape({
   name: string()
@@ -12,43 +13,50 @@ const validationSchema = object().shape({
     .required("Введите название группы"),
 });
 
-interface FormValues {
+export interface AddFormValues {
   name: string;
+  title: string;
 }
 
 interface AddFormProps {
   setClose: () => void;
-  handleSubmit: (name: string) => void;
+  handleSubmit: (values: AddFormValues) => void;
+  initialValues?: AddFormValues;
 }
 
 const AddFormComponent: React.FC<AddFormProps> = ({
   setClose,
   handleSubmit,
+  initialValues,
 }) => {
   return (
     <Wrapper>
       <Formik
         initialValues={{
-          name: "",
+          name: initialValues?.name ?? "",
+          title: initialValues?.title ?? "",
         }}
         validationSchema={validationSchema}
         onSubmit={(values, { setSubmitting, resetForm }) => {
           setSubmitting(true);
-          handleSubmit(values.name);
+          handleSubmit(values);
           setSubmitting(false);
           resetForm();
           setClose();
         }}
       >
-        {(props: FormikProps<FormValues>) => (
+        {(props: FormikProps<AddFormValues>) => (
           <Form>
-            <Title>Создать группу</Title>
+            <Title>
+              {initialValues ? "Редактировать группу" : "Добавить группу"}
+            </Title>
             <Input
               src="padlock"
               type="text"
               name="name"
               placeholder="Введите название группы"
             />
+            <TextArea name="title" placeholder="Введите описание группы" />
             <SButton type="submit" myType="orange">
               Подтвердить
             </SButton>
