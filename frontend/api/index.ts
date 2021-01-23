@@ -10,7 +10,7 @@ export const instanceWithOutHeaders = axios.create({
 })
 
 export const instance = () => {
-  const token = Cookie.get('token');
+  const token = Cookie.get('token') ?? "";
   return axios.create({
     baseURL: process.env.DB_HOST,
     headers: {
@@ -20,18 +20,8 @@ export const instance = () => {
   })
 }
 
-// export const instance = (token: string | undefined) => {
-//   return axios.create({
-//     baseURL: process.env.DB_HOST,
-//     headers: {
-//       'Content-Type': 'application/json',
-//       Authorization: `Token ${token}`
-//     }
-//   })
-// }
-
 export const instanceWithSSR = (ctx: GetServerSidePropsContext<ParsedUrlQuery>) => {
-  const token = cookies(ctx)?.token || "";
+  const token = cookies(ctx)?.token ?? "";
   return axios.create({
     baseURL: process.env.DB_HOST,
     headers: {

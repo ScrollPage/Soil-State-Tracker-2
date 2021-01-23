@@ -4,6 +4,19 @@ import { useUser } from "@/hooks/useUser";
 import { useRouter } from "next/router";
 import { Wrapper, Side, Rectangle, Circle, SideLink, Name } from "./styles";
 import { Avatar } from "@/components/UI/Avatar";
+import { sidebarLinks } from "@/someData/controlLinksData";
+
+const renderLinks = (pathname: string) => {
+  return sidebarLinks.map((link, index) => {
+    return (
+      <SideLink key={`sidelink__key__${index}`} active={pathname === link.href}>
+        <Link href={link.href}>
+          <a>{link.label}</a>
+        </Link>
+      </SideLink>
+    );
+  });
+};
 
 const ControlSideBarComponent = () => {
   const { firstName, lastName } = useUser();
@@ -16,23 +29,7 @@ const ControlSideBarComponent = () => {
           {firstName} <br /> {lastName}
         </Name>
       </Rectangle>
-      <Side>
-        <SideLink active={pathname === "/control"}>
-          <Link href="/control">
-            <a>Управление</a>
-          </Link>
-        </SideLink>
-        <SideLink active={pathname === "/control/[ID]"}>
-          <Link href="/control/[ID]" as="/control/1">
-            <a>Данные</a>
-          </Link>
-        </SideLink>
-        <SideLink active={pathname === "/secure"}>
-          <Link href="/secure">
-            <a>Настройки</a>
-          </Link>
-        </SideLink>
-      </Side>
+      <Side>{renderLinks(pathname)}</Side>
     </Wrapper>
   );
 };
