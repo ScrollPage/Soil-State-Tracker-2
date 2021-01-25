@@ -13,7 +13,7 @@ services:
       - static_volume:/home/app/web/staticfiles
 
   db:
-    container_name: timescaledb
+    container_name: web_timescaledb
     image: timescale/timescaledb:2.0.0-pg12
     volumes: 
       - pg_data:/var/lib/postgresql/data/
@@ -22,34 +22,41 @@ services:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_db=postgres
 
-  influxdb:
-    image: influxdb:latest
-    container_name: influxdb
-    ports:
-      - 8086:8086
-    volumes:
-      - influxdb:/var/lib/influxdb
-    restart: always
-
   grafana:
     container_name: grafana
     restart: always
     image: grafana/grafana
     depends_on:
       - db
-      - influxdb
     ports:
-      - "3001:3000"
+      - 3000:3000
     environment:
       - plugins="crate-datasource,grafana-clock-panel,grafana-worldmap-panel,natel-plotly-panel"
     volumes:
       - grafana:/var/lib/grafana
 
+  netdata:
+    container_name: netdata
+    restart: always
+    image: netdata/netdata
+    cap_add:
+      - SYS_PTRACE
+    security_opt:
+      - apparmor:unconfined
+    depends_on: 
+      - nginx
+    ports: 
+      - 19999:19999
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
   redis:
     container_name: redis
     image: redis
     ports:
-      - "6379:6379"
+      - 6379:6379
     volumes:
       - redis_data:/var/lib/redis/data/
     restart: always
@@ -74,5 +81,4 @@ volumes:
   pg_data:
   static_volume:
   redis_data:
-  influxdb:
   grafana:
