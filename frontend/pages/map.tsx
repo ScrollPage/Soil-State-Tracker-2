@@ -7,6 +7,7 @@ import useSWR from "swr";
 import { MapContainer } from "@/containers/map";
 import { instanceWithSSR } from "@/api";
 import { ICluster } from "@/types/cluster";
+import { ErrorMessage } from "@/components/UI/ErrorMessage";
 
 export interface ControlProps {
   clusters: ICluster[] | null;
@@ -17,16 +18,6 @@ const Map = ({ clusters }: ControlProps) => {
     initialData: clusters,
   });
 
-  const newData = useMemo(() => {
-    if (!data || error) {
-      return [];
-    }
-    let mas: ICluster[] = [];
-    return data.reduce((acc, current) => {
-      return [...acc, ...current.cluster_detectors];
-    }, mas);
-  }, [data, error]);
-
   return (
     <ControlLayout>
       <Head>
@@ -36,7 +27,8 @@ const Map = ({ clusters }: ControlProps) => {
           rel="stylesheet"
         />
       </Head>
-      {!error && newData && <MapContainer data={newData} />}
+      {error && <ErrorMessage message="Ошибка вывода карты" />}
+      {!error && data && <MapContainer data={data} />}
     </ControlLayout>
   );
 };
