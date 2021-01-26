@@ -23,34 +23,32 @@ services:
       - POSTGRES_db=postgres
 
   grafana:
-    container_name: grafana
-    restart: always
     image: grafana/grafana
-    depends_on:
-      - db
+    # depends_on:
+    #     - prometheus
     ports:
-      - 3000:3000
-    environment:
-      - plugins="crate-datasource,grafana-clock-panel,grafana-worldmap-panel,natel-plotly-panel"
+      - 3001:3000
     volumes:
-      - grafana:/var/lib/grafana
-
-  netdata:
-    container_name: netdata
+      - ./grafana:/var/lib/grafana
+      - ./grafana/provisioning/:/etc/grafana/provisioning/
     restart: always
-    image: netdata/netdata
-    cap_add:
-      - SYS_PTRACE
-    security_opt:
-      - apparmor:unconfined
-    depends_on: 
-      - nginx
-    ports: 
-      - 19999:19999
-    volumes:
-      - /proc:/host/proc:ro
-      - /sys:/host/sys:ro
-      - /var/run/docker.sock:/var/run/docker.sock:ro
+
+  # netdata:
+  #   container_name: netdata
+  #   restart: always
+  #   image: netdata/netdata
+  #   cap_add:
+  #     - SYS_PTRACE
+  #   security_opt:
+  #     - apparmor:unconfined
+  #   depends_on: 
+  #     - nginx
+  #   ports: 
+  #     - 19999:19999
+  #   volumes:
+  #     - /proc:/host/proc:ro
+  #     - /sys:/host/sys:ro
+  #     - /var/run/docker.sock:/var/run/docker.sock:ro
 
   redis:
     container_name: redis
@@ -60,6 +58,31 @@ services:
     volumes:
       - redis_data:/var/lib/redis/data/
     restart: always
+
+  # prometheus:
+  #   image: prom/prometheus:latest
+  #   container_name: prometheus
+  #   ports:
+  #     - 9090:9090
+  #   command:
+  #     - --config.file=/etc/prometheus/prometheus.yml
+  #   volumes:
+  #     - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+  #   depends_on:
+  #     - cadvisor
+
+  # cadvisor:
+  #   image: gcr.io/cadvisor/cadvisor:latest
+  #   container_name: cadvisor
+  #   ports:
+  #     - 8080:8080
+  #   volumes:
+  #     - /:/rootfs:ro
+  #     - /var/run:/var/run:rw
+  #     - /sys:/sys:ro
+  #     - /var/lib/docker/:/var/lib/docker:ro
+  #   depends_on:
+  #     - redis
 
   web:
     container_name: web
@@ -81,4 +104,3 @@ volumes:
   pg_data:
   static_volume:
   redis_data:
-  grafana:
