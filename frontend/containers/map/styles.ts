@@ -1,8 +1,12 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
+`;
+
+export const Inner = styled.div`
+  display: flex;
 `;
 
 export const Title = styled.h1`
@@ -15,13 +19,3 @@ export const Title = styled.h1`
   color: #000000;
 `;
 
-export const Main = styled.div`
-  display: flex;
-  flex-direction: row;
-  height: 100%;
-  position: relative;
-  min-height: 600px;
-  @media (max-width: 1199.98px) {
-    flex-direction: column;
-  }
-`;

@@ -7,8 +7,8 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 const data: IDetector = {
   cluster: "1cluster",
   id: 1337,
-  x: 123,
-  y: -123,
+  x: "123",
+  y: "-123",
 };
 
 describe("ErrorMessage", () => {
