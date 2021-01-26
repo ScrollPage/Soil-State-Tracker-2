@@ -21,15 +21,15 @@ export const Right = styled.div<{ rightMin: number }>`
 export const Closable = styled.div<{ isActive: boolean }>`
   display: none;
   position: absolute;
-  top: -25px;
+  top: -23px;
   left: 50%;
   transform: translateX(-50%);
   height: 25px;
   width: 25px;
   justify-content: center;
-  font-size: 30px;
   align-items: center;
   border-radius: 50%;
+  font-size: 30px;
   ${({ isActive }) => isActive && "transform: translateX(-50%) rotate(45deg)"};
   background-color: ${({ theme }) => theme.green};
   color: #fff;

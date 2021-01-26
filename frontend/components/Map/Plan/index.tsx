@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useRef, useState } from "react";
+import React, { useMemo, memo, useEffect, useRef, useState } from "react";
 import { Wrapper, DetectorBtn, ClusterMarker } from "./styles";
 import ReactMapGL, {
   ViewportProps,
@@ -39,18 +39,22 @@ const PlanComponent: React.FC<PlanProps> = ({ detectors }) => {
     };
   }, []);
 
-  const points = detectors.map((detector) => ({
-    type: "Feature",
-    properties: {
-      cluster: false,
-      title: detector.id,
-      venue: detector.id,
-    },
-    geometry: {
-      type: "Point",
-      coordinates: [parseFloat(detector.x), parseFloat(detector.y)],
-    },
-  }));
+  const points = useMemo(
+    () =>
+      detectors.map((detector) => ({
+        type: "Feature",
+        properties: {
+          cluster: false,
+          title: detector.id,
+          venue: detector.id,
+        },
+        geometry: {
+          type: "Point",
+          coordinates: [parseFloat(detector.x), parseFloat(detector.y)],
+        },
+      })),
+    [detectors]
+  );
 
   const bounds = mapRef.current
     ? mapRef.current.getMap().getBounds().toArray().flat()

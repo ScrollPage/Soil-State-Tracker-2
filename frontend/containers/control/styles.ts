@@ -18,7 +18,6 @@ export const Title = styled.h1`
 export const Main = styled.div`
   display: flex;
   flex-direction: row;
-  margin-top: 30px;
   height: 100%;
   position: relative;
   min-height: 600px;
