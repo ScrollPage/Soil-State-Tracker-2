@@ -9,7 +9,7 @@ class ClusterNameSerializer(serializers.StringRelatedField):
 
 class DetectorSerializer(serializers.ModelSerializer):
     '''Сериализация датчика'''
-    # cluster = ClusterNameSerializer(read_only=True)
+    cluster = ClusterNameSerializer(read_only=True)
     class Meta:
         model = Detector
-        exclude = ['user', 'cluster']
+        exclude = ['user']
