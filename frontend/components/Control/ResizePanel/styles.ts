@@ -4,6 +4,7 @@ export const Wrapper = styled.div`
   display: flex;
   flex: 1;
   max-width: 100%;
+  user-select: none;  
 `;
 
 export const Left = styled.div<{ width: number | null, leftMin: number }>`
@@ -17,6 +18,24 @@ export const Right = styled.div<{ rightMin: number }>`
   flex: 1;
   margin-left: 25px;
 `
+export const Closable = styled.div<{ isActive: boolean }>`
+  display: none;
+  position: absolute;
+  top: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 25px;
+  width: 25px;
+  justify-content: center;
+  font-size: 30px;
+  align-items: center;
+  border-radius: 50%;
+  ${({ isActive }) => isActive && "transform: translateX(-50%) rotate(45deg)"};
+  background-color: ${({ theme }) => theme.green};
+  color: #fff;
+  font-family: Play;
+  cursor: pointer;
+`
 
 export const Resize = styled.div<{ isActive: boolean }>`
   background-color: ${({ theme }) => theme.green};
@@ -27,16 +46,8 @@ export const Resize = styled.div<{ isActive: boolean }>`
   cursor: col-resize;
   &:hover { 
     border: 1px solid ${({ theme }) => theme.green};
+    ${Closable} {
+      display: flex;
+    }
   }
-`
-
-export const Closable = styled.div<{ isActive: boolean }>`
-  position: absolute;
-  top: -21px;
-  padding: 0 5px;
-  ${({ isActive }) => isActive ? "left: -61px;" : "right: -62px;"};
-  background-color: ${({ theme }) => theme.green};
-  color: #fff;
-  font-family: Play;
-  cursor: pointer;
 `
