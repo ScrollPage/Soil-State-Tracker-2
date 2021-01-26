@@ -232,10 +232,9 @@ pusher_client = pusher.Pusher(
     ssl=True
 )
 
-#REDIS related settings
-# REDIS_HOST = os.environ.get('REDIS_HOST', local.REDIS_HOST),
-REDIS_HOST = '127.0.0.1'
-REDIS_PORT = 6379
+# REDIS related settings
+REDIS_HOST = os.environ.get('REDIS_HOST', local.REDIS_HOST)
+REDIS_PORT = os.environ.get('REDIS_PORT', local.REDIS_PORT)
 
 # Cacheops
 CACHEOPS_REDIS = {
