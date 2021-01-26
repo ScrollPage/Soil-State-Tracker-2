@@ -6,7 +6,6 @@ import ReactMapGL, {
   FlyToInterpolator,
   Popup,
   NavigationControl,
-  ScaleControl,
   FullscreenControl,
 } from "react-map-gl";
 import useSupercluster from "use-supercluster";

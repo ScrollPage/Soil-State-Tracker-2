@@ -4,9 +4,10 @@ import styled from 'styled-components';
 export const Footer = styled.div`
   display: flex;
   flex-direction: column;
+  width: 100%;
   ${SButton} {
     &:first-of-type {
-      margin-bottom: 10px;
+      margin-bottom: 20px;
     }
   }
 `
@@ -17,7 +18,7 @@ export const Text = styled.div`
   font-weight: bold;
   font-size: 28px;
   line-height: 32px;
-  margin-bottom: 30px;
+  margin-bottom: 55px;
 `
 
 export const Wrapper = styled.div`

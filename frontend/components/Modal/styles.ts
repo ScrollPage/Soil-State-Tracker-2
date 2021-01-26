@@ -20,7 +20,7 @@ export const Wrapper = styled.div`
         height: 100%;
         width: 100%;
         background-color: #fff;
-        padding: 40px;
+        padding: 65px 55px;
         border-radius: 5px;
         border: 1px solid #d9d9d9;
     }
@@ -30,14 +30,14 @@ export const Close = styled.div`
     position: absolute;
     height: 18px;
     width: 18px;
-    top: 15px;
-    right: 15px;
+    top: 30px;
+    right: 30px;
     cursor: pointer;
     &:after, &:before {
       content: '';
       position: absolute;
-      height: 18px;
-      width: 3px;
+      height: 29px;
+      width: 1.5px;
       background-color: #000;
       top: 50%;
       left: 50%;

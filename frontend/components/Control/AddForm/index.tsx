@@ -1,5 +1,5 @@
 import React, { memo } from "react";
-import { Wrapper, Title } from "./styles";
+import { Wrapper } from "./styles";
 import { Formik, Form, FormikProps } from "formik";
 import { SButton } from "@/components/UI/Button";
 import { Input } from "@/components/UI/Input";
@@ -47,18 +47,16 @@ const AddFormComponent: React.FC<AddFormProps> = ({
       >
         {(props: FormikProps<AddFormValues>) => (
           <Form>
-            <Title>
-              {initialValues ? "Редактировать группу" : "Добавить группу"}
-            </Title>
             <Input
-              src="padlock"
               type="text"
               name="name"
               placeholder="Введите название группы"
+              myType="default"
+              width="100%"
             />
             <TextArea name="title" placeholder="Введите описание группы" />
-            <SButton type="submit" myType="orange">
-              Подтвердить
+            <SButton type="submit" myType="green">
+              Сохранить
             </SButton>
           </Form>
         )}

@@ -30,11 +30,11 @@ const DeleteClusterModalComponent: React.FC<IDeleteClusterModal> = ({
     <Wrapper>
       <Text>Вы действительно хотите удалить группу?</Text>
       <Footer>
-        <SButton onClick={onSubmit} myType="orange">
-          Да
+        <SButton onClick={setClose} myType="green">
+          Отменить
         </SButton>
-        <SButton onClick={setClose} myType="orange">
-          Нет
+        <SButton onClick={onSubmit} myType="red">
+          Удалить
         </SButton>
       </Footer>
     </Wrapper>

@@ -25,7 +25,7 @@ const SideBarContainer: React.FC<SideBarProps> = () => {
           <Transfers />
           <Clusters />
           <Footer>
-            <SButton myType="green" onClick={showHandler}>
+            <SButton myType="green_plus" onClick={showHandler}>
               Добавить группу
             </SButton>
           </Footer>

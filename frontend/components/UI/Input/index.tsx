@@ -7,22 +7,25 @@ import { Wrapper, Inner, Error, Icon } from "./styles";
 type InputProps = InputHTMLAttributes<HTMLInputElement> & {
   name: string;
   width?: string;
-  src: string;
+  src?: string;
+  myType?: "default";
 };
 
 const InputComponent: React.FC<InputProps> = (props) => {
   const [field, meta] = useField(props);
   const isShowError = meta.touched && !!meta.error;
   return (
-    <Wrapper>
-      <Icon>
-        <Image height={20} width={20} src={`/input/${props.src}.svg`} />
-      </Icon>
+    <Wrapper width={props?.width}>
+      {props?.src && (
+        <Icon>
+          <Image height={20} width={20} src={`/input/${props.src}.svg`} />
+        </Icon>
+      )}
       <Inner
+        myType={props?.myType}
         {...field}
         {...props}
         isShowError={isShowError}
-        width={props?.width}
       />
       {isShowError && <Error data-testid="error">{meta.error}</Error>}
     </Wrapper>

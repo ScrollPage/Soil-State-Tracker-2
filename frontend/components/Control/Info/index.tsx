@@ -141,10 +141,10 @@ const InfoComponent = () => {
         )}
       </Main>
       <Footer>
-        <SButton onClick={() => showHandler("add")} myType="green">
+        <SButton onClick={() => showHandler("add")} myType="green_plus">
           Редактировать
         </SButton>
-        <SButton onClick={() => showHandler("delete")} myType="red" />
+        <SButton onClick={() => showHandler("delete")} myType="red_plus" />
       </Footer>
     </Wrapper>
   );

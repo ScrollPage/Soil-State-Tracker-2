@@ -1,8 +1,8 @@
 import { AddForm, AddFormValues } from "@/components/Control/AddForm";
-import React, { memo } from "react";
+import React, { memo, useMemo } from "react";
 import { useDispatch } from "react-redux";
 import { addCluster, changeClusterInfo } from "@/store/actions/cluster";
-import { Wrapper } from "./styles";
+import { Wrapper, Text } from "./styles";
 
 export interface IAddClusterModalProps {
   initialValues?: AddFormValues;
@@ -20,8 +20,10 @@ const AddClusterModalComponent: React.FC<IAddClusterModal> = ({
 }) => {
   const dispatch = useDispatch();
 
+  const isChange = useMemo(() => !!id, [id]);
+
   const onSubmit = (values: AddFormValues) => {
-    if (id) {
+    if (isChange && id) {
       dispatch(changeClusterInfo(id, values));
     } else {
       dispatch(addCluster(values));
@@ -30,6 +32,7 @@ const AddClusterModalComponent: React.FC<IAddClusterModal> = ({
 
   return (
     <Wrapper>
+      <Text>{isChange ? "Редактировать группу" : "Добавить группу"}</Text>
       <AddForm
         setClose={setClose}
         handleSubmit={onSubmit}

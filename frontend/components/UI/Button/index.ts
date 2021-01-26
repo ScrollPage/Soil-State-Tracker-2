@@ -1,13 +1,13 @@
 import styled, { css } from 'styled-components';
 
-export const SButton = styled.button<{ myType: "white" | "blue" | "orange" | "green" | "red", small?: boolean }>`
+export const SButton = styled.button<{ myType: "red_plus" | "green_plus" | "white" | "blue" | "orange" | "green" | "red", small?: boolean }>`
   box-sizing: border-box;
   outline: none;
   cursor: pointer;
   font-style: normal;
   pointer-events: auto;
 
-  ${({ myType, theme }) => myType === 'green' && css`
+  ${({ myType, theme }) => myType === 'green_plus' && css`
     text-align: left !important;
     padding: 0 21px;
     min-width: 244px;
@@ -41,10 +41,30 @@ export const SButton = styled.button<{ myType: "white" | "blue" | "orange" | "gr
     }
   `};
 
-  ${({ myType, theme, small }) => myType === 'red' && css`
-    text-align: left !important;
-    width: ${small ? "20px" : "50px"};
-    height: ${small ? "20px" : "50px"};
+  ${({ myType, theme }) => myType === 'green' && css`
+    width: 100%;
+    height: 50px;
+    background-color: ${theme.green};
+    color: #fff;
+    box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.08);
+    border-radius: 20px;
+    border: none;
+    font-family: Play;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &:hover {
+      box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.2);
+    }
+  `};
+
+  ${({ myType, theme }) => myType === 'red_plus' && css`
+    width: 50px;
+    height: 50px;
     background-color: ${theme.red};
     box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.08);
     border-radius: 20px;
@@ -59,12 +79,32 @@ export const SButton = styled.button<{ myType: "white" | "blue" | "orange" | "gr
       left: 50%;
       top: 50%;
       transform: translateY(-50%) translateX(-50%) rotate(45deg);
-      width: ${small ? "1px" : "5px"};
-      height: ${small ? "10px" : "25px"};
+      width: 5px;
+      height: 25px;
       background-color: #fff;
     }
     &:before {
       transform: translateY(-50%) translateX(-50%) rotate(-45deg);
+    }
+  `};
+  ${({ myType, theme }) => myType === 'red' && css`
+    width: 100%;
+    height: 50px;
+    background-color: ${theme.red};
+    color: #fff;
+    box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.08);
+    border-radius: 20px;
+    border: none;
+    font-family: Play;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &:hover {
+      box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.2);
     }
   `};
 
