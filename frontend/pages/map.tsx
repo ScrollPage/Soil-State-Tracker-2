@@ -36,7 +36,7 @@ const Map = ({ clusters }: ControlProps) => {
           rel="stylesheet"
         />
       </Head>
-      {!error && data && <MapContainer data={newData} />}
+      {!error && newData && <MapContainer data={newData} />}
     </ControlLayout>
   );
 };

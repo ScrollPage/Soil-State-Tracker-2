@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { memo, useEffect, useRef, useState } from "react";
 import ReactMapGL, {
   ViewportProps,
   Marker,
@@ -16,12 +16,11 @@ interface MapContainerProps {
   data: IDetector[];
 }
 
-export const MapContainer: React.FC<MapContainerProps> = ({ data }) => {
-  console.log(data);
+const MapContainerComponent: React.FC<MapContainerProps> = ({ data }) => {
   const { width, height } = useWindowSize();
   const [viewport, setViewport] = useState<any>({
-    latitude: 38.887,
     longitude: -77.02,
+    latitude: 38.887,
     zoom: 12,
   });
   const [selectedPlace, setSelectedPlace] = useState<any>(null);
@@ -49,7 +48,7 @@ export const MapContainer: React.FC<MapContainerProps> = ({ data }) => {
     },
     geometry: {
       type: "Point",
-      coordinates: [detector.x, detector.y],
+      coordinates: [parseFloat(detector.x), parseFloat(detector.y)],
     },
   }));
 
@@ -174,3 +173,5 @@ export const MapContainer: React.FC<MapContainerProps> = ({ data }) => {
     </Wrapper>
   );
 };
+
+export const MapContainer = memo(MapContainerComponent);
