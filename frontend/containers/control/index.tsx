@@ -10,18 +10,16 @@ interface ControlContainerProps {}
 
 export const ControlContainer: React.FC<ControlContainerProps> = ({}) => {
   return (
-    <Container>
-      <Wrapper>
-        <Title>Управление</Title>
-        <ChooseProvider>
-          <Main>
-            <ResizePanel>
-              <SideBar />
-              <Info />
-            </ResizePanel>
-          </Main>
-        </ChooseProvider>
-      </Wrapper>
-    </Container>
+    <Wrapper>
+      <Title>Управление</Title>
+      <ChooseProvider>
+        <Main>
+          <ResizePanel>
+            <SideBar />
+            <Info />
+          </ResizePanel>
+        </Main>
+      </ChooseProvider>
+    </Wrapper>
   );
 };

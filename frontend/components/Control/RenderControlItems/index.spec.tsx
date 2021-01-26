@@ -8,14 +8,14 @@ const data: IDetector[] = [
   {
     cluster: "1cluster",
     id: 1337,
-    x: 123,
-    y: -123,
+    x: "123",
+    y: "-123",
   },
   {
     cluster: "1cluster",
     id: 1338,
-    x: 50,
-    y: 12,
+    x: "50",
+    y: "12",
   },
 ];
 

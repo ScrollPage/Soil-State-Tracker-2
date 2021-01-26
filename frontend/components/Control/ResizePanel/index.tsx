@@ -78,11 +78,6 @@ const ResizePanelComponent: React.FC<ResizePanelProps> = ({
     delta,
   ]);
 
-  const isChowClosable = useMemo(
-    () => width.left && (width.left + delta === 310 || !isShow),
-    [width, isShow]
-  );
-
   return (
     <Wrapper>
       {isShow && (
@@ -91,11 +86,9 @@ const ResizePanelComponent: React.FC<ResizePanelProps> = ({
         </Left>
       )}
       <Resize onMouseDown={mouseDownHandler} isActive={inspectMouse}>
-        {isChowClosable && (
-          <Closable isActive={isShow} onClick={showHandler}>
-            {isShow ? "Закрыть" : "Открыть"}
-          </Closable>
-        )}
+        <Closable isActive={isShow} onClick={showHandler}>
+          +
+        </Closable>
       </Resize>
       <Right rightMin={rightMin}>{childrenArray[1]}</Right>
     </Wrapper>
