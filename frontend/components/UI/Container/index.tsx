@@ -1,34 +1,20 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
-const Container = styled.div<{ fluid?: boolean }>`
-  flex-grow: 1;
-  margin: 0 auto;
+const Container = styled.div`
   padding: 0 15px;
-  position: relative;
-  height: 100%;
+  width: 100%;
   @media (min-width: 575.98px) {
-    max-width: 540px;
-    /* padding: 0px; */
+    padding: 0 calc(50vw - 270px);
   }
   @media (min-width: 767.98px) {
-    max-width: 720px;
+    padding: 0 calc(50vw - 360px);
   }
   @media (min-width: 991.98px) {
-    max-width: 860px;
+    padding: 0 calc(50vw - 480px);
   }
   @media (min-width: 1199.98px) {
-    max-width: 1000px;
+    padding: 0 calc(50vw - 590px);
   }
-  @media (min-width: 1407.98px) {
-    max-width: 1200px;
-  }
-  ${(props) =>
-    props.fluid &&
-    css`
-      padding: 0px;
-      margin: 0px;
-      max-width: 100% !important;
-    `}
 `;
 
 export default Container;

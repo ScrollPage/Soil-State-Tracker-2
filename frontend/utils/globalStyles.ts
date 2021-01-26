@@ -11,25 +11,21 @@ export const GlobalStyle = createGlobalStyle`
   }
   body {
     overflow-x: hidden;
-    /* scroll-bar */
     &::-webkit-scrollbar {
-        width: 5px;
-        @media (max-width: 575.98px) {
-            width: 0px;
-        }
+      width: 5px;
+      @media (max-width: 575.98px) {
+        width: 0px;
+      }
     }
     &::-webkit-scrollbar-track {
-        height: 90%;
+      height: 90%;
     }
     &::-webkit-scrollbar-thumb {
-        background-color: #60CFBF;
+      background-color: #60CFBF;
     }
   }
   #nprogress .bar {
     background: #60CFBF !important;
-  }
-  p {
-    margin: 0;
   }
 `;
 

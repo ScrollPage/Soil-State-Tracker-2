@@ -1,3 +1,4 @@
+import Container from "@/components/UI/Container";
 import { authCheckState } from "@/store/actions/auth";
 import React, { memo, useEffect } from "react";
 import { useDispatch } from "react-redux";
@@ -20,7 +21,9 @@ const ControlLayoutComponent: React.FC<ControlLayoutProps> = ({ children }) => {
     <>
       <ControlHeader />
       <ControlSideBar />
-      <Main>{children}</Main>
+      <Main>
+        <Container>{children}</Container>
+      </Main>
     </>
   );
 };
