@@ -233,7 +233,7 @@ pusher_client = pusher.Pusher(
 )
 
 #REDIS related settings
-REDIS_HOST = 'redis'
+REDIS_HOST = os.environ.get('REDIS_HOST', '127.0.0.1'),
 # os.environ.get('REDIS_HOST', default='127.0.0.1'),
 REDIS_PORT = 6379
 
