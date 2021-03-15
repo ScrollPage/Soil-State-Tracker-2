@@ -11,7 +11,6 @@ import requests
 import os
 import django
 
-from django.db.models import Prefetch
 from django.utils import timezone
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'backend.settings')
