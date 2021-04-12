@@ -68,7 +68,7 @@ class DetectorData(models.Model):
         )
 
         if days:
-            data.timestamp = datetime.now()+timedelta(days=days)
+            data.timestamp = datetime.now() + timedelta(days=days)
             data.save()
 
         return data
