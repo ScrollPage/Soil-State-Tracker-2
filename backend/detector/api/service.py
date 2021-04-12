@@ -1,6 +1,7 @@
 from rest_framework.viewsets import GenericViewSet
 from rest_framework.mixins import ListModelMixin
-from backend.service import SerializerMixin, QueryDate
+
+from backend.core import SerializerMixin, QueryDate
 
 class PSListViewSet(SerializerMixin,
                     GenericViewSet,

@@ -6,13 +6,35 @@ from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 
 from .serializers import TokenSerialzizer
+from .service import PSFViewSet
 from client.models import Client
 
-class ClientActivity(GenericViewSet):
-    '''Активация аккаунта'''
+from chat.api.serializers import ChatSerializer
+
+
+class ClientViewSet(PSFViewSet):
+    '''
+    Активация аккаунта
+    Чаты пользователя/администратора
+    '''
 
     serializer_class = TokenSerialzizer
+    serializer_class_by_action = {
+        'chat': ChatSerializer
+    }
     permission_classes = [permissions.AllowAny]
+    permission_classes_by_action = {
+        'chat': [permissions.IsAuthenticated]
+    }
+    queryset = Client.objects.all()
+
+    @action(detail=False, methods=['get'])
+    def chat(self, request, *args, **kwargs):
+        user = request.user
+        if user.is_staff:
+            return self.fast_response('chats', filtering='all', instance=user)
+        else:
+            return self.fast_response('chat', many=False, instance=user)
 
     @action(detail=False, methods=['post'])
     def activate(self, request, *args, **kwargs):

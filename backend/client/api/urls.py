@@ -1,16 +1,15 @@
-from django.urls import path
 from rest_framework.urlpatterns import format_suffix_patterns
+from rest_framework.routers import DefaultRouter
+from django.urls import path
 
-from . import views
+from .views import ClientViewSet
+
 
 urlpatterns = [
-    
+
 ]
 
-activate = views.ClientActivity.as_view({
-    'post': 'activate'
-})
 
-urlpatterns += [
-    path('activate/', activate, name='activate'),
-]
+r = DefaultRouter()
+r.register('client', ClientViewSet, basename='client')
+urlpatterns += r.urls

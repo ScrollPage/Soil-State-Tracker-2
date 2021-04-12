@@ -12,7 +12,9 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 import os
 from pathlib import Path
 from datetime import timedelta
+
 import pusher
+
 from . import local
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -41,7 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'cacheops',
-    # 'channels',
+    'channels',
     'corsheaders',
     'djoser',
     'drf_yasg',
@@ -88,7 +90,21 @@ TEMPLATES = [
     },
 ]
 
+# REDIS related settings
+REDIS_HOST = os.environ.get('REDIS_HOST', local.REDIS_HOST)
+REDIS_PORT = os.environ.get('REDIS_PORT', local.REDIS_PORT)
+
 WSGI_APPLICATION = 'backend.wsgi.application'
+ASGI_APPLICATION = 'backend.asgi.application'
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [(REDIS_HOST, REDIS_PORT)],
+        },
+    },
+}   
 
 
 # Database
@@ -153,7 +169,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # REST FRAMEWORK
 REST_FRAMEWORK = {
-    'EXCEPTION_HANDLER': 'backend.service.exception_handler',
+    'EXCEPTION_HANDLER': 'backend.core.exception_handler',
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
         'rest_framework.authentication.TokenAuthentication',
@@ -219,7 +235,7 @@ DJOSER = {
     'ACTIVATION_URL': '#',
     'SEND_ACTIVATION_EMAIL': False,
     'SERIALIZERS': {
-        'current_user': 'client.api.serializers.ClientMeSerialzier',
+        'current_user': 'client.api.serializers.ClientSerialzier',
     },
 }
 
@@ -232,15 +248,11 @@ pusher_client = pusher.Pusher(
     ssl=True
 )
 
-# REDIS related settings
-REDIS_HOST = os.environ.get('REDIS_HOST', local.REDIS_HOST)
-REDIS_PORT = os.environ.get('REDIS_PORT', local.REDIS_PORT)
-
 # Cacheops
 CACHEOPS_REDIS = {
     'host': REDIS_HOST, # redis-server is on same machine
     'port': REDIS_PORT,        # default redis port
-    'db': 2,             # SELECT non-default redis database
+    'db': 3,             # SELECT non-default redis database
 }
 
 CACHEOPS_DEFAULTS = {
@@ -251,12 +263,12 @@ CACHEOPS = {
     'detector.DetectorData': {'ops': 'all', 'timeout': 60*120},
     'detector.Detector': {'ops': {}, 'timeout': 60*120},
     'group.cluster': {'ops': 'all'},
-    'chat.message': {'ops': 'all'},
-    'chat.chat': {'ops': 'all'}
+    # 'chat.message': {'ops': 'all'},
+    # 'chat.chat': {'ops': 'all'}
 }
 
 # Celery
-CELERY_REDIS_DB = '1'
+CELERY_REDIS_DB = '2'
 CELERY_BROKER_URL = f'redis://{REDIS_HOST}:{REDIS_PORT}/{CELERY_REDIS_DB}'
 CELERY_BROKER_TRANSPORT_OPTIONS = {'visiblity_timeout': 3600}
 CELERY_RESULT_BACKEND = f'redis://{REDIS_HOST}:{REDIS_PORT}/{CELERY_REDIS_DB}'

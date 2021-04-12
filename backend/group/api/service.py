@@ -8,7 +8,7 @@ from django.utils import timezone
 import numpy as np
 from datetime import timedelta
 
-from backend.service import SerializerMixin, QueryDate
+from backend.core import SerializerMixin, QueryDate
 from detector_data.models import DetectorData
 
 class SListCreateUpdateViewSet(SerializerMixin,

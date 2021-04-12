@@ -1,5 +1,7 @@
 from rest_framework.test import APIClient
 from rest_framework.views import exception_handler as drf_exception_handler
+from rest_framework import status
+from rest_framework.response import Response
 from django.urls import reverse
 from django.utils import timezone
 
@@ -66,6 +68,7 @@ class PermissionSerializerMixin(PermissionMixin, SerializerMixin):
 
 class QueryDate:
     '''Позволяет получать 2 query параметра: begin_date, currency'''
+
     def get_query_params_date(self):
         begin_date = self.request.query_params.get('begin_date', None)
         currency = self.request.query_params.get('currency', '1')
@@ -75,3 +78,24 @@ class QueryDate:
             begin_date = dt.datetime.strptime(begin_date, '%Y-%m-%d')
         currency = int(currency)
         return begin_date, currency
+
+class FastResponseMixin:
+    '''Функция быстрого ответа'''
+
+    def fast_response(
+        self, field, status=status.HTTP_200_OK, detail=True,
+        many=True, filtering=None, instance=None
+    ):
+        if detail:
+            if instance is None:
+                instance = self.get_object()
+            instances = getattr(instance, field)
+        else:
+            instances = getattr(self.model, field)
+
+
+        if filtering:
+            instances = getattr(instances, filtering)()
+
+        serializer = self.get_serializer(instances, many=many)
+        return Response(serializer.data, status=status)
