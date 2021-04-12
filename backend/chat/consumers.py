@@ -43,7 +43,7 @@ class ChatConsumer(UpgradedWebsocketConsumer):
         return self.send_chat_message(content)
 
     def fetch_messages(self, data):
-        messages = self.chat.messages.all().order_by('-timestamp')
+        messages = data['chat'].messages.all().order_by('-timestamp')
         content = {
             'command': 'messages',
             'messages': self.messages_to_json(messages)
