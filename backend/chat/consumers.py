@@ -1,14 +1,22 @@
 from django.shortcuts import get_object_or_404
+from django.http.response import HttpResponseForbidden 
+from django.db import models
 
 import json
 from asgiref.sync import async_to_sync
-from channels.generic.websocket import WebsocketConsumer
 
+from .service import UpgradedChatConsumer
 from .models import Chat, Message
 from client.models import Client
+from .permissions import UserInChat
 
-class ChatConsumer(WebsocketConsumer):
+class ChatConsumer(UpgradedWEbsocketConsumer):
+    '''Консумер для чатов'''
 
+    required_fields = [(Chat, 'chat'), (Client, 'user')]
+    permissions = [UserInChat]
+
+    # Connect/Disconnect
     def connect(self):
         self.room_name = self.scope['url_route']['kwargs']['room_name']
         self.room_group_name = 'chat_%s' % self.room_name
@@ -18,16 +26,15 @@ class ChatConsumer(WebsocketConsumer):
         )
 
         self.accept()
-
+    
     def disconnect(self, close_code):
         async_to_sync(self.channel_layer.group_discard)(
             self.room_group_name,
             self.channel_name
         )
 
+    # Message handling
     def new_message(self, data):
-        data['chat'] = get_object_or_404(Chat, id=data.get('chat'))
-        data['user'] = get_object_or_404(Client, id=data.get('user'))
         message = Message.objects.create(**data)
         content = {
             'command': 'new_message',
@@ -36,23 +43,25 @@ class ChatConsumer(WebsocketConsumer):
         return self.send_chat_message(content)
 
     def fetch_messages(self, data):
-        messages = get_object_or_404(Chat, id=data['chat']).messages.all() \
-            .order_by('-timestamp')
+        messages = self.chat.messages.all().order_by('-timestamp')
         content = {
             'command': 'messages',
             'messages': self.messages_to_json(messages)
         }
         self.send_message(content)
 
+    # Main part
     commands = {
         'fetch_messages': fetch_messages,
         'new_message': new_message,
     }
 
     def receive(self, text_data):
-        data = json.loads(text_data)
+        data = self.prepare_data(text_data)
+        self.check_permissions()
         self.commands[data.pop('command')](self, data)
 
+    # Utils
     def messages_to_json(self, messages):
         return [self.message_to_json(message) for message in messages]
 
@@ -77,8 +86,4 @@ class ChatConsumer(WebsocketConsumer):
         )
 
     def send_message(self, message):
-        self.send(text_data=json.dumps(message))
-
-    def chat_message(self, event):
-        message = event['message']
         self.send(text_data=json.dumps(message))

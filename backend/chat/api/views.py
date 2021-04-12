@@ -31,10 +31,12 @@ class ChatViewSet(PCreateDestroyViewSet):
 
     @action(detail=False, methods=['get'])
     def free(self, request, *args, **kwargs):
+        '''Чаты без админа'''
         return self.fast_response('free', filtering='all', detail=False)
 
     @action(detail=True, methods=['put'])
     def admin(self, request, *args, **kwargs):
+        '''Стать админом в чате'''
         chat = self.get_object()
         chat.admin = request.user
         chat.save()

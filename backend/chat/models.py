@@ -1,4 +1,7 @@
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.conf import settings
 
 from model_utils.managers import QueryManager
 
@@ -42,7 +45,24 @@ class Message(models.Model):
     )
     timestamp = models.DateTimeField(auto_now_add=True)
     content = models.TextField(max_length=5000)
+    unread = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = 'Сообщение'
         verbose_name_plural = 'Сообщения'
+
+@receiver(post_save, sender=Message)
+def send_new_message_notification(sender, instance=None, created=False, **kwargs):
+    if created:
+        inc_counter = not bool(
+            instance.chat.messages.filter(unread=False).count() - 1
+        )
+
+        user = instance.chat.user if instance.user == instance.chat.admin \
+            else instance.chat.admin
+            
+        settings.pusher_client.trigger(
+            f'newmessage{user.id}',
+            'new-message',
+            {'increase_counter': inc_counter, 'chat': instance.chat.id}
+        )
