@@ -1,3 +1,5 @@
+from channels.generic.websocket import WebsocketConsumer
+
 class UpgradedWebsocketConsumer(WebsocketConsumer):
     '''Новые методы - prepare_data, check_permissions'''
 

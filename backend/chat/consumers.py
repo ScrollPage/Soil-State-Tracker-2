@@ -5,12 +5,12 @@ from django.db import models
 import json
 from asgiref.sync import async_to_sync
 
-from .service import UpgradedChatConsumer
+from .service import UpgradedWebsocketConsumer
 from .models import Chat, Message
 from client.models import Client
 from .permissions import UserInChat
 
-class ChatConsumer(UpgradedWEbsocketConsumer):
+class ChatConsumer(UpgradedWebsocketConsumer):
     '''Консумер для чатов'''
 
     required_fields = [(Chat, 'chat'), (Client, 'user')]
