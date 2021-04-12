@@ -6,9 +6,9 @@ class UpgradedWebsocketConsumer(WebsocketConsumer):
     required_fields = []
     permissions = []
 
-    def check_permissions(self):
+    def check_permissions(data):
         if not all([
-            permission(self.chat, self.user) for permission in self.permissions
+            permission(data) for permission in self.permissions
         ]):
             raise HttpResponseForbidden()
 
@@ -27,6 +27,5 @@ class UpgradedWebsocketConsumer(WebsocketConsumer):
                 ''')
 
             data[field] = get_object_or_404(model, id=data[field])
-            setattr(self, field, data[field])
 
         return data

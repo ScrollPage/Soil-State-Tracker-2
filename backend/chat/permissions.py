@@ -1,7 +1,7 @@
 class UserInChat:
 
-    def __call__(self, chat, user):
+    def __call__(self, data):
         return any([
-            user == chat.admin,
-            user == chat.user
+            data['user'] == data['chat'].admin,
+            data['user'] == data['chat'].user
         ])

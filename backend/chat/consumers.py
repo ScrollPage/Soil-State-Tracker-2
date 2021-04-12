@@ -58,7 +58,7 @@ class ChatConsumer(UpgradedWebsocketConsumer):
 
     def receive(self, text_data):
         data = self.prepare_data(text_data)
-        self.check_permissions()
+        self.check_permissions(data)
         self.commands[data.pop('command')](self, data)
 
     # Utils
