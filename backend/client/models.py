@@ -87,10 +87,11 @@ def send_conf_mail(sender, instance=None, created=False, **kwargs):
     '''Отправляет письмо с подтверждением'''
     if created and not instance.is_superuser:
         token = Token.objects.create(user=instance)
-        send_activation_email.delay(instance.email, token.key)
+        # send_activation_email.delay(instance.email, token.key)
+        send_activation_email(instance.email, token.key)
 
 @receiver(post_save, sender=Client)
 def create_private_auth_code(sender, instance=None, created=False, **kwargs):
     '''Создает индивидульный код авторизации в телеграме'''
-    if created and not instance.is_superuser:
+    if created:
         AuthCode.create_unique_code(instance)

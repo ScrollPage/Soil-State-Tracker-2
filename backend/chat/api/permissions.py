@@ -17,3 +17,8 @@ class IsStaff(BasePermission):
 
     def has_object_permission(self, request, view, obj):
         return request.user.is_staff
+
+class NoAdmin(BasePermission):
+    '''Нет админа'''
+    def has_object_permission(self, requst, view, obj):
+        return not bool(obj.admin)

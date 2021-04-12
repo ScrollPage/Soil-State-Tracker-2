@@ -4,7 +4,6 @@ from client.models import Client
 
 class TokenSerialzizer(serializers.Serializer):
     '''Сериализация ключа токена'''
-    
     token = serializers.CharField()
 
 class ClientActivitySerializer(serializers.ModelSerializer):

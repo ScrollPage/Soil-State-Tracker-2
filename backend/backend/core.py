@@ -23,7 +23,10 @@ def exception_handler(exc, context):
     # bot.send_message(text=msg, chat_id=local.EXCEPTION_BOT_CHAT_ID)
     return drf_exception_handler(exc, context)
 
-def get_response(url, method, user=None, data=None, kwargs=None, format=None, query_params=None):
+def get_response(
+    url, method, user=None, data=None, 
+    kwargs=None, format=None, query_params=None
+):
     client = APIClient()
 
     if user:

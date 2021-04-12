@@ -10,7 +10,7 @@ from client.models import Client
 from group.models import Cluster
 from detector.models import Detector
 from detector_data.models import DetectorData
-from backend.service import get_response
+from backend.core import get_response
 
 class TestViews(APITestCase):
 

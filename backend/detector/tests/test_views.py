@@ -8,7 +8,7 @@ from django.utils import timezone
 from client.models import Client
 from group.models import Cluster
 from detector.models import Detector
-from backend.service import get_response
+from backend.core import get_response
 from detector_data.models import DetectorData
 
 class TestViews(APITestCase):

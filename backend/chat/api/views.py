@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from .service import PCreateDestroyViewSet
 from .serializers import ChatSerializer
 from ..models import Chat
-from .permissions import AsUserInChat, NotStaff, IsStaff
+from .permissions import AsUserInChat, NotStaff, IsStaff, NoAdmin
 
 class ChatViewSet(PCreateDestroyViewSet):
     '''Создание, удаление чатов'''
@@ -16,7 +16,7 @@ class ChatViewSet(PCreateDestroyViewSet):
     permission_classes_by_action = {
         'destroy': [permissions.IsAuthenticated, AsUserInChat],
         'free': [permissions.IsAuthenticated, IsStaff],
-        'admin': [permissions.IsAuthenticated, IsStaff],
+        'admin': [permissions.IsAuthenticated, IsStaff, NoAdmin],
     }
     queryset = Chat.objects.all()
     model = Chat
