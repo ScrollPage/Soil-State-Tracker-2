@@ -15,13 +15,34 @@ class DetectorData(models.Model):
         on_delete=models.DO_NOTHING, 
         related_name='data'
     )
-    first_temp = models.DecimalField('Первая температура', max_digits=4, decimal_places=2)
-    second_temp = models.DecimalField('Вторая температура', max_digits=4, decimal_places=2)
-    third_temp = models.DecimalField('Третья температура', max_digits=4, decimal_places=2)
-    humidity = models.DecimalField('Влажность', max_digits=4, decimal_places=2)
-    lightning = models.DecimalField('Освещенность', max_digits=4, decimal_places=2)
-    pH = models.DecimalField('Кислотность', max_digits=4, decimal_places=2)
-    timestamp = TimescaleDateTimeField('Время сбор данных', interval='1 day', auto_now_add=True)
+    first_temp = models.DecimalField(
+        'Температура почвы', 
+        max_digits=4, decimal_places=2
+    )
+    second_temp = models.DecimalField(
+        'Температура воздуха', 
+        max_digits=4, decimal_places=2
+    )
+    third_temp = models.DecimalField(
+        'Температура устройства', 
+        max_digits=4, decimal_places=2
+    )
+    humidity = models.DecimalField(
+        'Влажность', max_digits=4, 
+        decimal_places=2
+    )
+    lightning = models.DecimalField(
+        'Освещенность', max_digits=4, 
+        decimal_places=2
+    )
+    pH = models.DecimalField(
+        'Кислотность', max_digits=4, 
+        decimal_places=2
+    )
+    timestamp = TimescaleDateTimeField(
+        'Время сбор данных', interval='1 day', 
+        auto_now_add=True
+    )
 
     objects = models.Manager()
     timescale = TimescaleManager()
