@@ -1,5 +1,9 @@
 export const sidebarLinks = [
   {
+    href: "/profile",
+    label: "Профиль"
+  },
+  {
     href: "/control",
     label: "Управление"
   },

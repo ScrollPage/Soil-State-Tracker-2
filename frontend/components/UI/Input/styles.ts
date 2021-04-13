@@ -1,18 +1,18 @@
 import styled, { css } from 'styled-components';
 
 export const Wrapper = styled.div<{ width?: string }>`
+  width: ${({ width }) => width ? width : '100%'};
   position: relative;
   display: flex;
   flex-direction: column;
   margin-bottom: 30px;
-  width: ${({ width }) => width ? width : '300px'};
 `;
 
-export const Inner = styled.input <{ isShowError?: boolean, myType?: "default" }> `
+export const Inner = styled.input <{ isShowError?: boolean, myType?: "default" }>`
   border: 1.5px solid ${({ isShowError }) => isShowError ? 'red' : "transparent"};
+  width: 100%;
   padding: 20px 50px;
   background-color: rgba(196, 196, 196, 0.3);
-  width: 100%;
   backdrop-filter: blur(4px);
   font-family: "Play";
   color: #fff;

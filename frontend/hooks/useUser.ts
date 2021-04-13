@@ -6,12 +6,14 @@ export const useUser = () => {
   const isStaff = Cookie.get('isStaff') === "true" ? true : false;
   const firstName = Cookie.get('firstName') ?? "";
   const lastName = Cookie.get('lastName') ?? "";
+  const userId = Cookie.get('userId') ?? "";
 
   const protection: IProtection = {
     isAuth,
     isStaff,
     firstName,
-    lastName
+    lastName,
+    userId
   };
 
   return protection

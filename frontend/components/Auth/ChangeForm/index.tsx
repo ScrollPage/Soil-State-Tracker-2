@@ -62,15 +62,23 @@ const ChangeFormComponent: React.FC<ChangeFormProps> = ({
               name="firstName"
               placeholder="Введите имя"
               src="user"
+              myType="default"
             />
             <Input
               type="text"
               name="lastName"
               placeholder="Введите фамилию"
               src="user"
+              myType="default"
             />
-            <Input type="text" name="email" placeholder="E-mail" src="email" />
-            <SButton myType="white" type="submit">
+            <Input
+              type="text"
+              name="email"
+              placeholder="E-mail"
+              src="email"
+              myType="default"
+            />
+            <SButton type="submit" myType="green">
               Изменить
             </SButton>
           </Form>

@@ -4,4 +4,5 @@ export interface IProtection {
   isStaff: boolean;
   firstName: string;
   lastName: string;
+  userId: string;
 }

@@ -8,16 +8,8 @@ const ControlHeaderComponent = () => {
     <Wrapper>
       <Nav>
         <Image height={84} width={114} src="/main/logo.svg" />
-        <NavLink>
-          <Link href="/">
-            <a>Главная</a>
-          </Link>
-        </NavLink>
-        <NavLink>
-          <Link href="/">
-            <a>Инструкция</a>
-          </Link>
-        </NavLink>
+        <HeadLink url="/" label="Главная" />
+        <HeadLink url="/im" label="Поддержка" />
       </Nav>
       <Settings>
         <Image src="/control/settings.svg" height={24} width={24} />
@@ -27,3 +19,18 @@ const ControlHeaderComponent = () => {
 };
 
 export const ControlHeader = memo(ControlHeaderComponent);
+
+interface HeadLinkProps {
+  label: string;
+  url: string;
+}
+
+const HeadLink: React.FC<HeadLinkProps> = ({ label, url }) => {
+  return (
+    <NavLink>
+      <Link href={url}>
+        <a>{label}</a>
+      </Link>
+    </NavLink>
+  );
+};

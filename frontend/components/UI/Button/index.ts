@@ -41,8 +41,8 @@ export const SButton = styled.button<{ myType: "red_plus" | "green_plus" | "whit
     }
   `};
 
-  ${({ myType, theme }) => myType === 'green' && css`
-    width: 100%;
+  ${({ myType, theme, small }) => myType === 'green' && css`
+    width: ${small ? "150px" : "350px"};
     height: 50px;
     background-color: ${theme.green};
     color: #fff;
