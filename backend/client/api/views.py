@@ -30,14 +30,16 @@ class ClientViewSet(PSFViewSet):
 
     @action(detail=False, methods=['get'])
     def chat(self, request, *args, **kwargs):
+        '''Чаты пользователя'''
         user = request.user
         if user.is_staff:
             return self.fast_response('chats', filtering='all', instance=user)
         else:
-            return self.fast_response('chat', instance=user)
+            return self.fast_response('chat', many=False, instance=user)
 
     @action(detail=False, methods=['post'])
     def activate(self, request, *args, **kwargs):
+        '''Активация аккаунта'''
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
 

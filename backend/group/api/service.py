@@ -5,7 +5,6 @@ from rest_framework.response import Response
 from django.db.models import Min, Max, Avg
 from django.utils import timezone
 
-import numpy as np
 from datetime import timedelta
 
 from backend.core import SerializerMixin, QueryDate

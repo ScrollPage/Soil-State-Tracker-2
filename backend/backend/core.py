@@ -97,7 +97,6 @@ class FastResponseMixin:
         else:
             instances = getattr(self.model, field)
 
-
         if filtering:
             instances = getattr(instances, filtering)()
 

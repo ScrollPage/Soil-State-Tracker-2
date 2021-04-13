@@ -1,7 +1,7 @@
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from django.conf import settings
+from backend.settings import pusher_client
 
 from model_utils.managers import QueryManager
 
@@ -61,7 +61,7 @@ def send_new_message_notification(sender, instance=None, created=False, **kwargs
         user = instance.chat.user if instance.user == instance.chat.admin \
             else instance.chat.admin
             
-        settings.pusher_client.trigger(
+        pusher_client.trigger(
             f'newmessage{user.id}',
             'new-message',
             {'increase_counter': inc_counter, 'chat': instance.chat.id}
