@@ -1,21 +1,14 @@
 from rest_framework.exceptions import AuthenticationFailed, PermissionDenied, ParseError
-from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
 
 from channels.generic.websocket import WebsocketConsumer
 
 import codecs
 import json
+from abc import abstractmethod, ABC
 
-from chat.models import Chat
-
-class UpgradedWebsocketConsumer(WebsocketConsumer):
+class UpgradedWebsocketConsumer(WebsocketConsumer, ABC):
     '''Новые методы - prepare_data, check_permissions'''
-
-    def __init__(self):
-        self.user_model = get_user_model()
-        self.chat_model = Chat
-        super().__init__()
 
     commands = {}
     permissions = []
@@ -26,17 +19,37 @@ class UpgradedWebsocketConsumer(WebsocketConsumer):
         ]):
             raise PermissionDenied()
 
-    def prepare_data(self, text_data):
+    @abstractmethod
+    def prepare_data(self, data):
+        pass
+
+    def validate(self, text_data):
         data = json.loads(text_data)
 
         try:
-            self.commands[data['command']]
+            command = data['command']
         except KeyError:
-            raise ParseError(f"""
-                No command {data['command']} in self.commands: {self.commands}
-            """)
+            raise ParseError("No command given")
+        else:
+            try:
+                self.commands[command]
+            except KeyError:
+                raise ParseError(f"""
+                    No command {data['command']} in self.commands: {self.commands}
+                """)
 
-        data['chat'] = get_object_or_404(self.chat_model, id=self.room_name)
-        data['user'] = get_object_or_404(self.user_model, id=data['user'])
+        data = self.prepare_data(data)
 
         return data
+
+# class PermissionConsumerMixin:
+#     def check_permissions(self, data):
+#         try:
+#             self.permissions = self.permissions_by_command[data['command']]
+#         except KeyError:
+#             pass
+#         finally:
+#             if not all([
+#                 permission(data) for permission in self.permissions
+#             ]): 
+#                 pass
