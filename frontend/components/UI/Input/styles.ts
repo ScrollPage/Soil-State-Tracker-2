@@ -40,7 +40,6 @@ export const Inner = styled.input <{ isShowError?: boolean, myType?: "default" }
       color: rgba(0, 0, 0, 0.4);
     }  
   `}
-
 `;
 
 export const Error = styled.small`

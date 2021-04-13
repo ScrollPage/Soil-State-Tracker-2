@@ -17,7 +17,7 @@ export const ImContext = createContext<ImProps | undefined>(undefined);
 
 export default function Im({ chats, currentChat }: ImProps) {
   return (
-    <ControlLayout>
+    <ControlLayout isContainer={false}>
       <Head>
         <title>Поддержка</title>
       </Head>

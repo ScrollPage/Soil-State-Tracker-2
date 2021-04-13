@@ -1,11 +1,5 @@
 import styled from "styled-components";
 
-export const Wrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  flex: 1;
-`;
-
 export const Content = styled.div`
   display: inline-block;
   margin: 20px auto;

@@ -1,40 +1,39 @@
-import React, { memo } from "react";
-import { Formik, Form } from "formik";
-import { Wrapper, Inner, Button } from "./styles";
-import { useDispatch } from "react-redux";
-import { Input } from "@/components/UI/Input";
-
-export interface ChatAddFormValues {
-  content: string;
-}
-
+import React, { memo, useState } from "react";
+import { Wrapper, Inner, Button, Input } from "./styles";
 interface ChatAddProps {
-  onSubmit: (content: string) => void;
+  handleSubmit: (content: string) => void;
 }
 
-const ChatAddComponent = ({ onSubmit }: ChatAddProps) => {
+const ChatAddComponent = ({ handleSubmit }: ChatAddProps) => {
+  const [value, setValue] = useState("");
+
   return (
     <Wrapper>
-      <Formik
-        initialValues={{
-          content: "",
-        }}
-        onSubmit={(values, { setSubmitting, resetForm }) => {
-          setSubmitting(true);
-          onSubmit(values.content);
-          resetForm();
-          setSubmitting(false);
+      <form
+        onSubmit={(e: React.SyntheticEvent) => {
+          e.preventDefault();
+          const target = e.target as typeof e.target & {
+            content: { value: string };
+          };
+          const content = target.content.value;
+          if (content.trim() !== "") {
+            handleSubmit(content);
+            setValue("");
+          }
         }}
       >
-        {() => (
-          <Form>
-            <Inner>
-              <Input name="content" placeholder="Введите..." width="100%" />
-              <Button type="submit">+</Button>
-            </Inner>
-          </Form>
-        )}
-      </Formik>
+        <Inner>
+          <Input
+            name="content"
+            placeholder="Введите сообщение"
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+          />
+          <Button type="submit">
+            <img src="/enter.svg" alt="Submit" />
+          </Button>
+        </Inner>
+      </form>
     </Wrapper>
   );
 };

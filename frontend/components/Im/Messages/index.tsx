@@ -33,6 +33,7 @@ const MessagesComponent = () => {
   const scrollToBottom = () => {
     endRef?.current?.scrollIntoView({ behavior: "smooth" });
   };
+
   useEffect(scrollToBottom, [messages, loading]);
 
   return (

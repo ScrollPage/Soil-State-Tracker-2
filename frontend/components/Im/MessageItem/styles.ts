@@ -28,10 +28,9 @@ export const Text = styled.p`
   word-break: break-all;
 `
 export const Wrapper = styled.div<{ isActive: boolean }>`
-  border: 1px solid ${({ theme }) => theme.lightBlue};
+  border: 1px solid ${({ theme }) => theme.green};
   display: flex;
-  align-items: center;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   padding: 19px 25px;
   max-width: 90%;
   border-radius: 10px;
@@ -39,6 +38,6 @@ export const Wrapper = styled.div<{ isActive: boolean }>`
   flex-direction: column;
   ${({ isActive }) => isActive && css`
     float: right;
-    background-color: ${({ theme }) => theme.lightBlue};
+    background-color: rgba(96, 207, 191, 0.18);
   ` }
 `;
