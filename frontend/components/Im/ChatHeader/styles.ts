@@ -2,7 +2,6 @@ import styled from 'styled-components'
 
 export const Wrapper = styled.div`
   height: 120px;
-  background-color: ${({ theme }) => theme.blueBgc};
 `;
 export const Hero = styled.div`
   display: flex;

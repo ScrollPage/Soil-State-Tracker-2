@@ -15,6 +15,7 @@ export const renderDialogs = (chats: IChat[]) => {
         key={`dialogItem__key__${chat.id}`}
         id={chat.id}
         user={chat.user}
+        lastMessage={chat.last_message.content}
       />
     );
   });

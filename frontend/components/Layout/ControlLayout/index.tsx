@@ -1,4 +1,5 @@
 import Container from "@/components/UI/Container";
+import { useSetupWebsokets } from "@/hooks/useSetupWebsokets";
 import { authCheckState } from "@/store/actions/auth";
 import React, { memo, useEffect, useMemo } from "react";
 import { useDispatch } from "react-redux";
@@ -8,7 +9,7 @@ import { Main } from "./styles";
 
 interface ControlLayoutProps {
   children: React.ReactNode;
-  isContainer: boolean;
+  isContainer?: boolean;
 }
 
 const ControlLayoutComponent: React.FC<ControlLayoutProps> = ({
@@ -16,6 +17,8 @@ const ControlLayoutComponent: React.FC<ControlLayoutProps> = ({
   isContainer = true,
 }) => {
   const dispatch = useDispatch();
+
+  useSetupWebsokets();
 
   useEffect(() => {
     dispatch(authCheckState());

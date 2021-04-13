@@ -2,24 +2,26 @@ import styled from 'styled-components'
 
 export const Wrapper = styled.div<{ isActive: boolean }>`
   position: relative;
-  padding: 30px 40px;
+  padding: 20px 40px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  background-color: ${({ isActive }) => isActive ? "rgba(204, 235, 255, 0.4)" : "#fff"};
+  background-color: ${({ isActive }) => isActive ? "rgba(96, 207, 191, 0.18)" : "#fff"};
   transition: all .3s ease;
   cursor: pointer;
   &:hover {
-    background-color: rgba(204, 235, 255, 0.4);
+    background-color: rgba(96, 207, 191, 0.18);
   }
 `;
+
 export const Hero = styled.div`
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  margin-left: 20px;
 `;
+
 export const Name = styled.p`
   max-width: 100%;
-  margin: 0 0 0 16px;
+  margin: 0;
   font-family: Montserrat;
   font-style: normal;
   font-weight: 500;
@@ -30,3 +32,13 @@ export const Name = styled.p`
     color: ${({ theme }) => theme.blue};
   }
 `;
+
+export const Message = styled.p`
+  margin: 10px 0 0 0;
+  opacity: 0.5;
+  font-size: 14px;
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: normal;
+  text-overflow: ellipsis;
+`

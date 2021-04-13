@@ -16,9 +16,7 @@ export const messageReducer = (state = initialState, action: MessageActionTypes)
     case 'ADD_MESSAGE':
       return { ...state, messages: [...state.messages, action.message] }
     case 'SET_MESSAGES':
-      return { ...state, messages: action.messages.reverse() }
-    case 'SET_LOADING_FALSE':
-      return { ...state, loading: false }
+      return { ...state, messages: action.messages.reverse(), loading: false }
     case 'SET_LOADING':
       return { ...state, loading: true }
     default:

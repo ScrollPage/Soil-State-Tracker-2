@@ -9,5 +9,4 @@ export const Wrapper = styled.div`
   justify-content: center;
   align-items: flex-end;
   overflow: hidden;
-  margin-bottom: 23px;
 `;
