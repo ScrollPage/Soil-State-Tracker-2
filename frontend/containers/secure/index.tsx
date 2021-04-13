@@ -17,15 +17,13 @@ export const SecureContainer: React.FC<SucureContainerProps> = ({
   const { firstName, lastName, email } = changeInfo;
 
   return (
-    <Container>
-      <Wrapper>
-        <Title>Смена данных</Title>
-        <ChangeForm
-          initialFirstName={firstName}
-          initialLastName={lastName}
-          initialEmail={email}
-        />
-      </Wrapper>
-    </Container>
+    <Wrapper>
+      <Title>Смена данных</Title>
+      <ChangeForm
+        initialFirstName={firstName}
+        initialLastName={lastName}
+        initialEmail={email}
+      />
+    </Wrapper>
   );
 };

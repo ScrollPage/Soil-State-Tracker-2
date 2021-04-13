@@ -2,7 +2,7 @@ import React, { memo } from "react";
 import Link from "next/link";
 import { useUser } from "@/hooks/useUser";
 import { useRouter } from "next/router";
-import { Wrapper, Side, Rectangle, Circle, SideLink, Name } from "./styles";
+import { Wrapper, Side, Rectangle, SideLink, Name } from "./styles";
 import { Avatar } from "@/components/UI/Avatar";
 import { sidebarLinks } from "@/someData/controlLinksData";
 

@@ -15,4 +15,12 @@ export const getModalInfo = (state: AppStateType) => {
   }
 }
 
+export const getMessageInfo = (state: AppStateType) => {
+  const { messages, loading } = state.message;
+  return {
+    messages, loading
+  }
+}
+
+
 

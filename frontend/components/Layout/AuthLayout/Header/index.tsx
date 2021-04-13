@@ -1,14 +1,17 @@
 import React, { memo } from "react";
 import { Wrapper, Title, GoBack, Content } from "./styles";
 import Link from "next/link";
+import { useMaxWidth } from "@/hooks/useMaxWidth";
 
 const AuthHeaderComponent = () => {
+  const isShow = useMaxWidth(767.98);
+
   return (
     <Wrapper>
       <Content>
         <Title>
           <Link href="/">
-            <a>LoRaWAN Dam</a>
+            <a>{isShow ? "LWD" : "LoRaWAN Dam"}</a>
           </Link>
         </Title>
       </Content>

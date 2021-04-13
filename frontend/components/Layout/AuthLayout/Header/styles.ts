@@ -13,6 +13,7 @@ export const Wrapper = styled.div`
   align-items: center;
   padding: 0 60px;
   z-index: 10;
+  background-color: ${({ theme }) => theme.blue};
 `;
 
 export const Content = styled.div`
@@ -36,6 +37,10 @@ export const Title = styled.h1`
 `;
 
 export const GoBack = styled.p`
+  margin-bottom: 0px;
+  @media (max-width: 991.98px) {
+    display: none;
+  }
   > a {
     font-family: "Play";
     font-style: normal;

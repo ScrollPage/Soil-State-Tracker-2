@@ -1,5 +1,4 @@
 import React from "react";
-import Container from "@/components/UI/Container";
 import { Wrapper, Title, Main } from "./styles";
 import { SideBar } from "@/components/Control/SideBar/index.";
 import ChooseProvider from "@/context/control";
