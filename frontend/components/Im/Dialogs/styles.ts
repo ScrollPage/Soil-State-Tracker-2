@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export const Wrapper = styled.div`
   background: #FFFFFF;
-  border-right: 1px solid rgba(0, 0, 0, 0.2);
+  border-right: 1px solid ${({ theme }) => theme.blue};
   display: flex;
   flex-direction: column;
   overflow: hidden;

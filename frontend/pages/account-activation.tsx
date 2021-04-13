@@ -1,6 +1,6 @@
 import React from "react";
 import { getAsString } from "@/utils/getAsString";
-import { ensureRedirectToData } from "@/utils/ensure";
+import { ensureAuth } from "@/utils/ensure";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { AccountActivationContainer } from "@/containers/accountactiovation";
@@ -25,7 +25,7 @@ export default AccountActivation;
 export const getServerSideProps: GetServerSideProps<AccountActivationProps> = async (
   ctx
 ) => {
-  ensureRedirectToData(ctx);
+  ensureAuth(ctx, "auth");
   let token = getAsString(ctx.query.token);
   return {
     props: {

@@ -23,7 +23,7 @@ export default Profile;
 export const getServerSideProps: GetServerSideProps<ProfileProps> = async (
   ctx
 ) => {
-  ensureAuth(ctx);
+  ensureAuth(ctx, "private");
   return {
     props: {},
   };

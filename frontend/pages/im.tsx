@@ -10,18 +10,19 @@ import { getAsString } from "@/utils/getAsString";
 
 export interface ImProps {
   chats: IChat[] | null;
+  freeChats: IChat[] | null;
   currentChat: IChat | null;
 }
 
 export const ImContext = createContext<ImProps | undefined>(undefined);
 
-export default function Im({ chats, currentChat }: ImProps) {
+export default function Im({ chats, freeChats, currentChat }: ImProps) {
   return (
     <ControlLayout isContainer={false}>
       <Head>
         <title>Поддержка</title>
       </Head>
-      <ImContext.Provider value={{ chats, currentChat }}>
+      <ImContext.Provider value={{ chats, freeChats, currentChat }}>
         <ImContainer />
       </ImContext.Provider>
     </ControlLayout>
@@ -29,8 +30,20 @@ export default function Im({ chats, currentChat }: ImProps) {
 }
 
 export const getServerSideProps: GetServerSideProps<ImProps> = async (ctx) => {
-  ensureAuth(ctx);
+  ensureAuth(ctx, "staff");
+
   let chats: IChat[] | null = null;
+  let freeChats: IChat[] | null = null;
+
+  await instanceWithSSR(ctx)
+    .get(`/api/chat/free/`)
+    .then((response) => {
+      freeChats = response?.data ?? null;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+
   await instanceWithSSR(ctx)
     .get(`/api/client/chat/`)
     .then((response) => {
@@ -55,6 +68,7 @@ export const getServerSideProps: GetServerSideProps<ImProps> = async (ctx) => {
   return {
     props: {
       chats,
+      freeChats,
       currentChat,
     },
   };

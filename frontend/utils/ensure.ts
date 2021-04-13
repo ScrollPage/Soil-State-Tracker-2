@@ -1,21 +1,33 @@
-import cookies from 'next-cookies';
 import { GetServerSidePropsContext } from 'next';
 import { ParsedUrlQuery } from 'querystring';
+import { parseCookies } from './parseCookie';
 
-export const ensureRedirectToData = (ctx: GetServerSidePropsContext<ParsedUrlQuery>) => {
-  const token = cookies(ctx)?.token;
-  if (token) {
-    ctx.res.writeHead(302, { Location: '/control/?redirected=true' });
-    ctx.res.end();
+type typeOfRoutes = 'public' | 'auth' | 'private' | 'staff';
+
+export const ensureAuth = (ctx: GetServerSidePropsContext<ParsedUrlQuery>, route: typeOfRoutes) => {
+  if (route === 'public') {
     return;
   }
-}
-
-export const ensureAuth = (ctx: GetServerSidePropsContext<ParsedUrlQuery>) => {
-  const token = cookies(ctx)?.token;
-  if (!token) {
-    ctx.res.writeHead(302, { Location: '/login/?redirected=true' });
-    ctx.res.end();
-    return;
+  if (route === 'private') {
+    const token = parseCookies(ctx.req)?.token;
+    if (!token) {
+      ctx.res.writeHead(302, { Location: '/login/?redirected=true' });
+      ctx.res.end();
+    }
   }
+  if (route === 'auth') {
+    const token = parseCookies(ctx.req)?.token;
+    if (token) {
+      ctx.res.writeHead(302, { Location: '/control/?redirected=true' });
+      ctx.res.end();
+    }
+  }
+  if (route === 'staff') {
+    const isStaff = parseCookies(ctx.req)?.isStaff === 'true';
+    if (!isStaff) {
+      ctx.res.writeHead(302, { Location: '/control/?redirected=true' });
+      ctx.res.end();
+    }
+  }
+  return;
 }

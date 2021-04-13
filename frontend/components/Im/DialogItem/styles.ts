@@ -11,6 +11,7 @@ export const Wrapper = styled.div<{ isActive: boolean }>`
   &:hover {
     background-color: rgba(96, 207, 191, 0.18);
   }
+  border-bottom: 1px solid ${({ theme }) => theme.blue}
 `;
 
 export const Hero = styled.div`

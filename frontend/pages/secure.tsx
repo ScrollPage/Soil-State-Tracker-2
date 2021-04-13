@@ -30,7 +30,7 @@ export default Sucure;
 export const getServerSideProps: GetServerSideProps<SucureProps> = async (
   ctx
 ) => {
-  ensureAuth(ctx);
+  ensureAuth(ctx, "private");
 
   const firstName = cookies(ctx)?.firstName || "";
   const lastName = cookies(ctx)?.lastName || "";

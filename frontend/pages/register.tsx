@@ -1,6 +1,6 @@
 import Head from "next/head";
 import React from "react";
-import { ensureRedirectToData } from "@/utils/ensure";
+import { ensureAuth } from "@/utils/ensure";
 import { GetServerSideProps } from "next";
 import { AuthLayout } from "@/components/Layout/AuthLayout";
 import { RegisterContainer } from "@/containers/register";
@@ -23,7 +23,7 @@ export default Register;
 export const getServerSideProps: GetServerSideProps<RegisterProps> = async (
   ctx
 ) => {
-  ensureRedirectToData(ctx);
+  ensureAuth(ctx, "auth");
   return {
     props: {},
   };

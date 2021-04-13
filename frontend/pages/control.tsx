@@ -35,7 +35,7 @@ export default Control;
 export const getServerSideProps: GetServerSideProps<ControlProps> = async (
   ctx
 ) => {
-  ensureAuth(ctx);
+  ensureAuth(ctx, "private");
   let detectors: IDetector[] | null = null;
   await instanceWithSSR(ctx)
     .get(`/api/detector/`)

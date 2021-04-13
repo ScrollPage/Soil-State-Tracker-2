@@ -38,7 +38,7 @@ export default Map;
 export const getServerSideProps: GetServerSideProps<ControlProps> = async (
   ctx
 ) => {
-  ensureAuth(ctx);
+  ensureAuth(ctx, "private");
   let clusters: ICluster[] | null = null;
   await instanceWithSSR(ctx)
     .get(`/api/cluster/`)
