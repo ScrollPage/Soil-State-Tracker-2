@@ -61,8 +61,9 @@ def send_new_message_notification(sender, instance=None, created=False, **kwargs
         user = instance.chat.user if instance.user == instance.chat.admin \
             else instance.chat.admin
             
-        pusher_client.trigger(
-            f'newmessage{user.id}',
-            'new-message',
-            {'increase_counter': inc_counter, 'chat': instance.chat.id}
-        )
+        if user:
+            pusher_client.trigger(
+                f'newmessage{user.id}',
+                'new-message',
+                {'increase_counter': inc_counter, 'chat': instance.chat.id}
+            )
