@@ -1,6 +1,4 @@
 from django.shortcuts import get_object_or_404
-from django.http.response import HttpResponseForbidden 
-from django.db import models
 
 import json
 from asgiref.sync import async_to_sync

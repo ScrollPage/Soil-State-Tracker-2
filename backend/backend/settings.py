@@ -275,5 +275,3 @@ CELERY_RESULT_BACKEND = f'redis://{REDIS_HOST}:{REDIS_PORT}/{CELERY_REDIS_DB}'
 CELERY_ACCEPT_CONTENT = ['json', 'applicaion/json', 'applicaion/text']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERILIZER = 'json'
-
-DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'

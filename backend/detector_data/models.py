@@ -56,7 +56,7 @@ class DetectorData(models.Model):
         indexes = [BrinIndex(fields=['timestamp'])]
 
     @classmethod
-    def create_random(cls, detector):
+    def create_random(cls, detector, days=None):
         data = cls.objects.create(
             detector=detector,
             first_temp=round(uniform(0, 20), 2),
@@ -66,5 +66,9 @@ class DetectorData(models.Model):
             lightning=round(uniform(0, 20), 2),
             pH=round(uniform(0, 20), 2),
         )
+
+        if days:
+            data.timestamp += timedelta(days=int(days))
+            data.save()
 
         return data
