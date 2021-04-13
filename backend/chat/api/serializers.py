@@ -2,11 +2,11 @@ from rest_framework import serializers
 
 from ..models import Chat, Message
 
-from client.api.serializers import ClientSerialzier
+from client.api.serializers import ClientSerializer
 
 class MessageSerializer(serializers.ModelSerializer):
     '''Сериализация сообщения'''
-    user = ClientSerialzier()
+    user = ClientSerializer()
 
     class Meta:
         model = Message
@@ -15,8 +15,8 @@ class MessageSerializer(serializers.ModelSerializer):
 class ChatSerializer(serializers.ModelSerializer):
     '''Сериализация чата'''
     last_message = MessageSerializer(read_only=True)
-    user = ClientSerialzier(read_only=True)
-    admin = ClientSerialzier(read_only=True)
+    user = ClientSerializer(read_only=True)
+    admin = ClientSerializer(read_only=True)
 
     class Meta:
         model = Chat

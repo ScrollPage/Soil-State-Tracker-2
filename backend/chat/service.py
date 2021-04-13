@@ -15,9 +15,9 @@ class UpgradedWebsocketConsumer(WebsocketConsumer, ABC):
 
     def check_permissions(self, data):
         if not all([
-            permission(data) for permission in self.permissions
+            permission()(data) for permission in self.permissions
         ]):
-            raise PermissionDenied()
+            self.disconnect(403)
 
     @abstractmethod
     def prepare_data(self, data):
@@ -29,27 +29,59 @@ class UpgradedWebsocketConsumer(WebsocketConsumer, ABC):
         try:
             command = data['command']
         except KeyError:
-            raise ParseError("No command given")
-        else:
-            try:
-                self.commands[command]
-            except KeyError:
-                raise ParseError(f"""
-                    No command {data['command']} in self.commands: {self.commands}
-                """)
+            self.disconnect(400)
+
+        try:
+            self.commands[command]
+        except KeyError:
+            self.disconnect(400)
 
         data = self.prepare_data(data)
 
         return data
 
-# class PermissionConsumerMixin:
-#     def check_permissions(self, data):
-#         try:
-#             self.permissions = self.permissions_by_command[data['command']]
-#         except KeyError:
-#             pass
-#         finally:
-#             if not all([
-#                 permission(data) for permission in self.permissions
-#             ]): 
-#                 pass
+class PermissionConsumerMixin:
+    def check_permissions(self, data):
+        try:
+            self.permissions = self.permissions_by_command[data['command']]
+        except KeyError:
+            pass
+        finally:
+            if not all([
+                permission()(data) for permission in self.permissions
+            ]): 
+                pass
+
+def message_to_json(message):
+    return {
+        'id': message.id,
+        'user': {
+            'id': message.user.id,
+            'full_name': message.user.get_full_name(),
+        },
+        'content': message.content,
+        'timestamp': str(message.timestamp),
+        'unread': message.unread
+    }
+
+def chat_to_json(chat):
+    if chat.admin:
+        admin = {
+            'id': chat.admin.id,
+            'full_name': chat.admin.get_full_name()
+        }
+    else:
+        admin = None
+        
+    return {
+        'id': chat.id,
+        'last_message': self.message_to_json(chat.last_message),
+        'user': {
+            'id': chat.user.id,
+            'full_name': chat.user.get_full_name()
+        },
+        'admin': admin
+    }
+
+def instances_to_json(messages, json_func):
+    return [json_func(inst) for inst in instances]

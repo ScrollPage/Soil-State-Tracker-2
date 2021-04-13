@@ -13,7 +13,7 @@ class ClientActivitySerializer(serializers.ModelSerializer):
         model = Client
         fields = ['is_active']
 
-class ClientSerialzier(serializers.ModelSerializer):
+class ClientSerializer(serializers.ModelSerializer):
     '''Для сериализации пользователя'''
 
     class Meta:

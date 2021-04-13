@@ -13,3 +13,8 @@ class IsAdmin:
             data['user'].is_staff,
             data['user'].is_superuser
         ])
+
+class NoAdmin:
+
+    def __call__(self, data):
+        return not data['chat'].admin
