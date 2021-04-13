@@ -85,7 +85,7 @@ class UpgradedWebsocketConsumer(WebsocketConsumer, ABC):
 
         validated_token = self.get_validated_token(raw_token)
 
-        return self.get_user(validated_token)
+        return self.obtain_user(validated_token)
 
     def validate(self, text_data):
         data = json.loads(text_data)
