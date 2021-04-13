@@ -41,7 +41,6 @@ def get_aggregated_data(queryset, multiplier, begin_date):
         .time_bucket_gapfill(
             'timestamp', f'{multiplier} day', 
             ranges[0], ranges[1], datapoints=1,
-            output_field=IntegerField()
         ) \
     
     print(detector_data_queryset)

@@ -20,12 +20,12 @@ class IsStaff(BasePermission):
 
 class NoAdmin(BasePermission):
     '''Нет админа'''
-    def has_object_permission(self, requst, view, obj):
+    def has_object_permission(self, request, view, obj):
         return not bool(obj.admin)
 
 class InChat(BasePermission):
     '''Нет админа'''
-    def has_object_permission(self, requst, view, obj):
+    def has_object_permission(self, request, view, obj):
         return any([
             request.user==obj.admin,
             request.user==obj.user
