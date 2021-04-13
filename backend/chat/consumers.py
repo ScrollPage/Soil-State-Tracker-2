@@ -51,7 +51,7 @@ class ChatConsumer(UpgradedWebsocketConsumer):
         messages = data['chat'].messages.all().order_by('-timestamp')
         content = {
             'command': 'messages',
-            'messages': self.instances_to_json(messages, message_to_json)
+            'messages': instances_to_json(messages, message_to_json)
         }
         self.send_message(content)
 
@@ -119,7 +119,7 @@ class AdminPanelConsumer(
         chats = Chat.free.all()
         content = {
             'command': 'free_chats',
-            'chats': self.instances_to_json(chats, chat_to_json)
+            'chats': instances_to_json(chats, chat_to_json)
         }
         self.send_chats(content)
 
@@ -130,7 +130,7 @@ class AdminPanelConsumer(
         chats = Chat.free.all()
         content = {
             'command': 'free_chats',
-            'chats': self.instances_to_json(chats, chat_to_json)
+            'chats': instances_to_json(chats, chat_to_json)
         }
         self.send_admin_panel_update(content)
 
