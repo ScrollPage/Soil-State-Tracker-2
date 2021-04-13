@@ -10,6 +10,7 @@ import codecs
 import json
 from abc import abstractmethod, ABC
 
+AUTH_HEADER_TYPES = jwt_settings.AUTH_HEADER_TYPES
 
 if not isinstance(AUTH_HEADER_TYPES, (list, tuple)):
     AUTH_HEADER_TYPES = (AUTH_HEADER_TYPES,)
