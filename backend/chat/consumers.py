@@ -17,6 +17,7 @@ from .permissions import UserInChat, IsAdmin, NoAdmin
 class ChatConsumer(UpgradedWebsocketConsumer):
     '''Консумер для чатов'''
     permissions = [UserInChat]
+    user_model = get_user_model()
 
     # Connect/Disconnect
     def connect(self):
@@ -58,7 +59,7 @@ class ChatConsumer(UpgradedWebsocketConsumer):
     # Main part
     def prepare_data(self, data):
         data['chat'] = get_object_or_404(Chat, id=self.room_name)
-        data['user'] = get_object_or_404(get_user_model(), id=data['user'])
+        data['user'] = get_object_or_404(self.user_model, id=data['user'])
         return data
 
     commands = {
@@ -97,6 +98,7 @@ class AdminPanelConsumer(
     permissions_by_command = {
         'become_admin': [IsAdmin, NoAdmin]
     }
+    user_model = get_user_model()
 
     # Connect/Disconnect
     def connect(self):
@@ -138,7 +140,7 @@ class AdminPanelConsumer(
     def prepare_data(self, data):
         if data['command'] == 'become_admin':
             data['chat'] = get_object_or_404(Chat, id=self.data['user'])
-        data['user'] = get_object_or_404(get_user_model(), id=data['user'])
+        data['user'] = get_object_or_404(self.user_model, id=data['user'])
 
     commands = {
         'free_chats': free_chats,
