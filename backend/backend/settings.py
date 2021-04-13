@@ -235,7 +235,7 @@ DJOSER = {
     'ACTIVATION_URL': '#',
     'SEND_ACTIVATION_EMAIL': False,
     'SERIALIZERS': {
-        'current_user': 'client.api.serializers.ClientSerialzier',
+        'current_user': 'client.api.serializers.ClientSerializer',
     },
 }
 
