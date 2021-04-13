@@ -2,9 +2,9 @@ from rest_framework.viewsets import GenericViewSet
 from rest_framework.mixins import ListModelMixin, CreateModelMixin, UpdateModelMixin, DestroyModelMixin
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
-from django.db.models import Min, Max, Avg
+from django.db.models import Min, Max, Avg, IntegerField
 from django.utils import timezone
-from django.db.models import IntegerField 
+from django.db.models.functions import Cast
 
 from datetime import timedelta
 
@@ -35,7 +35,6 @@ class PaginationData(PageNumberPagination):
 
 def get_aggregated_data(queryset, multiplier, begin_date):
     ranges = (begin_date, timezone.now())
-    print(ranges)
     detector_data_queryset = DetectorData.timescale \
         .filter(timestamp__range=ranges, detector__in=queryset) \
         .time_bucket_gapfill(
