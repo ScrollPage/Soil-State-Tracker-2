@@ -83,5 +83,5 @@ def chat_to_json(chat):
         'admin': admin
     }
 
-def instances_to_json(messages, json_func):
+def instances_to_json(instances, json_func):
     return [json_func(inst) for inst in instances]
