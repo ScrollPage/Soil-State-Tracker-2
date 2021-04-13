@@ -34,7 +34,7 @@ class ClientViewSet(PSFViewSet):
         if user.is_staff:
             return self.fast_response('chats', filtering='all', instance=user)
         else:
-            return self.fast_response('chat', many=False, instance=user)
+            return self.fast_response('chat', instance=user)
 
     @action(detail=False, methods=['post'])
     def activate(self, request, *args, **kwargs):
