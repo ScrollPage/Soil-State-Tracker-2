@@ -3,11 +3,13 @@ from rest_framework.views import exception_handler as drf_exception_handler
 from rest_framework import status
 from rest_framework.response import Response
 from django.urls import reverse
+from django.shortcuts import get_object_or_404
 from django.utils import timezone
 
 import datetime as dt
 
 from .bot import bot
+
 
 def exception_handler(exc, context):
     '''Отправляет все исключения в телеграм'''

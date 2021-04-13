@@ -12,8 +12,6 @@ from .permissions import UserInChat
 
 class ChatConsumer(UpgradedWebsocketConsumer):
     '''Консумер для чатов'''
-
-    required_fields = [(Chat, 'chat'), (Client, 'user')]
     permissions = [UserInChat]
 
     # Connect/Disconnect
@@ -35,7 +33,10 @@ class ChatConsumer(UpgradedWebsocketConsumer):
 
     # Message handling
     def new_message(self, data):
-        message = Message.objects.create(**data)
+        message = Message.objects.create(
+            chat=data['chat'], content=data['content'], 
+            user=data['user']
+        )
         content = {
             'command': 'new_message',
             'message': self.message_to_json(message)
