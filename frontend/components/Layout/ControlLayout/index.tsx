@@ -1,6 +1,7 @@
 import { ChatOpen } from "@/components/ChatViget/ChatOpen";
 import Container from "@/components/UI/Container";
 import { useSetupWebsokets } from "@/hooks/useSetupWebsokets";
+import { useUser } from "@/hooks/useUser";
 import { authCheckState } from "@/store/actions/auth";
 import React, { memo, useEffect, useMemo } from "react";
 import { useDispatch } from "react-redux";
@@ -18,6 +19,7 @@ const ControlLayoutComponent: React.FC<ControlLayoutProps> = ({
   isContainer = true,
 }) => {
   const dispatch = useDispatch();
+  const { isStaff } = useUser();
 
   useSetupWebsokets();
 
@@ -35,7 +37,7 @@ const ControlLayoutComponent: React.FC<ControlLayoutProps> = ({
       <ControlHeader />
       <ControlSideBar />
       <Main>
-        {render} <ChatOpen />
+        {render} {!isStaff && <ChatOpen />}
       </Main>
     </>
   );

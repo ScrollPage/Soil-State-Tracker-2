@@ -1,8 +1,8 @@
 import WebSocketInstance from '@/websocket';
 
-export const initialiseChat = (chatId: string, userId: string): void => {
+export const initialiseChat = (chatId: string, token: string): void => {
   waitForSocketConnection(() => {
-    WebSocketInstance.fetchMessages(userId);
+    WebSocketInstance.fetchMessages(token);
   });
   WebSocketInstance.connect(chatId);
 };

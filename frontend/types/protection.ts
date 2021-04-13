@@ -5,4 +5,5 @@ export interface IProtection {
   firstName: string;
   lastName: string;
   userId: string;
+  token: string;
 }

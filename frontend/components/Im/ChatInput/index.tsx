@@ -26,6 +26,7 @@ const ChatAddComponent = ({ handleSubmit }: ChatAddProps) => {
           <Input
             name="content"
             placeholder="Введите сообщение"
+            autoComplete="off"
             value={value}
             onChange={(e) => setValue(e.target.value)}
           />

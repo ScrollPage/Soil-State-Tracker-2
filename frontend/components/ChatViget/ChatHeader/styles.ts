@@ -29,22 +29,22 @@ export const Close = styled.div`
   position: absolute;
   height: 40px;
   width: 40px;
-  top: 10px;
-  right: 10px;
+  top: 20px;
+  right: -15px;
   cursor: pointer;
   &:hover {
     &:after {
-      transform: translateX(-50%) translateY(-50%) rotate(45deg) scale(1.4);
+      transform: translateX(-50%) translateY(-50%) rotate(45deg) scale(1.2);
     }
     &:before {
-      transform: translateX(-50%) translateY(-50%) rotate(-45deg) scale(1.4);
+      transform: translateX(-50%) translateY(-50%) rotate(-45deg) scale(1.2);
     }
   }
   &:after, &:before {
     content: '';
     position: absolute;
-    height: 10px;
-    width: 1.5px;
+    height: 30px;
+    width: 2px;
     background-color: #000;
     top: 50%;
     left: 50%;

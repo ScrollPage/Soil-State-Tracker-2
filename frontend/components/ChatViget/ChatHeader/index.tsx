@@ -27,11 +27,15 @@ export const ChatHeader: React.FC<Props> = ({ chatId, onClose }) => {
     const { error, data } = useSWR(`/api/chat/${chatId}`);
 
     if (error) {
-      return render("Идет поиск");
+      return (
+        <Wrapper>
+          <ErrorMessage message="Ошибка" />
+        </Wrapper>
+      );
     }
 
     if (!data) {
-      return <Wrapper />;
+      return render("Загрузка...");
     }
 
     return render(getFullName(data.user));
