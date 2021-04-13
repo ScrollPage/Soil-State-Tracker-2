@@ -1,4 +1,5 @@
 from rest_framework.exceptions import AuthenticationFailed, PermissionDenied, ParseError
+from rest_framework_simplejwt.exceptions import TokenError
 from rest_framework import HTTP_HEADER_ENCODING
 from django.shortcuts import get_object_or_404
 from backend.settings import SIMPLE_JWT as jwt_settings
