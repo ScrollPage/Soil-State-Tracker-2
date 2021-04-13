@@ -2,14 +2,13 @@ from django.shortcuts import get_object_or_404
 
 import json
 from asgiref.sync import async_to_sync
-from channels.generic.websocket import WebsocketConsumer
 
 from .service import UpgradedWebsocketConsumer
 from .models import Chat, Message
 from client.models import Client
 from .permissions import UserInChat
 
-class ChatConsumer(WebsocketConsumer):
+class ChatConsumer(UpgradedWebsocketConsumer):
     '''Консумер для чатов'''
     permissions = [UserInChat]
 

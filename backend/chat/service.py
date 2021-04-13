@@ -14,6 +14,7 @@ class UpgradedWebsocketConsumer(WebsocketConsumer):
     def __init__(self):
         self.user_model = get_user_model()
         self.chat_model = Chat
+        super().__init__()
 
     commands = {}
     permissions = []
