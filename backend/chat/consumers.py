@@ -56,7 +56,7 @@ class ChatConsumer(UpgradedWebsocketConsumer):
         self.send_message(content)
 
     # Main part
-    def prepare_data(data):
+    def prepare_data(self, data):
         data['chat'] = get_object_or_404(Chat, id=self.room_name)
         data['user'] = get_object_or_404(get_user_model(), id=data['user'])
         return data
@@ -135,7 +135,7 @@ class AdminPanelConsumer(
         self.send_admin_panel_update(content)
 
     # Main part
-    def prepare_data(data):
+    def prepare_data(self, data):
         if data['command'] == 'become_admin':
             data['chat'] = get_object_or_404(Chat, id=self.data['user'])
         data['user'] = get_object_or_404(get_user_model(), id=data['user'])
