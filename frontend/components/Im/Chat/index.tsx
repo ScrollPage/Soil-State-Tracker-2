@@ -30,7 +30,7 @@ const ChatComponent = () => {
   const sendMessage = (content: string) => {
     const messageObject = {
       content,
-      userId: userId,
+      userId,
     };
     WebSocketInstance.newChatMessage(messageObject);
   };

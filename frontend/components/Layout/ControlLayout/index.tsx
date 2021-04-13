@@ -1,3 +1,4 @@
+import { ChatOpen } from "@/components/ChatViget/ChatOpen";
 import Container from "@/components/UI/Container";
 import { useSetupWebsokets } from "@/hooks/useSetupWebsokets";
 import { authCheckState } from "@/store/actions/auth";
@@ -33,7 +34,9 @@ const ControlLayoutComponent: React.FC<ControlLayoutProps> = ({
     <>
       <ControlHeader />
       <ControlSideBar />
-      <Main>{render}</Main>
+      <Main>
+        {render} <ChatOpen />
+      </Main>
     </>
   );
 };
