@@ -19,6 +19,7 @@ AUTH_HEADER_TYPE_BYTES = set(
     for h in AUTH_HEADER_TYPES
 )
 
+
 class UpgradedWebsocketConsumer(WebsocketConsumer, ABC):
     '''Новые методы - prepare_data, check_permissions'''
 
@@ -49,7 +50,7 @@ class UpgradedWebsocketConsumer(WebsocketConsumer, ABC):
 
         return parts[1]
 
-    def get_valdated_token(self, raw_token):
+    def get_validated_token(self, raw_token):
         for AuthToken in jwt_settings['AUTH_TOKEN_CLASSES']:
             try:
                 return AuthToken(raw_token)
@@ -63,7 +64,9 @@ class UpgradedWebsocketConsumer(WebsocketConsumer, ABC):
             self.disconnect(400)
 
         try:
-            user = self.user_model.objects.get(**{jwt_settings['USER_ID_FIELD']: user_id})
+            user = self.user_model.objects.get(
+                **{jwt_settings['USER_ID_FIELD']: user_id}
+            )
         except self.user_model.DoesNotExist:
             self.disconnect(404)
 
@@ -74,6 +77,7 @@ class UpgradedWebsocketConsumer(WebsocketConsumer, ABC):
 
     def get_user(self, data):
         '''Получает пользователя по токену'''
+        header = data['user']
         raw_token = self.get_raw_token(header)
         if raw_token is None:
             self.disconnect(400)
@@ -99,6 +103,7 @@ class UpgradedWebsocketConsumer(WebsocketConsumer, ABC):
 
         return data
 
+
 class PermissionConsumerMixin:
     def check_permissions(self, data):
         try:
@@ -111,6 +116,7 @@ class PermissionConsumerMixin:
             ]): 
                 pass
 
+
 def message_to_json(message):
     return {
         'id': message.id,
@@ -122,6 +128,7 @@ def message_to_json(message):
         'timestamp': str(message.timestamp),
         'unread': message.unread
     }
+
 
 def chat_to_json(chat):
     if chat.admin:
@@ -141,6 +148,7 @@ def chat_to_json(chat):
         },
         'admin': admin
     }
+
 
 def instances_to_json(instances, json_func):
     return [json_func(inst) for inst in instances]

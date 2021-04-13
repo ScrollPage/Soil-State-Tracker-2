@@ -24,7 +24,7 @@ class NoAdmin(BasePermission):
         return not bool(obj.admin)
 
 class InChat(BasePermission):
-    '''Нет админа'''
+    '''Присутствует в чате'''
     def has_object_permission(self, request, view, obj):
         return any([
             request.user==obj.admin,
