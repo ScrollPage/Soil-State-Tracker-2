@@ -3,7 +3,7 @@ from rest_framework.mixins import CreateModelMixin, DestroyModelMixin, RetrieveM
 
 from backend.core import PermissionMixin, SerializerMixin, FastResponseMixin
 
-class PCreateDestroyViewSet(
+class PRetrieveCreateDestroyViewSet(
     PermissionMixin, FastResponseMixin,
     CreateModelMixin, DestroyModelMixin,
     RetrieveModelMixin, GenericViewSet

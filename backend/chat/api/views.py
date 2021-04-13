@@ -3,12 +3,12 @@ from rest_framework.exceptions import ParseError
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from .service import PCreateDestroyViewSet
+from .service import PRetrieveCreateDestroyViewSet
 from .serializers import ChatSerializer
 from ..models import Chat
-from .permissions import AsUserInChat, NotStaff, IsStaff, NoAdmin
+from .permissions import AsUserInChat, NotStaff, IsStaff, NoAdmin, InChat
 
-class ChatViewSet(PCreateDestroyViewSet):
+class ChatViewSet(PRetrieveCreateDestroyViewSet):
     '''Создание, удаление чатов'''
 
     serializer_class = ChatSerializer
@@ -17,6 +17,7 @@ class ChatViewSet(PCreateDestroyViewSet):
         'destroy': [permissions.IsAuthenticated, AsUserInChat],
         'free': [permissions.IsAuthenticated, IsStaff],
         'admin': [permissions.IsAuthenticated, IsStaff, NoAdmin],
+        'retrieve': [permissions.IsAuthenticated, InChat]
     }
     queryset = Chat.objects.all()
     model = Chat

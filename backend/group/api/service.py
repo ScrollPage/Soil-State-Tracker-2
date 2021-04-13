@@ -34,28 +34,31 @@ class PaginationData(PageNumberPagination):
 
 def get_aggregated_data(queryset, multiplier, begin_date):
     ranges = (begin_date, timezone.now())
+    print(ranges)
     detector_data_queryset = DetectorData.timescale \
         .filter(timestamp__range=ranges, detector__in=queryset) \
         .time_bucket_gapfill(
             'timestamp', f'{multiplier} day', 
             ranges[0], ranges[1], datapoints=1
         ) \
-        .annotate(
-            Avg('first_temp'), Avg('second_temp'), Avg('third_temp'), 
-            Avg('lightning'), Avg('humidity'), Avg('pH')
-        )
+    
+    print(detector_data_queryset)
+        # .annotate(
+        #     Avg('first_temp'), Avg('second_temp'), Avg('third_temp'), 
+        #     Avg('lightning'), Avg('humidity'), Avg('pH')
+        # )
 
     res = list()
-    for data in detector_data_queryset:
-        if data['first_temp__avg'] is not None:
-            res.append(dict(
-            first_temp=data['first_temp__avg'],
-            second_temp=data['second_temp__avg'],
-            third_temp=data['third_temp__avg'],
-            humidity=data['humidity__avg'],
-            lightning=data['lightning__avg'],
-            pH=data['pH__avg'],
-            timestamp=data['bucket'],
-        ))
+    # for data in detector_data_queryset:
+    #     if data['first_temp__avg'] is not None:
+    #         res.append(dict(
+    #         first_temp=data['first_temp__avg'],
+    #         second_temp=data['second_temp__avg'],
+    #         third_temp=data['third_temp__avg'],
+    #         humidity=data['humidity__avg'],
+    #         lightning=data['lightning__avg'],
+    #         pH=data['pH__avg'],
+    #         timestamp=data['bucket'],
+    #     ))
 
     return res
