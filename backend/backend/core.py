@@ -4,7 +4,9 @@ from rest_framework import status
 from rest_framework.response import Response
 from django.urls import reverse
 from django.utils import timezone
+from backend.settings import SIMPLE_JWT
 
+from rest_framework_simplejwt.settings import APISettings
 import datetime as dt
 
 from .bot import bot

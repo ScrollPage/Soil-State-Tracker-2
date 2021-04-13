@@ -2,15 +2,14 @@ from rest_framework.exceptions import AuthenticationFailed, PermissionDenied, Pa
 from rest_framework_simplejwt.exceptions import TokenError
 from rest_framework import HTTP_HEADER_ENCODING
 from django.shortcuts import get_object_or_404
-from backend.settings import SIMPLE_JWT as jwt_settings
 
+from rest_framework_simplejwt.settings import api_settings as jwt_settings
 from channels.generic.websocket import WebsocketConsumer
 
 import codecs
 import json
 from abc import abstractmethod, ABC
 
-AUTH_HEADER_TYPES = jwt_settings['AUTH_HEADER_TYPES']
 
 if not isinstance(AUTH_HEADER_TYPES, (list, tuple)):
     AUTH_HEADER_TYPES = (AUTH_HEADER_TYPES,)
@@ -52,7 +51,7 @@ class UpgradedWebsocketConsumer(WebsocketConsumer, ABC):
         return parts[1]
 
     def get_validated_token(self, raw_token):
-        for AuthToken in jwt_settings['AUTH_TOKEN_CLASSES']:
+        for AuthToken in jwt_settings.AUTH_TOKEN_CLASSES:
             try:
                 return AuthToken(raw_token)
             except TokenError as e:
@@ -60,13 +59,13 @@ class UpgradedWebsocketConsumer(WebsocketConsumer, ABC):
 
     def obtain_user(self, validated_token):
         try:
-            user_id = validated_token[jwt_settings['USER_ID_CLAIM']]
+            user_id = validated_token[jwt_settings.USER_ID_CLAIM]
         except KeyError:
             self.disconnect(400)
 
         try:
             user = self.user_model.objects.get(
-                **{jwt_settings['USER_ID_FIELD']: user_id}
+                **{jwt_settings.USER_ID_FIELD: user_id}
             )
         except self.user_model.DoesNotExist:
             self.disconnect(404)
