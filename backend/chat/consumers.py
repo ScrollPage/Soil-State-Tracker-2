@@ -10,7 +10,7 @@ from .permissions import UserInChat
 
 class ChatConsumer(UpgradedWebsocketConsumer):
     '''Консумер для чатов'''
-    permissions = [UserInChat]
+    permissions = [UserInChat()]
 
     # Connect/Disconnect
     def connect(self):
