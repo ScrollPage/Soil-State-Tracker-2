@@ -56,11 +56,8 @@ class ChatConsumer(UpgradedWebsocketConsumer):
     }
 
     def receive(self, text_data):
-        # data = self.prepare_data(text_data)
-        data = json.loads(text_data)
-        data['chat'] = get_object_or_404(self.chat_model, id=self.room_name)
-        data['user'] = get_object_or_404(self.user_model, id=data['user'])
-        # self.check_permissions(data)
+        data = self.prepare_data(text_data)
+        self.check_permissions(data)
         self.commands[data.pop('command')](self, data)
 
     # Utils

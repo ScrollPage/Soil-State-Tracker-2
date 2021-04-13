@@ -37,13 +37,5 @@ class UpgradedWebsocketConsumer(WebsocketConsumer):
 
         data['chat'] = get_object_or_404(self.chat_model, id=self.room_name)
         data['user'] = get_object_or_404(self.user_model, id=data['user'])
-        # user_token = bytes(data['user'].split('.')[1], 'utf-8') 
-        # user_decoded_token = codecs.decode(user_token, 'base64')
-        # try:
-        #     user_id = json.loads(user_decoded_token)['user_id']
-        # except (UnicodeDecodeError, KeyError):
-        #     raise AuthenticationFailed()
-        # else:
-        #     data['user'] = get_object_or_404(Client, id=user_id)
 
         return data
