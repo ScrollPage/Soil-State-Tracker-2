@@ -4,6 +4,7 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from django.db.models import Min, Max, Avg
 from django.utils import timezone
+from django.db.models import IntegerField 
 
 from datetime import timedelta
 
@@ -39,7 +40,8 @@ def get_aggregated_data(queryset, multiplier, begin_date):
         .filter(timestamp__range=ranges, detector__in=queryset) \
         .time_bucket_gapfill(
             'timestamp', f'{multiplier} day', 
-            ranges[0], ranges[1], datapoints=1
+            ranges[0], ranges[1], datapoints=1,
+            output_field=IntegerField()
         ) \
     
     print(detector_data_queryset)

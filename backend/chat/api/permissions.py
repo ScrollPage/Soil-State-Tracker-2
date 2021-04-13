@@ -28,5 +28,5 @@ class InChat(BasePermission):
     def has_object_permission(self, requst, view, obj):
         return any([
             request.user==obj.admin,
-            request.user=obj.user
+            request.user==obj.user
         ])
