@@ -43,7 +43,7 @@ class ChatConsumer(UpgradedWebsocketConsumer):
         )
         content = {
             'command': 'new_message',
-            'message': self.message_to_json(message)
+            'message': message_to_json(message)
         }
         return self.send_chat_message(content)
 
