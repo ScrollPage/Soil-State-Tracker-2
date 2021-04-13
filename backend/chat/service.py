@@ -39,11 +39,10 @@ class UpgradedWebsocketConsumer(WebsocketConsumer, ABC):
 
     def get_raw_token(self, header):
         parts = header.split()
-
         if len(parts) == 0:
             return None
 
-        if parts[0] not in AUTH_HEADER_TYPE_BYTES:
+        if bytes(parts[0], 'utf-8') not in AUTH_HEADER_TYPE_BYTES:
             return None
 
         if len(parts) != 2:
@@ -56,7 +55,9 @@ class UpgradedWebsocketConsumer(WebsocketConsumer, ABC):
             try:
                 return AuthToken(raw_token)
             except TokenError as e:
-                self.disconnect(400)
+                pass
+
+            self.disconnect(400)
 
     def obtain_user(self, validated_token):
         try:
