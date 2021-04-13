@@ -25,6 +25,6 @@ export const Wrapper = styled.div`
     height: 90%;
   }
   &::-webkit-scrollbar-thumb {
-    background-color: #0099FF;
+    background-color: #60CFBF;
   }
 `;

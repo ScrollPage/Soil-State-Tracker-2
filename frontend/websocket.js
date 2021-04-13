@@ -54,10 +54,10 @@ class WebSocketService {
 		}
 	}
 
-	fetchMessages(userId) {
+	fetchMessages(token) {
 		this.sendMessage({
 			command: 'fetch_messages',
-			user: userId
+			user: `Token ${token}`
 		});
 	}
 
@@ -65,7 +65,7 @@ class WebSocketService {
 		this.sendMessage({
 			command: 'new_message',
 			content: message.content,
-			user: message.userId
+			user: message.token
 		});
 	}
 

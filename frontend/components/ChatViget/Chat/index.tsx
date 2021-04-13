@@ -5,7 +5,6 @@ import { ChatHeader } from "../ChatHeader";
 import WebSocketInstance from "@/websocket";
 import { useUser } from "@/hooks/useUser";
 import { useDispatch } from "react-redux";
-import { messageActions } from "@/store/actions/message";
 import { initialiseChat } from "@/utils/initialiseChat";
 import { createChat } from "@/store/actions/chat";
 import Cookie from "js-cookie";
@@ -18,13 +17,12 @@ interface Props {
 export const Chat: React.FC<Props> = ({ onClose }) => {
   const dispatch = useDispatch();
   const [chatId, setChatId] = useState<string | undefined>(Cookie.get("chat"));
-  const { userId } = useUser();
+  const { token } = useUser();
 
   useEffect(() => {
     if (chatId) {
       Cookie.set("chat", chatId);
-      dispatch(messageActions.setLoading());
-      initialiseChat(chatId, userId);
+      initialiseChat(chatId, token);
       return () => {
         WebSocketInstance.disconnect();
       };
@@ -34,13 +32,10 @@ export const Chat: React.FC<Props> = ({ onClose }) => {
   const sendMessage = async (content: string) => {
     if (!chatId) {
       await dispatch(createChat(setChatId));
-      if (chatId) {
-        initialiseChat(chatId, userId);
-      }
     }
     const messageObject = {
       content,
-      userId,
+      token,
     };
     WebSocketInstance.newChatMessage(messageObject);
   };
@@ -48,7 +43,9 @@ export const Chat: React.FC<Props> = ({ onClose }) => {
   return (
     <Wrapper>
       <ChatHeader onClose={onClose} chatId={chatId} />
-      <Messages />
+      <div style={{ height: "390px" }}>
+        <Messages />
+      </div>
       <ChatAdd handleSubmit={sendMessage} />
     </Wrapper>
   );

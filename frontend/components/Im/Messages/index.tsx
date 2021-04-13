@@ -31,7 +31,9 @@ const MessagesComponent = () => {
   const isLoading = useMemo(() => !messages || loading, [messages, loading]);
 
   const scrollToBottom = () => {
-    endRef?.current?.scrollIntoView({ behavior: "smooth" });
+    endRef?.current?.scrollIntoView({
+      behavior: "auto",
+    });
   };
 
   useEffect(scrollToBottom, [messages, loading]);
