@@ -20,7 +20,7 @@ class UpgradedWebsocketConsumer(WebsocketConsumer):
     commands = {}
     permissions = []
 
-    def check_permissions(data):
+    def check_permissions(self, data):
         if not all([
             permission(data) for permission in self.permissions
         ]):
