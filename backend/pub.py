@@ -1,5 +1,6 @@
 import paho.mqtt.client as mqtt
 from loguru import logger
+import asyncio
 from service import MQTT_HOST, MQTT_PORT
 
 def on_connect(client, userdata, flags, rc):
