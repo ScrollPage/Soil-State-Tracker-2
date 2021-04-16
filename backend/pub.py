@@ -14,9 +14,6 @@ client.on_publish = on_publish
 client.on_connect = on_connect
 client.connect(MQTT_HOST, MQTT_PORT, 3600)
 
-if __name__ == '__main__':
-    asyncio.get_event_loop().run_until_complete(
-		client.publish('data', input())
-	)
-    asyncio.get_event_loop().run_forever()
+while True:
+	client.publish('data', input())
     
