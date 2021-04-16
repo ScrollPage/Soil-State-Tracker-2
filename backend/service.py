@@ -7,10 +7,11 @@ from quickchart import QuickChart
 from datetime import timedelta
 import numpy as np
 import requests
+import socket
 
 import os
-import django
 
+import django
 from django.utils import timezone
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'backend.settings')
@@ -140,3 +141,6 @@ def get_time_keyboard(instance_type, instance):
         types.InlineKeyboardButton('неделя', callback_data=f'{instance_type}:week:{instance}:data')
     )
     return keyboard
+
+MQTT_PORT = 1883
+MQTT_HOST = os.environ.get('MQTT_HOST', socket.gethostbyname(socket.gethostname())) 
