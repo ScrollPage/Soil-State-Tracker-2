@@ -14,14 +14,13 @@ import { ChatAdd } from "../ChatInput";
 const ChatComponent = () => {
   const dispatch = useDispatch();
   const { query } = useRouter();
-  const { token, userId } = useUser();
+  const { token } = useUser();
   const chatId = getAsString(query.id);
 
   useEffect(() => {
     if (chatId) {
       dispatch(messageActions.setLoading());
-      // initialiseChat(chatId, token);
-      initialiseChat(chatId, userId);
+      initialiseChat(chatId, token);
       return () => {
         WebSocketInstance.disconnect();
       };
@@ -31,7 +30,7 @@ const ChatComponent = () => {
   const sendMessage = (content: string) => {
     const messageObject = {
       content,
-      token: userId,
+      token,
     };
     WebSocketInstance.newChatMessage(messageObject);
   };
