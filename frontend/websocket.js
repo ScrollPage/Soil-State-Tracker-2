@@ -65,7 +65,7 @@ class WebSocketService {
 		this.sendMessage({
 			command: 'new_message',
 			content: message.content,
-			user: message.token
+			user: `Token ${message.token}`
 		});
 	}
 
