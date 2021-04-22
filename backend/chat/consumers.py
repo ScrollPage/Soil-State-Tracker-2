@@ -59,7 +59,7 @@ class ChatConsumer(UpgradedWebsocketConsumer):
     # Main part
     def prepare_data(self, data):
         data['chat'] = get_object_or_404(Chat, id=self.room_name)
-        data['user'] = self.get_user(data)
+        data['user'] = self.auth.get_user(data)
         return data
 
     commands = {
@@ -87,84 +87,4 @@ class ChatConsumer(UpgradedWebsocketConsumer):
 
     def chat_message(self, event):
         message = event['message']
-        self.send(text_data=json.dumps(message))
-
-
-class AdminPanelConsumer(
-    UpgradedWebsocketConsumer, PermissionConsumerMixin
-):
-    '''Консумер админ-панели'''
-    permissions = [IsAdmin]
-    permissions_by_command = {
-        'become_admin': [IsAdmin, NoAdmin]
-    }
-    user_model = get_user_model()
-
-    # Connect/Disconnect
-    def connect(self):
-        self.room_group_name = 'admin_panel'
-        async_to_sync(self.channel_layer.group_add)(
-            self.room_group_name,
-            self.channel_name
-        )
-
-        self.accept()
-    
-    def disconnect(self, close_code):
-        async_to_sync(self.channel_layer.group_discard)(
-            self.room_group_name,
-            self.channel_name
-        )
-
-    # Event handling
-    def free_chats(self, data):
-        chats = Chat.free.all()
-        content = {
-            'command': 'free_chats',
-            'chats': instances_to_json(chats, chat_to_json)
-        }
-        self.send_chats(content)
-
-    def become_admin(self, data):
-        chat = data['chat']
-        chat.admin = data['user']
-        chat.save()
-        chats = Chat.free.all()
-        content = {
-            'command': 'free_chats',
-            'chats': instances_to_json(chats, chat_to_json)
-        }
-        self.send_admin_panel_update(content)
-
-    # Main part
-    def prepare_data(self, data):
-        if data['command'] == 'become_admin':
-            data['chat'] = get_object_or_404(Chat, id=self.data['user'])
-        data['user'] = self.get_user(data)
-    
-    commands = {
-        'free_chats': free_chats,
-        'become_admin': become_admin    
-    }
-
-    def receive(self, text_data):
-        data = self.validate(text_data)
-        self.check_permissions(data)
-        self.commands[data.pop('command')](self, data)
-
-    # Utils
-    def send_admin_panel_update(self, chats):    
-        async_to_sync(self.channel_layer.group_send)(
-            self.room_group_name,
-            {
-                'type': 'panel_update',
-                'message': chats
-            }
-        )
-
-    def panel_update(self, event):
-        chats = event['chats']
-        self.send(text_data=json.dumps(chats))
-
-    def send_chats(self, message):
         self.send(text_data=json.dumps(message))

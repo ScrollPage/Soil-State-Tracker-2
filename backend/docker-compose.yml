@@ -18,7 +18,7 @@ services:
 
   db:
     container_name: web_timescaledb
-    image: timescale/timescaledb:2.0.0-pg12
+    image: timescale/timescaledb:2.2.0-pg12
     volumes: 
       - pg_data:/var/lib/postgresql/data/
     environment: 

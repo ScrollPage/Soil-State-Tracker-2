@@ -24,22 +24,8 @@ AUTH_HEADER_TYPE_BYTES = set(
 )
 
 
-class UpgradedWebsocketConsumer(WebsocketConsumer, ABC):
-    '''Новые методы - prepare_data, check_permissions'''
-
-    commands = {}
-    permissions = []
-
-    def check_permissions(self, data):
-        if not all([
-            permission()(data) for permission in self.permissions
-        ]):
-            self.disconnect(403)
-
-    @abstractmethod
-    def prepare_data(self, data):
-        pass
-
+class Authenticator:
+    
     def get_raw_token(self, header):
         parts = header.split()
         if len(parts) == 0:
@@ -90,6 +76,24 @@ class UpgradedWebsocketConsumer(WebsocketConsumer, ABC):
         validated_token = self.get_validated_token(raw_token)
 
         return self.obtain_user(validated_token)
+
+
+class UpgradedWebsocketConsumer(WebsocketConsumer, ABC):
+    '''Новые методы - prepare_data, check_permissions'''
+
+    commands = {}
+    permissions = []
+    auth = Authenticator()
+
+    def check_permissions(self, data):
+        if not all([
+            permission()(data) for permission in self.permissions
+        ]):
+            self.disconnect(403)
+
+    @abstractmethod
+    def prepare_data(self, data):
+        pass
 
     def validate(self, text_data):
         data = json.loads(text_data)

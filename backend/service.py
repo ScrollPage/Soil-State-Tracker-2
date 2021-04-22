@@ -143,4 +143,4 @@ def get_time_keyboard(instance_type, instance):
     return keyboard
 
 MQTT_PORT = 1883
-MQTT_HOST = os.environ.get('MQTT_HOST', socket.gethostbyname(socket.gethostname())) 
+MQTT_HOST = os.environ.get('MQTT_HOST', socket.gethostbyname(socket.gethostname()))
