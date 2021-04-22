@@ -15,7 +15,6 @@ export const Button = styled.button`
   border: none;
   background-color: transparent;
   margin-left: 10px;
-  margin-right: 10px;
   cursor: pointer;
   > img {
     max-height: 100%;

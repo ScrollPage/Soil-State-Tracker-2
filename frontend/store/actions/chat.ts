@@ -18,10 +18,8 @@ export const submitChat = (chatId: number): ThunkType => async dispatch => {
 export const createChat = (callback: Dispatch<SetStateAction<string | undefined>>): ThunkType => async dispatch => {
   try {
     const chat: { data: IChat } = await instance().post(`/api/chat/`, {})
-    callback(String(chat.data.id))
+    callback(String(chat.data?.id))
   } catch (e) {
     dispatch(show('Ошибка создания чата!', 'warning'));
   }
 };
-
-
