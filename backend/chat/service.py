@@ -26,8 +26,13 @@ AUTH_HEADER_TYPE_BYTES = set(
 
 class Authenticator:
     
+    def __init__(self, consumer, user_model):
+        self.consumer = consumer
+        self.user_model = user_model
+
     def get_raw_token(self, header):
         parts = header.split()
+        print(parts)
         if len(parts) == 0:
             return None
 
@@ -46,23 +51,23 @@ class Authenticator:
             except TokenError as e:
                 pass
 
-            self.disconnect(400)
+            self.consumer.disconnect(400)
 
     def obtain_user(self, validated_token):
         try:
             user_id = validated_token[jwt_settings.USER_ID_CLAIM]
         except KeyError:
-            self.disconnect(400)
+            self.consumer.disconnect(400)
 
         try:
             user = self.user_model.objects.get(
                 **{jwt_settings.USER_ID_FIELD: user_id}
             )
         except self.user_model.DoesNotExist:
-            self.disconnect(404)
+            self.consumer.disconnect(404)
 
         if not user.is_active:
-            self.disconnect(401)
+            self.consumer.disconnect(401)
 
         return user
 
@@ -71,7 +76,7 @@ class Authenticator:
         header = data['user']
         raw_token = self.get_raw_token(header)
         if raw_token is None:
-            self.disconnect(400)
+            self.consumer.disconnect(400)
 
         validated_token = self.get_validated_token(raw_token)
 
@@ -83,7 +88,10 @@ class UpgradedWebsocketConsumer(WebsocketConsumer, ABC):
 
     commands = {}
     permissions = []
-    auth = Authenticator()
+    
+    def __init__(self):
+        self.auth = Authenticator(self, self.user_model)
+        super().__init__()
 
     def check_permissions(self, data):
         if not all([

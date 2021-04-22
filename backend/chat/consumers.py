@@ -60,6 +60,7 @@ class ChatConsumer(UpgradedWebsocketConsumer):
     def prepare_data(self, data):
         data['chat'] = get_object_or_404(Chat, id=self.room_name)
         data['user'] = self.auth.get_user(data)
+        # data['user'] = get_object_or_404(Client, id=data['user'])
         return data
 
     commands = {
