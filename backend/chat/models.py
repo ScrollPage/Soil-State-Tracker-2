@@ -52,7 +52,10 @@ class Message(models.Model):
         verbose_name_plural = 'Сообщения'
 
 @receiver(post_save, sender=Message)
-def send_new_message_notification(sender, instance=None, created=False, **kwargs):
+def send_new_message_notification(
+    sender, instance=None, 
+    created=False, **kwargs
+):
     if created:
         inc_counter = not bool(
             instance.chat.messages.filter(unread=False).count() - 1

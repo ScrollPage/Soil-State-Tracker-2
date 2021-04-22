@@ -119,12 +119,12 @@ CHANNEL_LAYERS = {
 
 DATABASES = {
     'default': {
-        'ENGINE': os.environ.get('SQL_ENGINE', 'timescale.db.backends.postgresql'),
-        'NAME': os.environ.get('SQL_DATABASE', 'postgres'),
-        'USER': os.environ.get('SQL_USER', 'postgres'),
-        'PASSWORD': os.environ.get('SQL_PASSWORD', 'pass'),
-        'HOST': os.environ.get('SQL_HOST', '127.0.0.1'),
-        'PORT': os.environ.get('SQL_PORT', '5432'),
+        'ENGINE': os.environ.get('SQL_ENGINE', local.SQL_ENGINE),
+        'NAME': os.environ.get('SQL_DATABASE', local.SQL_DATABASE),
+        'USER': os.environ.get('SQL_USER', local.SQL_USER),
+        'PASSWORD': os.environ.get('SQL_PASSWORD', local.SQL_PASSWORD),
+        'HOST': os.environ.get('SQL_HOST', local.SQL_HOST),
+        'PORT': os.environ.get('SQL_PORT', local.SQL_PORT),
     }
 }
 
