@@ -17,13 +17,12 @@ interface Props {
 export const Chat: React.FC<Props> = ({ onClose }) => {
   const dispatch = useDispatch();
   const [chatId, setChatId] = useState<string | undefined>(Cookie.get("chat"));
-  const { token, userId } = useUser();
+  const { token } = useUser();
 
   useEffect(() => {
     if (chatId) {
       Cookie.set("chat", chatId);
-      // initialiseChat(chatId, token);
-      initialiseChat(chatId, userId);
+      initialiseChat(chatId, token);
       return () => {
         WebSocketInstance.disconnect();
       };
@@ -36,7 +35,7 @@ export const Chat: React.FC<Props> = ({ onClose }) => {
     }
     const messageObject = {
       content,
-      token: userId,
+      token,
     };
     WebSocketInstance.newChatMessage(messageObject);
   };

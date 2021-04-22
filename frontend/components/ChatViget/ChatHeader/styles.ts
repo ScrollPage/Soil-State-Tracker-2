@@ -15,7 +15,7 @@ export const Name = styled.p`
   font-family: Montserrat;
   font-style: normal;
   font-weight: 500;
-  font-size: 20px;
+  font-size: 32px;
   line-height: 39px;
   > a {
     color: #000;

@@ -25,5 +25,4 @@ export const Main = styled.div`
   @media (max-width: 1199.98px) {
     flex-direction: column;
   }
-  padding-bottom: 30px;
 `;
