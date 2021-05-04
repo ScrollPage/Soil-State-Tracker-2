@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 import os
 from pathlib import Path
 from datetime import timedelta
+import socket
 
 import pusher
 
@@ -45,6 +46,7 @@ INSTALLED_APPS = [
     'cacheops',
     'channels',
     'corsheaders',
+    'django_celery_beat',
     'djoser',
     'drf_yasg',
     'rest_auth',
@@ -250,9 +252,9 @@ pusher_client = pusher.Pusher(
 
 # Cacheops
 CACHEOPS_REDIS = {
-    'host': REDIS_HOST, # redis-server is on same machine
-    'port': REDIS_PORT,        # default redis port
-    'db': 3,             # SELECT non-default redis database
+    'host': REDIS_HOST,
+    'port': REDIS_PORT,
+    'db': 4,
 }
 
 CACHEOPS_DEFAULTS = {
@@ -268,7 +270,7 @@ CACHEOPS = {
 }
 
 # Celery
-CELERY_REDIS_DB = '2'
+CELERY_REDIS_DB = '3'
 CELERY_BROKER_URL = f'redis://{REDIS_HOST}:{REDIS_PORT}/{CELERY_REDIS_DB}'
 CELERY_BROKER_TRANSPORT_OPTIONS = {'visiblity_timeout': 3600}
 CELERY_RESULT_BACKEND = f'redis://{REDIS_HOST}:{REDIS_PORT}/{CELERY_REDIS_DB}'
@@ -277,3 +279,7 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERILIZER = 'json'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
+# MQTT
+MQTT_PORT = int(os.environ.get('MQTT_PORT', local.MQTT_PORT))
+MQTT_HOST = os.environ.get('MQTT_HOST', local.MQTT_HOST)

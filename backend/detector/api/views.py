@@ -1,9 +1,10 @@
 from rest_framework.decorators import action
 from rest_framework import permissions, status
 from rest_framework.response import Response
+from rest_framework.generics import CreateAPIView
 
 from .service import PSListViewSet
-from .serializers import DetectorSerializer
+from .serializers import DetectorSerializer, DetectorCommandSerializer
 from detector_data.api.serializers import DetectorDataSerializer
 from detector.models import Detector
 from group.api.service import get_aggregated_data
@@ -36,3 +37,11 @@ class DetectorViewSet(PSListViewSet):
 
         serializer = self.get_serializer(resulting_queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+class DetectorComamndView(CreateAPIView):
+    '''Создание команды датчику'''
+    serializer_class = DetectorCommandSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)

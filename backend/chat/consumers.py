@@ -7,7 +7,7 @@ from asgiref.sync import async_to_sync
 from chat.models import Chat
 from .service import (
     UpgradedWebsocketConsumer, instances_to_json, 
-    message_to_json, chat_to_json, PermissionConsumerMixin
+    message_to_json, chat_to_json
 )
 from .models import Chat, Message
 from client.models import Client
@@ -60,7 +60,6 @@ class ChatConsumer(UpgradedWebsocketConsumer):
     def prepare_data(self, data):
         data['chat'] = get_object_or_404(Chat, id=self.room_name)
         data['user'] = self.auth.get_user(data)
-        # data['user'] = get_object_or_404(Client, id=data['user'])
         return data
 
     commands = {
@@ -70,7 +69,7 @@ class ChatConsumer(UpgradedWebsocketConsumer):
 
     def receive(self, text_data):
         data = self.validate(text_data)
-        self.check_permissions(data)
+        self.check_permissions(self, data)
         self.commands[data.pop('command')](self, data)
 
     # Utils

@@ -32,7 +32,6 @@ class Authenticator:
 
     def get_raw_token(self, header):
         parts = header.split()
-        print(parts)
         if len(parts) == 0:
             return None
 
@@ -119,20 +118,7 @@ class UpgradedWebsocketConsumer(WebsocketConsumer, ABC):
         data = self.prepare_data(data)
 
         return data
-
-
-class PermissionConsumerMixin:
-    def check_permissions(self, data):
-        try:
-            self.permissions = self.permissions_by_command[data['command']]
-        except KeyError:
-            pass
-        finally:
-            if not all([
-                permission()(data) for permission in self.permissions
-            ]): 
-                pass
-
+        
 
 def message_to_json(message):
     return {
