@@ -53,7 +53,7 @@ class DetectorCommand(models.Model):
     interval = models.TimeField('Интервал для 2-й команды', null=True)
     category = models.CharField('Тип команды', max_length=10, choices=COMMAND_CHOICES)
     timestamp = models.DateTimeField('Время создания команды', auto_now_add=True)
-    command = models.CharField('Команда для отправки', max_length=40, null=True)
+    command = models.CharField('Команда для отправки', max_length=60, null=True)
 
     def __str__(self):
         return 'command category {category} by user {user}' \

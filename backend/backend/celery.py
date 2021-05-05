@@ -11,6 +11,6 @@ app.autodiscover_tasks()
 app.conf.beat_schedule = {
     'reset': {
         'task': 'detector.tasks.release',
-        'schedule': crontab(minute='*/1')
+        'schedule': crontab(minute='*')
     }
 }
