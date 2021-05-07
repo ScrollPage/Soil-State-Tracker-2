@@ -1,7 +1,7 @@
 import paho.mqtt.client as mqtt
 from loguru import logger
 import asyncio
-from service import MQTT_HOST, MQTT_PORT
+from backend.settings import MQTT_HOST, MQTT_PORT, DETECTOR_TOPIC
 
 def on_connect(client, userdata, flags, rc):
     logger.info(f'Connected with result code {rc}')
@@ -15,5 +15,5 @@ client.on_connect = on_connect
 client.connect(MQTT_HOST, MQTT_PORT, 3600)
 
 while True:
-	client.publish('data', input())
+	client.publish(DETECTOR_TOPIC, input())
     

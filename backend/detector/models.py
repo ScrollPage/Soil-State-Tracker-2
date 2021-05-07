@@ -7,6 +7,7 @@ from datetime import timedelta, time
 
 from client.models import Client
 from group.models import Cluster
+from .service import CommandCreator
 
 class Detector(models.Model):
     x = models.DecimalField(
@@ -44,13 +45,13 @@ class DetectorCommand(models.Model):
     COMMAND_CHOICES = (
         ('1', 'Id'),
         ('2', 'Data'),
+        ('3', 'Time')
     )
 
     user = models.ForeignKey(
         Client, verbose_name='Пользователь', 
         related_name='commands', on_delete=models.CASCADE
     )
-    interval = models.TimeField('Интервал для 2-й команды', null=True)
     category = models.CharField('Тип команды', max_length=10, choices=COMMAND_CHOICES)
     timestamp = models.DateTimeField('Время создания команды', auto_now_add=True)
     command = models.CharField('Команда для отправки', max_length=60, null=True)
@@ -68,25 +69,7 @@ class DetectorCommand(models.Model):
 def make_command(sender, instance=None, created=False, **kwargs):
     '''Записывает команду'''
     if created:
-        if int(instance.category) == 1:
-            now = timezone.now()
-            detector = Detector.objects.create()
-            uid = '{}'.format(detector.id).rjust(3, '-')
-            lasted = 60 - now.second
-            timestamp = str(now.timestamp()).rjust(10, '-')
-            data = '{uid}{lasted}{timestamp}' \
-                .format(uid=uid, lasted=lasted, timestamp=timestamp)
-
-        elif int(instance.category) == 2:
-            data =  ''.rjust(16, '-')
-
-        user = '{id}{email}'.format(
-            id=instance.user.id, email=instance.user.email
-        ) \
-            .rjust(16, '-')
-        cid = instance.category.rjust(4, '-')
-
-        instance.command = '{user}{cid}{data}' \
-            .format(user=user, cid=cid, data=data)
-        
+        creator = CommandCreator(instance.user, instance.cid)
+        command = creator.create_data()
+        instance.command = command
         instance.save()

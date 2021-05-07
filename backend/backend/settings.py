@@ -184,7 +184,8 @@ REST_FRAMEWORK = {
 
 CORS_ORIGIN_WHITELIST = (
     u'http://127.0.0.1:3000',
-    u'http://localhost:3000'
+    u'http://localhost:3000',
+    u'http://178.154.207.84:3000'
 )
 
 # smtp
@@ -283,3 +284,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 # MQTT
 MQTT_PORT = int(os.environ.get('MQTT_PORT', local.MQTT_PORT))
 MQTT_HOST = os.environ.get('MQTT_HOST', local.MQTT_HOST)
+SERVER_TOPIC = os.environ.get('SERVER_TOPIC', local.SERVER_TOPIC)
+DETECTOR_TOPIC = os.environ.get('DETECTOR_TOPIC', local.DETECTOR_TOPIC)
+DATA_COMMAND_ID = '2'

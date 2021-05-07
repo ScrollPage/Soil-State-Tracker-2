@@ -5,7 +5,6 @@ from aiogram.types import ReplyKeyboardRemove, \
     InlineKeyboardMarkup, InlineKeyboardButton
 from quickchart import QuickChart
 from datetime import timedelta
-import numpy as np
 import requests
 import socket
 
