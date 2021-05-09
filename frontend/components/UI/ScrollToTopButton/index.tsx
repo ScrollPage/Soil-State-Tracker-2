@@ -23,7 +23,7 @@ const SctollToTopButtonComponent = () => {
 
   return (
     <Wrapper onClick={scrollToTop}>
-      <SButton small myType="orange">
+      <SButton small myType="blue">
         Наверх
       </SButton>
     </Wrapper>

@@ -1,29 +1,29 @@
 import React from "react";
 import styled from "styled-components";
 import Container from "@/components/UI/Container";
-import Image from "next/image";
 import { SButton } from "@/components/UI/Button";
+import { useWindowSize } from "@/hooks/useWindowSize";
 
 export const Product = () => {
   return (
     <Wrapper>
       <Container>
         <Inner>
+          <Images>
+            <img src="/landing/circles.svg" />
+          </Images>
           <Info>
-            <Title>
-              Система, <br /> автоматизирующая <br /> производство
-            </Title>
+            <Title>Наш продукт - ваш комфорт</Title>
             <SubTitle>
-              Датчики, которые мы разработаем лично под ваши нужды, позволят
-              удаленно следить за посевами и увеличить урожайность до 20%
+              Все стремятся к облегчению своего труда, при этом без потери
+              эффективности. Наши датчики для этого и созданы. Они избавят вас
+              от *************, а всю информацию можно получать через интернет,
+              сидя уюте.
             </SubTitle>
             <SButton myType="blue" type="submit">
-              Смотреть подробнее
+              Смотреть видео
             </SButton>
           </Info>
-          <Images>
-            <Image height={504} width={262} src="/landing/phone.svg" />
-          </Images>
         </Inner>
       </Container>
     </Wrapper>
@@ -35,7 +35,7 @@ const Wrapper = styled.div`
 `;
 
 const Info = styled.div`
-  flex: 1.2;
+  flex: 1;
   ${SButton} {
     margin-top: 40px;
   }
@@ -47,18 +47,23 @@ const Inner = styled.div`
 `;
 
 const Images = styled.div`
-  flex: 1;
+  position: relative;
+  flex: 1.2;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 50px;
+  padding: 140px 0 20px 0;
+  height: 100%;
+  > img {
+    max-height: 100%;
+  }
 `;
 
 const Title = styled.h2`
   font-family: Montserrat;
   font-style: normal;
   font-weight: bold;
-  font-size: 52px;
+  font-size: 30px;
   line-height: 58px;
   letter-spacing: -0.06em;
   color: ${({ theme }) => theme.blue};
