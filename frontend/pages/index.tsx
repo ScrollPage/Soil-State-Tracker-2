@@ -2,6 +2,7 @@ import Head from "next/head";
 import { MainLayout } from "@/components/Layout/MainLayout";
 import { Promo } from "@/containers/landing/Promo";
 import { Product } from "@/containers/landing/Product";
+import { NextProduct } from "@/containers/landing/NextProduct";
 
 export default function Index() {
   return (
@@ -11,6 +12,7 @@ export default function Index() {
       </Head>
       <Promo />
       <Product />
+      <NextProduct />
     </MainLayout>
   );
 }

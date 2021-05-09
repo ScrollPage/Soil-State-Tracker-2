@@ -3,26 +3,26 @@ import styled from "styled-components";
 import Container from "@/components/UI/Container";
 import { SButton } from "@/components/UI/Button";
 
-export const Product = () => {
+export const NextProduct = () => {
   return (
     <Wrapper>
       <Container>
         <Inner>
-          <Images>
-            <img src="/landing/circles.svg" />
-          </Images>
           <Info>
-            <Title>Наш продукт - ваш комфорт</Title>
+            <Title>Вы получаете</Title>
             <SubTitle>
-              Все стремятся к облегчению своего труда, при этом без потери
-              эффективности. Наши датчики для этого и созданы. Они избавят вас
-              от *************, а всю информацию можно получать через интернет,
-              сидя уюте.
+              Вы покупаете систему из нужного количеста датчиков, подключенных к
+              нашей сети, а так же интуитовно понятный сайт, через который
+              сможете ими управлять, как с компьютера или телефона, лишь был бы
+              интернет.
             </SubTitle>
             <SButton myType="blue" type="submit">
               Смотреть видео
             </SButton>
           </Info>
+          <Images>
+            <img src="/landing/blocks.svg" />
+          </Images>
         </Inner>
       </Container>
     </Wrapper>
