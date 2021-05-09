@@ -5,7 +5,7 @@ export const Wrapper = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  height: 120px;
+  height: 80px;
   width: 100%;
   background-color: transparent;
   display: flex;
@@ -16,9 +16,6 @@ export const Wrapper = styled.div`
   background-color: ${({ theme }) => theme.blue};
   @media (max-width: 500px) {
     height: 60px !important;
-  }
-  @media (max-width: 940px) {
-    height: 100px;
   }
 `;
 
@@ -34,7 +31,7 @@ export const Title = styled.h1`
     font-family: "Montserrat";
     font-style: normal;
     font-weight: normal;
-    font-size: 40px;
+    font-size: 30px;
     line-height: 50px;
     text-align: center;
     letter-spacing: 0.1em;
@@ -54,7 +51,7 @@ export const GoBack = styled.p`
     font-family: "Play";
     font-style: normal;
     font-weight: normal;
-    font-size: 18px;
+    font-size: 14px;
     line-height: 21px;
     color: #FFFFFF;
   }

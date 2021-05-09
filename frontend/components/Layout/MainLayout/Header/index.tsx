@@ -63,19 +63,19 @@ const MainHeaderComponent = () => {
                 <>
                   <AuthTitle
                     onClick={() =>
-                      push({ pathname: "/login" }, undefined, { shallow: true })
-                    }
-                  >
-                    Вход
-                  </AuthTitle>
-                  <AuthTitle
-                    onClick={() =>
                       push({ pathname: "/register" }, undefined, {
                         shallow: true,
                       })
                     }
                   >
                     Регистрация
+                  </AuthTitle>
+                  <AuthTitle
+                    onClick={() =>
+                      push({ pathname: "/login" }, undefined, { shallow: true })
+                    }
+                  >
+                    Вход
                   </AuthTitle>
                 </>
               )}

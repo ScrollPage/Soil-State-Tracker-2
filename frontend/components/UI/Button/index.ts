@@ -42,8 +42,8 @@ export const SButton = styled.button<{ myType: "red_plus" | "green_plus" | "whit
   `};
 
   ${({ myType, theme, small }) => myType === 'green' && css`
-    width: ${small ? "150px" : "350px"};
-    height: 50px;
+    width: ${small ? "150px" : "300px"};
+    height: 45px;
     background-color: ${theme.green};
     color: #fff;
     box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.08);
@@ -64,10 +64,10 @@ export const SButton = styled.button<{ myType: "red_plus" | "green_plus" | "whit
 
   ${({ myType, theme }) => myType === 'red_plus' && css`
     width: 50px;
-    height: 50px;
+    height: 45px;
     background-color: ${theme.red};
     box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.08);
-    border-radius: 20px;
+    border-radius: 10px;
     border: none;
     position: relative;
     &:hover {
@@ -89,11 +89,11 @@ export const SButton = styled.button<{ myType: "red_plus" | "green_plus" | "whit
   `};
   ${({ myType, theme }) => myType === 'red' && css`
     width: 100%;
-    height: 50px;
+    height: 45px;
     background-color: ${theme.red};
     color: #fff;
     box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.08);
-    border-radius: 20px;
+    border-radius: 10px;
     border: none;
     font-family: Play;
     font-style: normal;
@@ -109,9 +109,9 @@ export const SButton = styled.button<{ myType: "red_plus" | "green_plus" | "whit
   `};
 
   ${({ myType, small }) => myType === 'white' && css`
-    height: 60px;
-    border-radius: 20px;
-    width: ${small ? "150px" : "350px"};
+    height: 45px;
+    border-radius: 10px;
+    width: ${small ? "125px" : "300px"};
     background-color: transparent;
     border: 1px solid #fff;
     font-family: "Play";
@@ -126,9 +126,9 @@ export const SButton = styled.button<{ myType: "red_plus" | "green_plus" | "whit
   `};
 
   ${({ myType, small }) => myType === 'orange' && css`
-    height: 60px;
-    border-radius: 20px;
-    width: ${small ? "150px" : "350px"};
+    height: 45px;
+    border-radius: 10px;
+    width: ${small ? "150px" : "300px"};
     background-color: ${({ theme }) => theme.orange};
     border: 1px solid ${({ theme }) => theme.orange};
     font-family: "Raleway";

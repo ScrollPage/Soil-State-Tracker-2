@@ -29,8 +29,10 @@ export const MenuItem = styled.p`
   font-weight: normal;
   font-size: 14px;
   line-height: 22px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
   &:hover {
-    cursor: pointer;
+    border-bottom: 2px solid ${({ theme }) => theme.blue};
   }
 `
 
@@ -74,6 +76,11 @@ export const AuthTitle = styled.p`
   font-weight: 600;
   font-size: 15px;
   line-height: 22px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  &:hover {
+    border-bottom: 2px solid ${({ theme }) => theme.blue};
+  }
 `
 
 export const Inner = styled.div`

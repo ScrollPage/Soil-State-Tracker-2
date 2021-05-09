@@ -11,17 +11,17 @@ export const Wrapper = styled.div<{ width?: string }>`
 export const Inner = styled.input <{ isShowError?: boolean, myType?: "default" }>`
   border: 1.5px solid ${({ isShowError }) => isShowError ? 'red' : "transparent"};
   width: 100%;
-  padding: 20px 50px;
+  padding: 11px 50px;
   background-color: rgba(196, 196, 196, 0.3);
   backdrop-filter: blur(4px);
   font-family: "Play";
   color: #fff;
   font-size: 18px;
-  border-radius: 20px;
+  border-radius: 10px;
   outline: none;
   ::placeholder {
     color: ${({ theme }) => theme.white};
-    font-size: 18px;
+    font-size: 14px;
   }  
 
   ${({ myType }) => myType === 'default' && css`
@@ -52,7 +52,7 @@ export const Error = styled.small`
 export const Icon = styled.small`
   position: absolute;
   z-index: 1;
-  top: 23px;
+  top: 11px;
   left: 19px;
 `;
 
