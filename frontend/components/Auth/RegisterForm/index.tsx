@@ -3,7 +3,9 @@ import { Wrapper, Buttons } from "./styles";
 import { Formik, Form, FormikConfig, FormikValues } from "formik";
 import { SButton } from "@/components/UI/Button";
 import { Input } from "@/components/UI/Input";
-import { object, string, ref } from "yup";
+import { object, string } from "yup";
+import { usePageLoading } from "@/hooks/usePageLoading";
+import { LoadingInner } from "@/components/UI/LoadingInner";
 
 const nameValidationSchema = object().shape({
   firstName: string()
@@ -25,9 +27,6 @@ const contactValidationSchema = object().shape({
       "Слишком легкий пароль"
     )
     .required("Введите пароль"),
-  confirmPassword: string()
-    .required("Введите пароль")
-    .oneOf([ref("password"), ""], "Пароли должны совпадать"),
 });
 
 export interface RegisterFormValues {
@@ -35,7 +34,6 @@ export interface RegisterFormValues {
   firstName: string;
   lastName: string;
   password: string;
-  confirmPassword: string;
 }
 
 interface RegisterFormProps {
@@ -59,11 +57,10 @@ const RegisterFormComponent: React.FC<RegisterFormProps> = ({
           firstName: "",
           lastName: "",
           password: "",
-          confirmPassword: "",
         }}
-        onSubmit={(values, { setSubmitting, resetForm }) => {
+        onSubmit={async (values, { setSubmitting, resetForm }) => {
           setSubmitting(true);
-          handleSubmit(values as RegisterFormValues);
+          await handleSubmit(values as RegisterFormValues);
           setSubmitting(false);
           resetForm();
         }}
@@ -79,12 +76,6 @@ const RegisterFormComponent: React.FC<RegisterFormProps> = ({
             name="password"
             placeholder="Пароль"
             src="padlock"
-          />
-          <Input
-            type="password"
-            name="confirmPassword"
-            placeholder="Повторите пароль"
-            src="reload"
           />
         </FormikStep>
       </FormikStepper>
@@ -128,6 +119,8 @@ const FormikStepper: React.FC<FormikStepperProps> = ({
     return step === childrenArray.length - 1;
   };
 
+  const isLoading = usePageLoading();
+
   return (
     <Formik
       {...stepperProps}
@@ -141,7 +134,6 @@ const FormikStepper: React.FC<FormikStepperProps> = ({
           setTouched({
             email: false,
             password: false,
-            confirmPassword: false,
           });
           setSubmitting(false);
         }
@@ -156,7 +148,7 @@ const FormikStepper: React.FC<FormikStepperProps> = ({
                 <SButton
                   onClick={() => setStep(step - 1)}
                   myType="white"
-                  disabled={isSubmitting}
+                  disabled={isSubmitting || isLoading}
                   small
                 >
                   Назад
@@ -165,10 +157,18 @@ const FormikStepper: React.FC<FormikStepperProps> = ({
               <SButton
                 myType="white"
                 type="submit"
-                disabled={isSubmitting}
+                disabled={isSubmitting || isLoading}
                 small={isLastElement() ? true : false}
               >
-                {isLastElement() ? "Регистрация" : "Продолжить"}
+                {isLastElement() ? (
+                  isSubmitting || isLoading ? (
+                    <LoadingInner />
+                  ) : (
+                    "Регистрация"
+                  )
+                ) : (
+                  "Продолжить"
+                )}
               </SButton>
             </Buttons>
           </Form>

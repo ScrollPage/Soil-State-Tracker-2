@@ -5,7 +5,8 @@ import { SButton } from "@/components/UI/Button";
 import { Input } from "@/components/UI/Input";
 import { object, string } from "yup";
 import { useDispatch } from "react-redux";
-import { authLogin } from "@/store/actions/auth";
+import { authChange } from "@/store/actions/auth";
+import { LoadingInner } from "@/components/UI/LoadingInner";
 
 const validationSchema = object().shape({
   firstName: string()
@@ -19,7 +20,7 @@ const validationSchema = object().shape({
   email: string().email("Некорректный E-mail").required("Введите E-mail"),
 });
 
-interface FormValues {
+export interface ChangeFormValues {
   firstName: string;
   lastName: string;
   email: string;
@@ -47,15 +48,14 @@ const ChangeFormComponent: React.FC<ChangeFormProps> = ({
           email: initialEmail ?? "",
         }}
         validationSchema={validationSchema}
-        onSubmit={(values, { setSubmitting, resetForm }) => {
+        onSubmit={async (values, { setSubmitting, resetForm }) => {
           setSubmitting(true);
-          // await dispatch(authLogin(values.email, values.password));
-          console.log(values);
+          await dispatch(authChange(values));
           setSubmitting(false);
           resetForm();
         }}
       >
-        {(props: FormikProps<FormValues>) => (
+        {({ isSubmitting }: FormikProps<ChangeFormValues>) => (
           <Form>
             <Input
               type="text"
@@ -78,8 +78,8 @@ const ChangeFormComponent: React.FC<ChangeFormProps> = ({
               src="email"
               myType="default"
             />
-            <SButton type="submit" myType="green">
-              Изменить
+            <SButton type="submit" myType="green" disabled={isSubmitting}>
+              {isSubmitting ? <LoadingInner /> : "Изменить"}
             </SButton>
           </Form>
         )}

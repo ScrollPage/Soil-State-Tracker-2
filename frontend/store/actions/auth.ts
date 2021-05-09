@@ -5,6 +5,22 @@ import { show } from './alert';
 import Router from 'next/router';
 import { RegisterFormValues } from '@/components/Auth/RegisterForm';
 import { LoginFormValues } from '@/components/Auth/LoginForm';
+import { ChangeFormValues } from '@/components/Auth/ChangeForm';
+
+export const authChange = (values: ChangeFormValues): ThunkType => async dispatch => {
+  await instance()
+    .patch('/auth/users/me/', {
+      email: values.email,
+      first_name: values.firstName,
+      last_name: values.lastName
+    })
+    .then(res => {
+      dispatch(show('Вы успешно сменили данные', 'success'));
+    })
+    .catch(() => {
+      dispatch(show('Ошибка при смене данных!', 'warning'));
+    });
+}
 
 export const authSignup = (values: RegisterFormValues): ThunkType => async dispatch => {
   await instanceWithOutHeaders

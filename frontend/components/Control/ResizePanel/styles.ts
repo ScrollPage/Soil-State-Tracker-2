@@ -4,7 +4,8 @@ export const Wrapper = styled.div`
   display: flex;
   flex: 1;
   max-width: 100%;
-  user-select: none;  
+  user-select: none;
+  padding-bottom: 40px;
 `;
 
 export const Left = styled.div<{ width: number | null, leftMin: number }>`

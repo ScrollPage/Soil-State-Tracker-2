@@ -15,11 +15,14 @@ export const Wrapper = styled.div`
     background-color: #FFF;
     height: 4px;
     width: 55%;
+    @media (max-width: 500px) {
+      width: 120px;
+    }
   }
 `;
 
 export const Step = styled.div<{ active: boolean }>`
-  height: 100px;
+  height: 70px;
   width: 150px;
   display: flex;
   justify-content: center;
@@ -34,14 +37,14 @@ export const Step = styled.div<{ active: boolean }>`
     border-radius: 50%;
   }
   &:after {
-    height: 20px;
-    width: 20px;
+    height: 10px;
+    width: 10px;
     background-color: #FFF;
   }
   ${({ active }) => active && css`
     &:before {
-      height: 39px;
-      width: 39px;
+      height: 30px;
+      width: 30px;
       background-color: transparent;
       border: 1px solid #FFF;
     }
@@ -53,7 +56,7 @@ export const Title = styled.div<{ active: boolean }>`
   font-family: "Play";
   font-style: normal;
   font-weight: normal;
-  font-size: 15px;
+  font-size: 13px;
   line-height: 14px;
   color: #FFFFFF;
   opacity: ${({ active }) => active ? 1 : 0.7};

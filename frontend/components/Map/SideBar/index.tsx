@@ -34,9 +34,7 @@ const SideBarComponent: React.FC<SideBarProps> = ({
 
   return (
     <Wrapper>
-      <Title>
-        Выбор кластера
-      </Title>
+      <Title>Выбор кластера</Title>
       <Checkbox
         indeterminate={indeterminate}
         onChange={onCheckAllChange}
@@ -45,11 +43,15 @@ const SideBarComponent: React.FC<SideBarProps> = ({
         Выбрать все
       </Checkbox>
       <hr />
-      <CheckboxGroup
-        options={plainOptions}
-        value={checkedList}
-        onChange={onChange}
-      />
+      {plainOptions.length === 0 ? (
+        "У вас нет кластеров"
+      ) : (
+        <CheckboxGroup
+          options={plainOptions}
+          value={checkedList}
+          onChange={onChange}
+        />
+      )}
     </Wrapper>
   );
 };

@@ -14,6 +14,12 @@ export const Wrapper = styled.div`
   padding: 0 60px;
   z-index: 10;
   background-color: ${({ theme }) => theme.blue};
+  @media (max-width: 500px) {
+    height: 60px !important;
+  }
+  @media (max-width: 940px) {
+    height: 100px;
+  }
 `;
 
 export const Content = styled.div`
@@ -33,6 +39,9 @@ export const Title = styled.h1`
     text-align: center;
     letter-spacing: 0.1em;
     color: #FFFFFF;
+    @media (max-width: 500px) {
+      font-size: 30px;
+    }
  }
 `;
 

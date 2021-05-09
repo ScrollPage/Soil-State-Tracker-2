@@ -11,5 +11,6 @@ export const Wrapper = styled.div`
 export const Buttons = styled.h3`
   display: flex;
   justify-content: space-between;
+  gap: 50px;
 `;
 

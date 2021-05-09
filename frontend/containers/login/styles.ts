@@ -2,7 +2,10 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.div`
   flex: 1;
-  padding: 328px 0 110px 0;
+  padding: 150px 0 0px 0;
+  @media (max-width: 940px) {
+    padding: 115px 0 0px 0;
+  }
 `;
 
 export const Inner = styled.div`
@@ -19,6 +22,12 @@ export const Title = styled.h1`
   line-height: 56px;
   color: ${({ theme }) => theme.white};
   margin-bottom: 84px;
+  margin-top: 20px;
+  @media (max-width: 500px) {
+    font-size: 30px;
+    margin-top: 0px;
+    margin-bottom: 20px;
+  }
 `;
 export const SubTitle = styled.span`
   margin-top: 20px;

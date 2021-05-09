@@ -2,9 +2,10 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.div`
   position: fixed;
-  top: 0; 
+  top: 0;
+  right: 0;
   left: 249px;
-  width: 100%;
+  width: calc(100% - 249px);
   height: 120px;
   z-index: 4;
   background: ${({ theme }) => theme.blue};
@@ -14,7 +15,7 @@ export const Wrapper = styled.div`
 `
 
 
-export const NavLink = styled.div`
+export const NavLink = styled.div<{ isActive: boolean }>`
  > a {
   font-family: "Play";
   font-style: normal;
@@ -22,6 +23,7 @@ export const NavLink = styled.div`
   font-size: 24px;
   line-height: 28px;
   color: #FFFFFF;
+  border-bottom: 2px solid ${({ isActive }) => isActive ? "#fff" : "transparent"};
   margin-left: 50px;
  }
 `

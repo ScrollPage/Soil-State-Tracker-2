@@ -4,6 +4,8 @@ import { Formik, Form, FormikProps } from "formik";
 import { SButton } from "@/components/UI/Button";
 import { Input } from "@/components/UI/Input";
 import { object, string } from "yup";
+import { usePageLoading } from "@/hooks/usePageLoading";
+import { LoadingInner } from "@/components/UI/LoadingInner";
 
 const validationSchema = object().shape({
   email: string().email("Некорректный E-mail").required("Введите E-mail"),
@@ -20,6 +22,8 @@ interface LoginFormProps {
 }
 
 const LoginFormComponent: React.FC<LoginFormProps> = ({ handleSubmit }) => {
+  const isLoading = usePageLoading();
+
   return (
     <Wrapper>
       <Formik
@@ -28,14 +32,14 @@ const LoginFormComponent: React.FC<LoginFormProps> = ({ handleSubmit }) => {
           password: "",
         }}
         validationSchema={validationSchema}
-        onSubmit={(values, { setSubmitting, resetForm }) => {
+        onSubmit={async (values, { setSubmitting, resetForm }) => {
           setSubmitting(true);
-          handleSubmit(values);
+          await handleSubmit(values);
           setSubmitting(false);
           resetForm();
         }}
       >
-        {(props: FormikProps<LoginFormValues>) => (
+        {({ isSubmitting }: FormikProps<LoginFormValues>) => (
           <Form>
             <Input type="text" name="email" placeholder="E-mail" src="email" />
             <Input
@@ -44,8 +48,12 @@ const LoginFormComponent: React.FC<LoginFormProps> = ({ handleSubmit }) => {
               placeholder="Пароль"
               src="padlock"
             />
-            <SButton myType="white" type="submit">
-              Продолжить
+            <SButton
+              myType="white"
+              type="submit"
+              disabled={isSubmitting || isLoading}
+            >
+              {isSubmitting || isLoading ? <LoadingInner /> : "Продолжить"}
             </SButton>
           </Form>
         )}
