@@ -1,4 +1,3 @@
-import { About } from "@/components/Landing/Footer/styles";
 import { Avatar } from "@/components/UI/Avatar";
 import { useUser } from "@/hooks/useUser";
 import React from "react";
@@ -16,6 +15,7 @@ import {
   Value,
   SubValue,
   Card,
+  About,
 } from "./styles";
 
 export const ProfileContainer = () => {

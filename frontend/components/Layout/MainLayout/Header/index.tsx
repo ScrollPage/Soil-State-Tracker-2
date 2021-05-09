@@ -1,5 +1,6 @@
 import Image from "next/image";
 import React, { memo } from "react";
+import Container from "@/components/UI/Container";
 import {
   Wrapper,
   Info,
@@ -8,90 +9,81 @@ import {
   SubTitle,
   Inner,
   AuthButtons,
-  Nav,
-  NavLink,
+  Menu,
+  MenuItem,
+  Auth,
+  AuthTitle,
 } from "./styles";
 import { useDispatch } from "react-redux";
 import { logout } from "@/store/actions/auth";
 import { SButton } from "@/components/UI/Button";
 import { useUser } from "@/hooks/useUser";
 import { useRouter } from "next/router";
-import { useScroll } from "@/hooks/useScroll";
-import { useWindowSize } from "@/hooks/useWindowSize";
 
 const MainHeaderComponent = () => {
   const dispatch = useDispatch();
   const { isAuth } = useUser();
   const { push } = useRouter();
-  const scroll = useScroll();
-  const { height } = useWindowSize();
 
   return (
-    <Wrapper small={scroll > (height ?? 1000) - 120}>
-      <Info>
-        <Image height={120} width={160} src="/main/logo.svg" />
-        <Name>
-          <Title>LoRaWan Dam</Title>
-          <SubTitle>
-            Умный сервис по выращиванию
-            <br /> клубники
-          </SubTitle>
-        </Name>
-      </Info>
-      <Inner>
-        <AuthButtons>
-          {isAuth ? (
-            <>
-              <SButton
-                myType="orange"
-                small
-                onClick={() =>
-                  push({ pathname: "/control" }, undefined, {
-                    shallow: true,
-                  })
-                }
-              >
-                Кабинет
-              </SButton>
-              <SButton
-                myType="white"
-                small
-                onClick={() => dispatch(logout(true))}
-              >
-                Выход
-              </SButton>
-            </>
-          ) : (
-            <>
-              <SButton
-                myType="white"
-                small
-                onClick={() =>
-                  push({ pathname: "/login" }, undefined, { shallow: true })
-                }
-              >
-                Вход
-              </SButton>
-              <SButton
-                myType="orange"
-                small
-                onClick={() =>
-                  push({ pathname: "/register" }, undefined, {
-                    shallow: true,
-                  })
-                }
-              >
-                Регистрация
-              </SButton>
-            </>
-          )}
-        </AuthButtons>
-        <Nav>
-          <NavLink>Как это работает</NavLink>
-          <NavLink>Кому подойдет</NavLink>
-          <NavLink>Команда</NavLink>
-        </Nav>
-      </Inner>
+    <Wrapper>
+      <Container>
+        <Inner>
+          <Info>
+            <Name>
+              <Title>SightVI</Title>
+              <Image height={28} width={50} src="/landing/eyeLogo.svg" />
+            </Name>
+            <SubTitle>Система мониторинга климата</SubTitle>
+          </Info>
+          <Menu>
+            <MenuItem>Польза</MenuItem>
+            <MenuItem>Стоимость</MenuItem>
+            <MenuItem>FAQ</MenuItem>
+            <MenuItem>Блог</MenuItem>
+          </Menu>
+          <Auth>
+            <img src="/landing/zamok.svg" alt="Замок" />
+            <AuthButtons>
+              {isAuth ? (
+                <>
+                  <AuthTitle
+                    onClick={() =>
+                      push({ pathname: "/control" }, undefined, {
+                        shallow: true,
+                      })
+                    }
+                  >
+                    Личный кабинет
+                  </AuthTitle>
+                  <AuthTitle onClick={() => dispatch(logout(true))}>
+                    Выход
+                  </AuthTitle>
+                </>
+              ) : (
+                <>
+                  <AuthTitle
+                    onClick={() =>
+                      push({ pathname: "/login" }, undefined, { shallow: true })
+                    }
+                  >
+                    Вход
+                  </AuthTitle>
+                  <AuthTitle
+                    onClick={() =>
+                      push({ pathname: "/register" }, undefined, {
+                        shallow: true,
+                      })
+                    }
+                  >
+                    Регистрация
+                  </AuthTitle>
+                </>
+              )}
+            </AuthButtons>
+          </Auth>
+        </Inner>
+      </Container>
     </Wrapper>
   );
 };

@@ -6,6 +6,7 @@ export const Wrapper = styled.div`
 `;
 
 export const Inner = styled.div``
+export const About = styled.div``
 
 export const Title = styled.h1`
   font-family: Play;
