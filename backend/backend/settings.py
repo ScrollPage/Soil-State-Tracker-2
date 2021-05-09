@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 import os
 from pathlib import Path
 from datetime import timedelta
+import socket
 
 import pusher
 
@@ -45,6 +46,7 @@ INSTALLED_APPS = [
     'cacheops',
     'channels',
     'corsheaders',
+    'django_celery_beat',
     'djoser',
     'drf_yasg',
     'rest_auth',
@@ -119,12 +121,12 @@ CHANNEL_LAYERS = {
 
 DATABASES = {
     'default': {
-        'ENGINE': os.environ.get('SQL_ENGINE', 'timescale.db.backends.postgresql'),
-        'NAME': os.environ.get('SQL_DATABASE', 'postgres'),
-        'USER': os.environ.get('SQL_USER', 'postgres'),
-        'PASSWORD': os.environ.get('SQL_PASSWORD', 'pass'),
-        'HOST': os.environ.get('SQL_HOST', '127.0.0.1'),
-        'PORT': os.environ.get('SQL_PORT', '5432'),
+        'ENGINE': os.environ.get('SQL_ENGINE', local.SQL_ENGINE),
+        'NAME': os.environ.get('SQL_DATABASE', local.SQL_DATABASE),
+        'USER': os.environ.get('SQL_USER', local.SQL_USER),
+        'PASSWORD': os.environ.get('SQL_PASSWORD', local.SQL_PASSWORD),
+        'HOST': os.environ.get('SQL_HOST', local.SQL_HOST),
+        'PORT': os.environ.get('SQL_PORT', local.SQL_PORT),
     }
 }
 
@@ -182,7 +184,8 @@ REST_FRAMEWORK = {
 
 CORS_ORIGIN_WHITELIST = (
     u'http://127.0.0.1:3000',
-    u'http://localhost:3000'
+    u'http://localhost:3000',
+    u'http://178.154.207.84:3000'
 )
 
 # smtp
@@ -250,9 +253,9 @@ pusher_client = pusher.Pusher(
 
 # Cacheops
 CACHEOPS_REDIS = {
-    'host': REDIS_HOST, # redis-server is on same machine
-    'port': REDIS_PORT,        # default redis port
-    'db': 3,             # SELECT non-default redis database
+    'host': REDIS_HOST,
+    'port': REDIS_PORT,
+    'db': 4,
 }
 
 CACHEOPS_DEFAULTS = {
@@ -268,7 +271,7 @@ CACHEOPS = {
 }
 
 # Celery
-CELERY_REDIS_DB = '2'
+CELERY_REDIS_DB = '3'
 CELERY_BROKER_URL = f'redis://{REDIS_HOST}:{REDIS_PORT}/{CELERY_REDIS_DB}'
 CELERY_BROKER_TRANSPORT_OPTIONS = {'visiblity_timeout': 3600}
 CELERY_RESULT_BACKEND = f'redis://{REDIS_HOST}:{REDIS_PORT}/{CELERY_REDIS_DB}'
@@ -277,3 +280,10 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERILIZER = 'json'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
+# MQTT
+MQTT_PORT = int(os.environ.get('MQTT_PORT', local.MQTT_PORT))
+MQTT_HOST = os.environ.get('MQTT_HOST', local.MQTT_HOST)
+SERVER_TOPIC = os.environ.get('SERVER_TOPIC', local.SERVER_TOPIC)
+DETECTOR_TOPIC = os.environ.get('DETECTOR_TOPIC', local.DETECTOR_TOPIC)
+DATA_COMMAND_ID = '2'

@@ -25,7 +25,7 @@ application = ProtocolTypeRouter({
     'http': django_application, 
 
     # WebSocket chat handler
-    'websocket':AuthMiddlewareStack(
+    'websocket': AuthMiddlewareStack(
         URLRouter([
             url(r'^ws/chat/(?P<room_name>[^/]+)/$', ChatConsumer.as_asgi()),
         ]),

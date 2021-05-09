@@ -2,14 +2,13 @@ import paho.mqtt.client as mqtt
 from loguru import logger
 import asyncio
 
-from service import MQTT_HOST, MQTT_PORT
+from backend.settings import MQTT_PORT, MQTT_HOST, SERVER_TOPIC, DETECTOR_TOPIC
 
 
 def on_connect(client, userdata, flags, rc):
     logger.info(f'Connected with result code {rc}')
-    topic = 'data'
-    client.subscribe("data", qos=0)
-    logger.info(f'Subscribed to a topic {topic}')
+    client.subscribe(DETECTOR_TOPIC, qos=0)
+    logger.info(f'Subscribed to a server topic')
 
 
 def on_disconnect(client, userdata, rc):
@@ -26,7 +25,7 @@ client.on_connect = on_connect
 client.on_message = on_message
 client.on_disconnect = on_disconnect
 
-client.connect(MQTT_HOST, MQTT_PORT, 3600)
+client.connect(MQTT_HOST, MQTT_PORT, 1)
 
 if __name__ == '__main__':
     asyncio.get_event_loop().run_until_complete(client.loop_forever())

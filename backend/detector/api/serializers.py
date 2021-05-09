@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from detector.models import Detector
+from detector.models import Detector, DetectorCommand
 
 class ClusterNameSerializer(serializers.StringRelatedField):
     '''Сериализация имени кластера'''
@@ -13,3 +13,10 @@ class DetectorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Detector
         exclude = ['user']
+
+class DetectorCommandSerializer(serializers.ModelSerializer):
+    '''Сериализация команды датчику'''
+
+    class Meta:
+        model = DetectorCommand
+        exclude = ['command']
