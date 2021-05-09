@@ -142,21 +142,19 @@ export const SButton = styled.button<{ myType: "red_plus" | "green_plus" | "whit
   `};
 
   ${({ myType, small, theme }) => myType === 'blue' && css`
-    height: ${small ? 'auto' : '60px'};
-    border-radius: ${small ? '10px' : '20px'};
-    font-size: ${small ? '12px' : '18px'};
-    line-height: ${small ? '15px' : '22px'};
-    padding: ${small ? '7px 21px' : '16px 31px'};
-    min-width: ${small ? '110px' : '218px'};
-    background-color: ${small ? "#FFF" : theme.lightBlue};
-    border: 1px solid ${({ theme }) => theme.lightBlue};
-    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.08);
-    font-family: Montserrat;
-    color: #000000;
+    height: 50px;
+    border-radius: 10px;
+    width: ${small ? "150px" : "300px"};
+    background-color: transparent;
+    border: 1px solid ${theme.blue};
+    font-family: "Play";
     font-weight: normal;
+    font-size: 18px;
+    line-height: 21px;
+    color: ${theme.blue};
     &:hover {
-      /* background-color: transparent; */
-      box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.15);
+      background-color: ${theme.blue};
+      color: #fff;
     }
   `};
 

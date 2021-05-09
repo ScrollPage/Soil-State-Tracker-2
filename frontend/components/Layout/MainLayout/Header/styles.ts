@@ -46,6 +46,7 @@ export const Title = styled.h1`
   font-size: 24px;
   line-height: 29px;
   margin: 10px 0 0 0;
+  color: ${({ theme }) => theme.blue};
 `;
 export const SubTitle = styled.p`
   width: 240px;

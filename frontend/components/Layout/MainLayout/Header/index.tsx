@@ -16,7 +16,6 @@ import {
 } from "./styles";
 import { useDispatch } from "react-redux";
 import { logout } from "@/store/actions/auth";
-import { SButton } from "@/components/UI/Button";
 import { useUser } from "@/hooks/useUser";
 import { useRouter } from "next/router";
 
@@ -32,7 +31,7 @@ const MainHeaderComponent = () => {
           <Info>
             <Name>
               <Title>SightVI</Title>
-              <Image height={28} width={50} src="/landing/eyeLogo.svg" />
+              <Image height={25} width={40} src="/landing/eyeLogo.svg" />
             </Name>
             <SubTitle>Система мониторинга климата</SubTitle>
           </Info>
