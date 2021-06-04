@@ -1,7 +1,4 @@
-from rest_framework.exceptions import (
-    AuthenticationFailed, 
-    PermissionDenied, ParseError
-)
+from rest_framework.exceptions import AuthenticationFailed, PermissionDenied, ParseError
 from rest_framework_simplejwt.exceptions import TokenError
 from rest_framework import HTTP_HEADER_ENCODING
 from django.shortcuts import get_object_or_404
@@ -18,14 +15,10 @@ AUTH_HEADER_TYPES = jwt_settings.AUTH_HEADER_TYPES
 if not isinstance(AUTH_HEADER_TYPES, (list, tuple)):
     AUTH_HEADER_TYPES = (AUTH_HEADER_TYPES,)
 
-AUTH_HEADER_TYPE_BYTES = set(
-    h.encode(HTTP_HEADER_ENCODING)
-    for h in AUTH_HEADER_TYPES
-)
+AUTH_HEADER_TYPE_BYTES = set(h.encode(HTTP_HEADER_ENCODING) for h in AUTH_HEADER_TYPES)
 
 
 class Authenticator:
-    
     def __init__(self, consumer, user_model):
         self.consumer = consumer
         self.user_model = user_model
@@ -35,7 +28,7 @@ class Authenticator:
         if len(parts) == 0:
             return None
 
-        if bytes(parts[0], 'utf-8') not in AUTH_HEADER_TYPE_BYTES:
+        if bytes(parts[0], "utf-8") not in AUTH_HEADER_TYPE_BYTES:
             return None
 
         if len(parts) != 2:
@@ -59,9 +52,7 @@ class Authenticator:
             self.consumer.disconnect(400)
 
         try:
-            user = self.user_model.objects.get(
-                **{jwt_settings.USER_ID_FIELD: user_id}
-            )
+            user = self.user_model.objects.get(**{jwt_settings.USER_ID_FIELD: user_id})
         except self.user_model.DoesNotExist:
             self.consumer.disconnect(404)
 
@@ -71,8 +62,8 @@ class Authenticator:
         return user
 
     def get_user(self, data):
-        '''Получает пользователя по токену'''
-        header = data['user']
+        """Получает пользователя по токену"""
+        header = data["user"]
         raw_token = self.get_raw_token(header)
         if raw_token is None:
             self.consumer.disconnect(400)
@@ -83,19 +74,17 @@ class Authenticator:
 
 
 class UpgradedWebsocketConsumer(WebsocketConsumer, ABC):
-    '''Новые методы - prepare_data, check_permissions'''
+    """Новые методы - prepare_data, check_permissions"""
 
     commands = {}
     permissions = []
-    
+
     def __init__(self):
         self.auth = Authenticator(self, self.user_model)
         super().__init__()
 
     def check_permissions(self, data):
-        if not all([
-            permission()(data) for permission in self.permissions
-        ]):
+        if not all([permission()(data) for permission in self.permissions]):
             self.disconnect(403)
 
     @abstractmethod
@@ -106,7 +95,7 @@ class UpgradedWebsocketConsumer(WebsocketConsumer, ABC):
         data = json.loads(text_data)
 
         try:
-            command = data['command']
+            command = data["command"]
         except KeyError:
             self.disconnect(400)
 
@@ -118,38 +107,32 @@ class UpgradedWebsocketConsumer(WebsocketConsumer, ABC):
         data = self.prepare_data(data)
 
         return data
-        
+
 
 def message_to_json(message):
     return {
-        'id': message.id,
-        'user': {
-            'id': message.user.id,
-            'full_name': message.user.get_full_name(),
+        "id": message.id,
+        "user": {
+            "id": message.user.id,
+            "full_name": message.user.get_full_name(),
         },
-        'content': message.content,
-        'timestamp': str(message.timestamp),
-        'unread': message.unread
+        "content": message.content,
+        "timestamp": str(message.timestamp),
+        "unread": message.unread,
     }
 
 
 def chat_to_json(chat):
     if chat.admin:
-        admin = {
-            'id': chat.admin.id,
-            'full_name': chat.admin.get_full_name()
-        }
+        admin = {"id": chat.admin.id, "full_name": chat.admin.get_full_name()}
     else:
         admin = None
-        
+
     return {
-        'id': chat.id,
-        'last_message': self.message_to_json(chat.last_message),
-        'user': {
-            'id': chat.user.id,
-            'full_name': chat.user.get_full_name()
-        },
-        'admin': admin
+        "id": chat.id,
+        "last_message": message_to_json(chat.last_message),
+        "user": {"id": chat.user.id, "full_name": chat.user.get_full_name()},
+        "admin": admin,
     }
 
 

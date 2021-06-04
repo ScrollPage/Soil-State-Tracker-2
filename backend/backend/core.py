@@ -4,7 +4,6 @@ from rest_framework import status
 from rest_framework.response import Response
 from django.urls import reverse
 from django.utils import timezone
-from backend.settings import SIMPLE_JWT
 
 from rest_framework_simplejwt.settings import APISettings
 import datetime as dt
@@ -13,7 +12,7 @@ from .bot import bot
 
 
 def exception_handler(exc, context):
-    '''Отправляет все исключения в телеграм'''
+    """Отправляет все исключения в телеграм"""
     # msg = f'An exception occured: {str(exc)}\n'
     # msg += traceback.format_exc() + '\n'
     # request = context['request']
@@ -26,9 +25,9 @@ def exception_handler(exc, context):
     # bot.send_message(text=msg, chat_id=local.EXCEPTION_BOT_CHAT_ID)
     return drf_exception_handler(exc, context)
 
+
 def get_response(
-    url, method, user=None, data=None, 
-    kwargs=None, format=None, query_params=None
+    url, method, user=None, data=None, kwargs=None, format=None, query_params=None
 ):
     client = APIClient()
 
@@ -39,58 +38,74 @@ def get_response(
 
     if query_params:
         # for k, v in query_params.items():
-        url += '?'
-        url += ''.join(f'{k}={v}&' for k, v in query_params.items())
+        url += "?"
+        url += "".join(f"{k}={v}&" for k, v in query_params.items())
         print(url)
 
     method_dict = {
-        'post': client.post,
-        'get': client.get,
-        'patch': client.patch,
-        'delete': client.delete,
-        'put': client.put
+        "post": client.post,
+        "get": client.get,
+        "patch": client.patch,
+        "delete": client.delete,
+        "put": client.put,
     }
     return method_dict[method](url, data, format=format)
 
+
 class PermissionMixin:
-    '''Mixin permission для action'''
+    """Mixin permission для action"""
+
     def get_permissions(self):
         try:
-            return [permission() for permission in self.permission_classes_by_action[self.action]] 
+            return [
+                permission()
+                for permission in self.permission_classes_by_action[self.action]
+            ]
         except KeyError:
             return [permission() for permission in self.permission_classes]
 
+
 class SerializerMixin:
-    '''Класс сериализатора в зависимости от action'''
+    """Класс сериализатора в зависимости от action"""
+
     def get_serializer_class(self):
         try:
             return self.serializer_class_by_action[self.action]
         except KeyError:
             return self.serializer_class
 
+
 class PermissionSerializerMixin(PermissionMixin, SerializerMixin):
-    '''Доп классы'''
+    """Доп классы"""
+
     pass
 
+
 class QueryDate:
-    '''Позволяет получать 2 query параметра: begin_date, currency'''
+    """Позволяет получать 2 query параметра: begin_date, currency"""
 
     def get_query_params_date(self):
-        begin_date = self.request.query_params.get('begin_date', None)
-        currency = self.request.query_params.get('currency', '1')
+        begin_date = self.request.query_params.get("begin_date", None)
+        currency = self.request.query_params.get("currency", "1")
         if begin_date is None:
             begin_date = timezone.now()
         else:
-            begin_date = dt.datetime.strptime(begin_date, '%Y-%m-%d')
+            begin_date = dt.datetime.strptime(begin_date, "%Y-%m-%d")
         currency = int(currency)
         return begin_date, currency
 
+
 class FastResponseMixin:
-    '''Функция быстрого ответа'''
+    """Функция быстрого ответа"""
 
     def fast_response(
-        self, field, status=status.HTTP_200_OK, detail=True,
-        many=True, filtering=None, instance=None
+        self,
+        field,
+        status=status.HTTP_200_OK,
+        detail=True,
+        many=True,
+        filtering=None,
+        instance=None,
     ):
         if detail:
             if instance is None:

@@ -14,7 +14,7 @@ from .service import CommandCreator
 
 @celery_app.task
 def release():
-    clients = Client.objects.filter(is_superuser=False, is_staff=False) \
+    clients = Client.objects.filter(is_superuser=False, is_staff=False, is_active=True) \
         .exclude(commands__category='2')
     commands = DetectorCommand.objects.filter(timestamp__lte=timezone.now())
 
@@ -30,6 +30,5 @@ def release():
     for command in commands:
         client.publish(DETECTOR_TOPIC, command.command)
 
-    
     client.disconnect()
     commands.delete()

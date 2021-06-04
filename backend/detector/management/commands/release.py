@@ -3,7 +3,7 @@ from django.utils import timezone
 
 import paho.mqtt.client as mqtt
 
-from backend.settings import MQTT_HOST, MQTT_PORT
+from backend.settings import MQTT_HOST, MQTT_PORT, DETECTOR_TOPIC
 from detector.models import DetectorCommand
 
 class Command(BaseCommand):
@@ -14,6 +14,6 @@ class Command(BaseCommand):
         client.connect(MQTT_HOST, MQTT_PORT, 3600)
         commands = DetectorCommand.objects.filter(timestamp__lte=timezone.now())
         for command in commands:
-            client.publish('data', command.command)
+            client.publish(DETECTOR_TOPIC, command.command)
         client.disconnect()
         commands.delete()

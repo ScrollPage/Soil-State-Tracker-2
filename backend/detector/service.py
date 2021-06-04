@@ -15,7 +15,7 @@ class CommandCreator:
                 .format(uid=uid, lasted=lasted, timestamp=timestamp)
 
         elif int(self.cid) == 2:
-            data =  ''.rjust(16, '-')
+            data = ''.rjust(16, '-')
 
         elif int(self.cid) == 3:
             data = str(timezone.now().timestamp()).rjust(10, '-')
