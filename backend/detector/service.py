@@ -1,29 +1,40 @@
-class CommandCreator:
+# type: ignore
+from django.utils import timezone
 
-    def __init__(self, user, cid):
-        self.user = user
-        self.cid = cid
+from backend.settings import DATA_COMMAND_ID
+from .models import Detector
+
+
+class CommandCreator:
+    def __init__(self, instance):
+        self.instance = instance
 
     def create_data(self):
-        if int(self.cid) == 1:
+        if int(self.instance.category) == 1:
             now = timezone.now()
             detector = Detector.objects.create()
-            uid = '{}'.format(detector.id).rjust(3, '-')
+            uid = "{}".format(detector.id).rjust(3, "-")
             lasted = 60 - now.second
-            timestamp = str(now.timestamp()).rjust(10, '-')
-            data = '{uid}{lasted}{timestamp}' \
-                .format(uid=uid, lasted=lasted, timestamp=timestamp)
+            timestamp = str(now.timestamp()).rjust(10, "-")
+            data = "{uid}{lasted}{timestamp}".format(
+                uid=uid, lasted=lasted, timestamp=timestamp
+            )
 
-        elif int(self.cid) == 2:
-            data = ''.rjust(16, '-')
+        elif int(self.instance.category) == 2:
+            data = str(timezone.now().timestamp()).rjust(10, "-")
 
-        elif int(self.cid) == 3:
-            data = str(timezone.now().timestamp()).rjust(10, '-')
+        elif int(self.instance.category) == 3:
+            data = str(self.instance.extra["currency"]).rjust(10, "-")
 
-        user = '{id}{email}'.format(
-            id=self.user.id, email=self.user.email
-        ).rjust(16, '-')
-        cid = self.cid.rjust(4, '-')
+        elif int(self.instance.category) == DATA_COMMAND_ID:
+            data = "".rjust(16, "-")
 
-        return '{user}{cid}{data}' \
-            .format(user=user, cid=cid, data=data)
+        user = "{id}{email}".format(
+            id=self.instance.user.id, email=self.instance.user.email
+        ).rjust(16, "-")
+
+        cid = self.instance.category.rjust(4, "-")
+
+        print("{user}{cid}{data}".format(user=user, cid=cid, data=data))
+
+        return "{user}{cid}{data}".format(user=user, cid=cid, data=data)

@@ -276,4 +276,4 @@ MQTT_PORT = int(os.environ.get("MQTT_PORT", local.MQTT_PORT))
 MQTT_HOST = os.environ.get("MQTT_HOST", local.MQTT_HOST)
 SERVER_TOPIC = os.environ.get("SERVER_TOPIC", local.SERVER_TOPIC)
 DETECTOR_TOPIC = os.environ.get("DETECTOR_TOPIC", local.DETECTOR_TOPIC)
-DATA_COMMAND_ID = "2"
+DATA_COMMAND_ID = "101"

@@ -1,11 +1,11 @@
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from django.conf.global_settings import pusher_client
 
 from model_utils.managers import QueryManager
 
-from .models import Client
+from backend.settings import pusher_client
+from client.models import Client
 
 
 class Chat(models.Model):

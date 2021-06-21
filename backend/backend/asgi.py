@@ -18,7 +18,7 @@ django_application = get_asgi_application()
 from channels.auth import AuthMiddlewareStack
 from channels.routing import ProtocolTypeRouter, URLRouter
 
-from ..consumers import ChatConsumer
+from chat.consumers import ChatConsumer
 
 application = ProtocolTypeRouter(
     {
