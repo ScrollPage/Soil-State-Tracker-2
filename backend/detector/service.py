@@ -2,7 +2,6 @@
 from django.utils import timezone
 
 from backend.settings import DATA_COMMAND_ID
-from .models import Detector
 
 
 class CommandCreator:
@@ -16,7 +15,7 @@ class CommandCreator:
             uid = "{}".format(detector.id).rjust(3, "-")
             lasted = 60 - now.second
             timestamp = str(now.timestamp()).rjust(10, "-")
-            data = "{uid}{lasted}{timestamp}".format(
+            data = "{uid}/{lasted}/{timestamp}".format(
                 uid=uid, lasted=lasted, timestamp=timestamp
             )
 
@@ -26,7 +25,7 @@ class CommandCreator:
         elif int(self.instance.category) == 3:
             data = str(self.instance.extra["currency"]).rjust(10, "-")
 
-        elif int(self.instance.category) == DATA_COMMAND_ID:
+        elif int(self.instance.category) == int(DATA_COMMAND_ID):
             data = "".rjust(16, "-")
 
         user = "{id}{email}".format(
@@ -34,7 +33,5 @@ class CommandCreator:
         ).rjust(16, "-")
 
         cid = self.instance.category.rjust(4, "-")
-
-        print("{user}{cid}{data}".format(user=user, cid=cid, data=data))
 
         return "{user}{cid}{data}".format(user=user, cid=cid, data=data)

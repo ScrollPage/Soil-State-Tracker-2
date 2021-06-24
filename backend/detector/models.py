@@ -70,11 +70,3 @@ def make_command(sender, instance=None, created=False, **kwargs):
         command = creator.create_data()
         instance.command = command
         instance.save()
-
-
-@receiver(post_save, sender=DetectorCommand)
-def update_send_settings(sender, instance=None, created=False, **kwargs):
-    """Обновление настроек"""
-
-    if created:
-        pass

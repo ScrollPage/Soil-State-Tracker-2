@@ -1,3 +1,4 @@
+# type: ignore
 from rest_framework.authtoken.models import Token
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -10,6 +11,7 @@ from django.contrib.auth.models import (
 
 from datetime import datetime, timedelta
 
+from backend.settings import DEFAULT_SEND_CURRENCY_MINUTES
 from .tasks import send_activation_email
 from .service import create_code
 
@@ -101,7 +103,7 @@ class SendSettings(models.Model):
         Client, verbose_name="Клиент", on_delete=models.CASCADE, related_name="settings"
     )
     last_send = models.DateTimeField(default=datetime(1970, 1, 1, 0, 0, 0))
-    currency = models.DurationField(default=timedelta(minutes=30))
+    currency = models.DurationField(default=timedelta(minutes=DEFAULT_SEND_CURRENCY_MINUTES))
 
     class Meta:
         verbose_name = "Настройки"
