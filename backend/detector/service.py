@@ -2,7 +2,7 @@
 from django.utils import timezone
 
 from backend.settings import DATA_COMMAND_ID
-
+from detector.models import Detector
 
 class CommandCreator:
     def __init__(self, instance):
