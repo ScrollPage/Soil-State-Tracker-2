@@ -5,6 +5,8 @@ from rest_framework.response import Response
 from django.urls import reverse
 from django.utils import timezone
 
+from collections import namedtuple
+
 from rest_framework_simplejwt.settings import APISettings
 import datetime as dt
 
@@ -119,3 +121,7 @@ class FastResponseMixin:
 
         serializer = self.get_serializer(instances, many=many)
         return Response(serializer.data, status=status)
+
+
+# Named - Tuple data structure for receiving answers
+ReceivedAnswer = namedtuple("Command", ["user", "cid", "data", "num"])

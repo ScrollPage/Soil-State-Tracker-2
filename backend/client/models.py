@@ -103,7 +103,9 @@ class SendSettings(models.Model):
         Client, verbose_name="Клиент", on_delete=models.CASCADE, related_name="settings"
     )
     last_send = models.DateTimeField(default=datetime(1970, 1, 1, 0, 0, 0))
-    currency = models.DurationField(default=timedelta(minutes=DEFAULT_SEND_CURRENCY_MINUTES))
+    currency = models.DurationField(
+        default=timedelta(minutes=DEFAULT_SEND_CURRENCY_MINUTES)
+    )
 
     class Meta:
         verbose_name = "Настройки"
@@ -122,6 +124,9 @@ def send_conf_mail(sender, instance=None, created=False, **kwargs):
 @receiver(post_save, sender=Client)
 def create_private_auth_code(sender, instance=None, created=False, **kwargs):
     """Создает необходимые сущности"""
+    from detector.models import InnerDetectorCounter
+
     if created:
         AuthCode.create_unique_code(instance)
         SendSettings.objects.create(user=instance)
+        InnerDetectorCounter.objects.create(user=instance)

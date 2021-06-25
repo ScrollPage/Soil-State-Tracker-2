@@ -19,7 +19,11 @@ def on_disconnect(client, userdata, rc):
 
 
 def on_message(client, userdata, msg):
-    logger.info(f"New message: {msg.payload.decode('utf-8')}, topic: {msg.topic}")
+    # logger.info(f"New message: {msg.payload.decode('utf-8')}, topic: {msg.topic}")
+    recv = Receiver(msg.payload.decode("utf-8"))
+
+    if recv.is_valid():
+        recv.process()
 
 
 client = mqtt.Client()

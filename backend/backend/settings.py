@@ -276,7 +276,20 @@ MQTT_PORT = int(os.environ.get("MQTT_PORT", local.MQTT_PORT))
 MQTT_HOST = os.environ.get("MQTT_HOST", local.MQTT_HOST)
 SERVER_TOPIC = os.environ.get("SERVER_TOPIC", local.SERVER_TOPIC)
 DETECTOR_TOPIC = os.environ.get("DETECTOR_TOPIC", local.DETECTOR_TOPIC)
+
+# Server sendable commands
 DATA_COMMAND_ID = "101"
+JOIN_COMMAND_ID = "100"
+
+# User sendable commands
+CURRRENCY_COMMAND_ID = "0"
 
 # Send settings
 DEFAULT_SEND_CURRENCY_MINUTES = 1
+DEFAULT_DATA_LEN = 10
+DEFAULT_MESSAGE_LEN = 5
+LOWER_BORDER_NUM = 0
+HIGHER_BORDER_NUM = 1e4
+
+# Receive settings
+STRIP_DELIMETERS = "0-"
