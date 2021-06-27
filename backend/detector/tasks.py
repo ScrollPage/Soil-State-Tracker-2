@@ -53,9 +53,9 @@ def release():
     for user in clients:
         client.publish(
             DETECTOR_TOPIC,
-            CommandCreator.create_data(
+            CommandCreator(
                 DetectorCommand(category=DATA_COMMAND_ID, user=user)
-            ),
+            ).create_data(),
         )
 
     # Send user created commands

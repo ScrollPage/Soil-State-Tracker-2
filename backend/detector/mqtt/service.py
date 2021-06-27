@@ -1,3 +1,4 @@
+# type: ignore
 from dataclasses import dataclass
 
 import paho.mqtt.client as mqtt
@@ -66,7 +67,7 @@ class Receiver:
         self.data = self.parse(msg)
 
     def process(self):
-        data = self.ANSWER_DICT[self.data.cid](self.data).call_back()
+        data = self.COMMAND_DICT[self.data.cid](self.data).call_back()
 
         if data:
             self.sender.publish(data)

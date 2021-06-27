@@ -1,5 +1,4 @@
 # type: ignore
-
 from dataclasses import dataclass
 from typing import Union
 import json
@@ -41,17 +40,18 @@ class CommandJoin(DefaultCommandClass):
 
     UID = JOIN_COMMAND_ID
 
-    def create_detector(self) -> int:
-        detector = Detector.objects.create(user=self.user)
-        return self.user.counter.counter
+    @staticmethod
+    def create_detector(user) -> int:
+        detector = Detector.objects.create(user=user)
+        return user.counter.counter
 
     def call_back(self, *args, **kwargs) -> str:
-        uid = self.create_detector()
+        uid = self.create_detector(self.user)
 
         data = Data(inner_id=uid, currency=DEFAULT_SEND_CURRENCY_MINUTES)
 
         ack_num = random.randrange(LOWER_BORDER_NUM, HIGHER_BORDER_NUM)
-        numbers = Numbers(sync_num=self.message.numbers.syn + 1, ack_num=ack_num)
+        numbers = Numbers(sync_num=self.message.numbers.sync_num + 1, ack_num=ack_num)
 
         extra_dict = data.json()
         extra_dict.update(numbers.json())
@@ -82,7 +82,7 @@ class CommandData(DefaultCommandClass):
         return self.message.json(by_alias=True, exclude_none=True)
 
     def create_data_in_db(self) -> None:
-        data = self.message.data.json(by_alias=True, exclude_none=True)
+        data = self.message.data.dict(by_alias=True, exclude_none=True)
         token = data.pop("token")
         data["detector"] = Detector.objects.get(token=token)
         DetectorData.objects.create(**data)
@@ -97,7 +97,14 @@ class CommandCurrency(DefaultCommandClass):
     UID = CURRRENCY_COMMAND_ID
 
     def create_data(self, *args, **kwargs) -> str:
-        return str(self.message.extra["currency"]).center(self.DEFAULT_LEN, "-")
+        return self.message.json(by_alias=True, exclude_none=True)
 
     def call_back(self) -> None:
-        pass
+        data = self.message.dict(by_alias=True, exclude_none=True)
+        sync_num = data["n"].pop("s") - 1
+
+        command = DetectorCommand.objects.get(extra__sync_num=sync_num)
+        data["n"]["a"] = data["n"].pop("a") + 1
+
+        command.delete()
+        return data
