@@ -4,7 +4,7 @@ from loguru import logger
 import asyncio
 
 from backend.settings import MQTT_PORT, MQTT_HOST, SERVER_TOPIC, DETECTOR_TOPIC
-
+from detector.mqtt.receiver import Receiver
 
 def on_connect(client, userdata, flags, rc):
     logger.info(f"Connected with result code {rc}")
@@ -22,8 +22,7 @@ def on_message(client, userdata, msg):
     # logger.info(f"New message: {msg.payload.decode('utf-8')}, topic: {msg.topic}")
     recv = Receiver(msg.payload.decode("utf-8"))
 
-    if recv.is_valid():
-        recv.process()
+    recv.process()
 
 
 client = mqtt.Client()

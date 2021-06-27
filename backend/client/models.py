@@ -50,7 +50,7 @@ class ClientManager(BaseUserManager):
 class Client(AbstractBaseUser, PermissionsMixin):
     """Кастомная модель пользователя"""
 
-    email = models.EmailField("Почта", max_length=60, unique=True)
+    email = models.EmailField("Почта", max_length=30, unique=True)
     first_name = models.CharField("Имя", max_length=30, default="")
     last_name = models.CharField("Фамлиия", max_length=30, default="")
     is_staff = models.BooleanField(default=False)
@@ -80,8 +80,12 @@ class AuthCode(models.Model):
     """Код авторизации для телеграма"""
 
     code = models.CharField(null=False, unique=True, max_length=6)
-    user = models.ForeignKey(
-        Client, verbose_name="Пользователь", null=False, on_delete=models.CASCADE
+    user = models.OneToOneField(
+        Client,
+        verbose_name="Пользователь",
+        null=False,
+        on_delete=models.CASCADE,
+        related_name="user_key",
     )
 
     class Meta:

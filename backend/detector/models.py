@@ -8,7 +8,8 @@ import random
 
 from client.models import Client
 from group.models import Cluster
-from backend.settings import CURRRENCY_COMMAND_ID, LOWER_BORDER_NUM, HIGHER_BORDER_NUM
+from backend.settings import CURRRENCY_COMMAND_ID
+from detector.mqtt.pydantic_models import Message, Data, Numbers
 
 
 class InnerDetectorCounter(models.Model):
@@ -28,7 +29,12 @@ class InnerDetectorCounter(models.Model):
 class Detector(models.Model):
     x = models.DecimalField("Координата x", max_digits=9, decimal_places=6, null=True)
     y = models.DecimalField("Координата y", max_digits=9, decimal_places=6, null=True)
-    inner_id = models.PositiveIntegerField(default=0)
+    token = models.CharField(
+        "Токен, необходимый для физических датчиков",
+        max_length=6,
+        unique=True,
+        default="",
+    )
     cluster = models.ForeignKey(
         Cluster,
         verbose_name="Группа",
@@ -68,7 +74,6 @@ class DetectorCommand(models.Model):
     command = models.CharField("Команда для отправки", max_length=60, null=True)
     extra = models.JSONField("Дополнительно", null=True)
     wait_resp = models.BooleanField(default=False)
-    valid_num = models.PositiveIntegerField(null=True)
 
     def __str__(self):
         return "command category {category} by user {user}".format(
@@ -79,16 +84,31 @@ class DetectorCommand(models.Model):
         verbose_name = "Команда датчикам"
         verbose_name_plural = "Команды датчикам"
 
+    def to_pydantic(self):
+
+        if self.extra:
+            data = Data()
+            numbers = Numbers()
+            for key, value in self.extra.items():
+                if key in Data.__fields__.keys():
+                    setattr(data, key, value)
+                else:
+                    setattr(numbers, key, value)
+        else:
+            data = None
+            numbers = None
+
+        return Message(uk=self.user.user_key.code, c=self.category, d=data, n=numbers)
+
 
 @receiver(post_save, sender=DetectorCommand)
 def make_command(sender, instance=None, created=False, **kwargs):
     """Записывает команду"""
-    from .sending.service import CommandCreator
+    from detector.mqtt.service import CommandCreator
 
     if created:
-        command = CommandCreator.create_data(instance)
+        command = CommandCreator(instance).create_data()
         instance.command = command
-        instance.valid_num = random.randrange(LOWER_BORDER_NUM, HIGHER_BORDER_NUM)
         instance.save()
 
 
@@ -100,5 +120,3 @@ def make_command(sender, instance=None, created=False, **kwargs):
         counter = InnerDetectorCounter.objects.get(user=instance.user)
         counter.counter += 1
         counter.save()
-        instance.inner_id = counter.counter
-        instance.save()

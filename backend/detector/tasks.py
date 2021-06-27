@@ -17,7 +17,7 @@ from backend.settings import (
 from detector.models import DetectorCommand
 from client.models import Client, SendSettings
 from backend.celery import app as celery_app
-from detector.sending.service import CommandCreator
+from detector.mqtt.service import CommandCreator
 
 
 @celery_app.task
@@ -67,10 +67,8 @@ def release():
             sett.currency = timedelta(minutes=int(command.extra["currency"]))
             sett.last_send = timezone.now() - timedelta(seconds=5)
             sett.save()
-            command.delete()
 
     client.disconnect()
-    commands.delete()
 
     SendSettings.objects.filter(user__in=clients).update(
         last_send=timezone.now() - timedelta(seconds=5)
