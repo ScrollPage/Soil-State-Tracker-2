@@ -5,11 +5,9 @@ from django.urls import path
 from .views import ClientViewSet
 
 
-urlpatterns = [
-
-]
+urlpatterns = []
 
 
 r = DefaultRouter()
-r.register('client', ClientViewSet, basename='client')
+r.register("client", ClientViewSet, basename="client")
 urlpatterns += r.urls

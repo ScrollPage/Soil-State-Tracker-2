@@ -26,4 +26,4 @@ class DetectorCommandSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = DetectorCommand
-        exclude = ["command", 'user']
+        exclude = ["command", "user"]

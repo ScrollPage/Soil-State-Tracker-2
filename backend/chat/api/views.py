@@ -8,16 +8,17 @@ from .serializers import ChatSerializer
 from ..models import Chat
 from .permissions import AsUserInChat, NotStaff, IsStaff, NoAdmin, InChat
 
+
 class ChatViewSet(PRetrieveCreateDestroyViewSet):
-    '''Создание, удаление чатов'''
+    """Создание, удаление чатов"""
 
     serializer_class = ChatSerializer
     permission_classes = [permissions.IsAuthenticated, NotStaff]
     permission_classes_by_action = {
-        'destroy': [permissions.IsAuthenticated, AsUserInChat],
-        'free': [permissions.IsAuthenticated, IsStaff],
-        'admin': [permissions.IsAuthenticated, IsStaff, NoAdmin],
-        'retrieve': [permissions.IsAuthenticated, InChat]
+        "destroy": [permissions.IsAuthenticated, AsUserInChat],
+        "free": [permissions.IsAuthenticated, IsStaff],
+        "admin": [permissions.IsAuthenticated, IsStaff, NoAdmin],
+        "retrieve": [permissions.IsAuthenticated, InChat],
     }
     queryset = Chat.objects.all()
     model = Chat
@@ -28,16 +29,16 @@ class ChatViewSet(PRetrieveCreateDestroyViewSet):
         except self.model.DoesNotExist:
             serializer.save(user=self.request.user)
         else:
-            raise ParseError({'error': 'Chat is already exists.', 'id': chat.id})
+            raise ParseError({"error": "Chat is already exists.", "id": chat.id})
 
-    @action(detail=False, methods=['get'])
+    @action(detail=False, methods=["get"])
     def free(self, request, *args, **kwargs):
-        '''Чаты без админа'''
-        return self.fast_response('free', filtering='all', detail=False)
+        """Чаты без админа"""
+        return self.fast_response("free", filtering="all", detail=False)
 
-    @action(detail=True, methods=['put'])
+    @action(detail=True, methods=["put"])
     def admin(self, request, *args, **kwargs):
-        '''Стать админом в чате'''
+        """Стать админом в чате"""
         chat = self.get_object()
         chat.admin = request.user
         chat.save()

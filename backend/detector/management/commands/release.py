@@ -6,8 +6,9 @@ import paho.mqtt.client as mqtt
 from backend.settings import MQTT_HOST, MQTT_PORT, DETECTOR_TOPIC
 from detector.models import DetectorCommand
 
+
 class Command(BaseCommand):
-    help = 'Releases all of the storaged commands'
+    help = "Releases all of the storaged commands"
 
     def handle(self, *args, **options):
         client = mqtt.Client()

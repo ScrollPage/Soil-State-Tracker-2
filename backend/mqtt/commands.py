@@ -82,12 +82,7 @@ class CommandCurrency(DefaultCommandClass):
 
     UID = FREQUENCY_COMMAND_ID
 
-    def create_data(self) -> str:
-        return self.message.json(by_alias=True, exclude_none=True)
-
-    def call_back(self) -> None:
-        data = self.message.dict(exclude_none=True)
-
+    def update_confirmation() -> None:
         confirm = ReceiveConfirmation.objects.get(
             user=self.user, command__category=self.UID
         )
@@ -96,3 +91,10 @@ class CommandCurrency(DefaultCommandClass):
 
         if confirm.detectors.count() == 0:
             confirm.command.delete()
+
+    def create_data(self) -> str:
+        return self.message.json(by_alias=True, exclude_none=True)
+
+    def call_back(self) -> None:
+        data = self.message.dict(exclude_none=True)
+        self.update_confirmation()

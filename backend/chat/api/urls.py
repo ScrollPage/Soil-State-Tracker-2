@@ -3,10 +3,8 @@ from django.urls import path
 
 from .views import ChatViewSet
 
-urlpatterns = [
-    
-]
+urlpatterns = []
 
 r = DefaultRouter()
-r.register('chat', ChatViewSet, basename='chat')
+r.register("chat", ChatViewSet, basename="chat")
 urlpatterns += r.urls

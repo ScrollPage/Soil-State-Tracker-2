@@ -1,4 +1,4 @@
-#type: ignore
+# type: ignore
 import paho.mqtt.client as mqtt
 from loguru import logger
 import asyncio
