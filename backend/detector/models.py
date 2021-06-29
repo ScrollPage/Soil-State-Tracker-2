@@ -1,15 +1,15 @@
 # type: ignore
 from django.db import models
 from django.utils import timezone
-from django.db.models.signals import post_save, pre_save
+from django.db.models.signals import post_save, pre_save, m2m_changed
 from django.dispatch import receiver
 
 import random
 
 from client.models import Client
 from group.models import Cluster
-from backend.settings import CURRRENCY_COMMAND_ID, LOWER_BORDER_NUM, HIGHER_BORDER_NUM
-from detector.mqtt.pydantic_models import Message, Data, Numbers
+from backend.settings import FREQUENCY_COMMAND_ID
+from mqtt.pydantic_models import Message, Data
 
 
 class InnerDetectorCounter(models.Model):
@@ -19,7 +19,7 @@ class InnerDetectorCounter(models.Model):
         related_name="counter",
         on_delete=models.CASCADE,
     )
-    count = models.PositiveIntegerField(default=0)
+    counter = models.PositiveIntegerField(default=0)
 
     class Meta:
         verbose_name = "Счетчик датчиков"
@@ -34,6 +34,9 @@ class Detector(models.Model):
         max_length=6,
         unique=True,
         default="",
+    )
+    sensor_id = models.PositiveIntegerField(
+        "Айди датчика внутри пользователя", default=0
     )
     cluster = models.ForeignKey(
         Cluster,
@@ -61,8 +64,9 @@ class Detector(models.Model):
 class DetectorCommand(models.Model):
     """Команда датчикам"""
 
-    COMMAND_CHOICES = ((str(CURRRENCY_COMMAND_ID), "NewCurrency"),)
-    REQUIRES_SYNC_NUM = [str(CURRRENCY_COMMAND_ID)]
+    COMMAND_CHOICES = ((str(FREQUENCY_COMMAND_ID), "NewCurrency"),)
+
+    REQUIRES_CONFIRM = [str(FREQUENCY_COMMAND_ID)]
 
     user = models.ForeignKey(
         Client,
@@ -88,50 +92,62 @@ class DetectorCommand(models.Model):
     def to_pydantic(self):
 
         data = None
-        numbers = None
 
         if self.extra:
             for key, value in self.extra.items():
                 if key in Data.__fields__.keys():
                     data = data or Data()
                     setattr(data, key, value)
-                else:
-                    numbers = numbers or Numbers()
-                    setattr(numbers, key, value)
-            
+
         return Message(
             uk=self.user.user_key.code,
             c=self.category,
             d=data,
-            n=numbers,
         )
 
 
-@receiver(pre_save, sender=DetectorCommand)
-def write_num(sender, instance=None, created=False, **kwargs):
-    """Записывает синхронизирующее число при необходимости"""
+class ReceiveConfirmation(models.Model):
+    """Подтверждение получения команды"""
 
-    if not instance.id and instance.category in instance.REQUIRES_SYNC_NUM:
-        if instance.extra:
-            instance.extra.update(
-                {"sync_num": random.randrange(LOWER_BORDER_NUM, HIGHER_BORDER_NUM)}
-            )
-        else:
-            instance.extra = {
-                "sync_num": random.randrange(LOWER_BORDER_NUM, HIGHER_BORDER_NUM)
-            }
+    detectors = models.ManyToManyField(Detector, verbose_name="Датчики")
+    command = models.OneToOneField(
+        DetectorCommand,
+        verbose_name="",
+        on_delete=models.CASCADE,
+        related_name="confirmation",
+    )
+
+    class Meta:
+        verbose_name = "Подтверждение получения"
+        verbose_name_plural = "Подтверждения получения"
+
+    def generate_commands(self):
+        pydantic_model = self.command.to_pydantic()
+
+        for detector in self.detectors.all().only("token"):
+            pydantic_model.data.token = detector.token
+            yield pydantic_model.json(by_alias=True, exclude_none=True)
 
 
 @receiver(post_save, sender=DetectorCommand)
 def make_command(sender, instance=None, created=False, **kwargs):
-    """Записывает команду"""
+    """Записывает команду, при необходимости создает подтверждение"""
 
     if created:
-        from detector.mqtt.service import CommandCreator
+        from mqtt.service import CommandCreator
 
         command = CommandCreator(instance).create_data()
         instance.command = command
         instance.save()
+
+        if instance.category in instance.REQUIRES_CONFIRM:
+            ReceiveConfirmation.objects.filter(
+                command__user=instance.user, command__category=instance.category
+            ).delete()
+
+            ReceiveConfirmation.objects.create(command=instance).detectors.set(
+                instance.user.detectors.all()
+            )
 
 
 @receiver(post_save, sender=Detector)
@@ -142,3 +158,5 @@ def counter_increase(sender, instance=None, created=False, **kwargs):
         counter = InnerDetectorCounter.objects.get(user=instance.user)
         counter.counter += 1
         counter.save()
+        instance.sensor_id = counter.counter
+        instance.save()

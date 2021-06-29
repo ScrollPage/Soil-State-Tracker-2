@@ -11,7 +11,7 @@ from django.contrib.auth.models import (
 
 from datetime import datetime, timedelta
 
-from backend.settings import DEFAULT_SEND_CURRENCY_MINUTES
+from backend.settings import DEFAULT_SEND_FREQUENCY_MINUTES
 from .tasks import send_activation_email
 from .service import create_code
 
@@ -107,8 +107,8 @@ class SendSettings(models.Model):
         Client, verbose_name="Клиент", on_delete=models.CASCADE, related_name="settings"
     )
     last_send = models.DateTimeField(default=datetime(1970, 1, 1, 0, 0, 0))
-    currency = models.DurationField(
-        default=timedelta(minutes=DEFAULT_SEND_CURRENCY_MINUTES)
+    sleeping_time = models.DurationField(
+        default=timedelta(minutes=DEFAULT_SEND_FREQUENCY_MINUTES)
     )
 
     class Meta:
@@ -122,7 +122,7 @@ def send_conf_mail(sender, instance=None, created=False, **kwargs):
     if created and not instance.is_superuser:
         token = Token.objects.create(user=instance)
         # send_activation_email.delay(instance.email, token.key)
-        send_activation_email(instance.email, token.key)
+        # send_activation_email(instance.email, token.key)
 
 
 @receiver(post_save, sender=Client)

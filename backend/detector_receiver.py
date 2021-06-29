@@ -3,8 +3,9 @@ import paho.mqtt.client as mqtt
 from loguru import logger
 import asyncio
 
-from backend.settings import MQTT_PORT, MQTT_HOST, SERVER_TOPIC, DETECTOR_TOPIC
-from detector.mqtt.receiver import Receiver
+
+from backend.settings import MQTT_PORT, MQTT_HOST, DETECTOR_TOPIC
+
 
 def on_connect(client, userdata, flags, rc):
     logger.info(f"Connected with result code {rc}")
@@ -19,10 +20,7 @@ def on_disconnect(client, userdata, rc):
 
 
 def on_message(client, userdata, msg):
-    # logger.info(f"New message: {msg.payload.decode('utf-8')}, topic: {msg.topic}")
-    recv = Receiver(msg.payload.decode("utf-8"))
-
-    recv.process()
+    logger.info(f"New message: {msg.payload.decode('utf-8')}, topic: {msg.topic}")
 
 
 client = mqtt.Client()

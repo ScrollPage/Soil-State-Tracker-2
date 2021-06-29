@@ -37,7 +37,6 @@ def get_response(
     url = reverse(url, kwargs=kwargs)
 
     if query_params:
-        # for k, v in query_params.items():
         url += "?"
         url += "".join(f"{k}={v}&" for k, v in query_params.items())
         print(url)

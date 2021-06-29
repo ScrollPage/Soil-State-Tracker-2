@@ -21,9 +21,6 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "backend.settings")
 django.setup()
 
 from client.models import Client, AuthCode
-from detector.models import Detector
-from detector_data.models import DetectorData
-from group.models import Cluster
 from backend.local import CHAT_BOT_TOKEN
 from group.api.service import get_aggregated_data
 
@@ -129,18 +126,14 @@ def get_pictures_url(detectors, multiplier, begin_date):
     attribute_arr_ru = [
         "Первая температура",
         "Вторая температура",
-        "Третья температура",
         "Влажность",
         "Освещенность",
-        "Кислотность",
     ]
     attribute_arr_eng = [
         "first_temp",
         "second_temp",
-        "third_temp",
         "humidity",
         "lightning",
-        "pH",
     ]
 
     resulting_queryset = get_aggregated_data(detectors, multiplier, begin_date)

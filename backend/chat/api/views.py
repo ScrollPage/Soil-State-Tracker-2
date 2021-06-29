@@ -35,7 +35,7 @@ class ChatViewSet(PRetrieveCreateDestroyViewSet):
         '''Чаты без админа'''
         return self.fast_response('free', filtering='all', detail=False)
 
-    @action(detail=True, methods=['patch'])
+    @action(detail=True, methods=['put'])
     def admin(self, request, *args, **kwargs):
         '''Стать админом в чате'''
         chat = self.get_object()

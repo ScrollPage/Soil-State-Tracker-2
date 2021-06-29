@@ -16,10 +16,8 @@ class DetectorData(models.Model):
         on_delete=models.DO_NOTHING,
         related_name="data",
     )
-    first_temp = models.DecimalField(
-        "Температура почвы", max_digits=4, decimal_places=1
-    )
-    second_temp = models.DecimalField(
+    temp_soil = models.DecimalField("Температура почвы", max_digits=4, decimal_places=1)
+    temp_air = models.DecimalField(
         "Температура воздуха", max_digits=4, decimal_places=1
     )
     humidity = models.PositiveIntegerField()
@@ -45,10 +43,8 @@ class DetectorData(models.Model):
             detector=detector,
             first_temp=round(uniform(0, 20), 2),
             second_temp=round(uniform(0, 20), 2),
-            third_temp=round(uniform(0, 20), 2),
             humidity=round(uniform(0, 20), 2),
             lightning=round(uniform(0, 20), 2),
-            pH=round(uniform(0, 20), 2),
         )
 
         if days:

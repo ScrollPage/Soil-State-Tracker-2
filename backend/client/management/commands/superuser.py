@@ -5,8 +5,10 @@ from client.models import Client
 
 
 class Command(BaseCommand):
-    help = "Creates 2 dummy superusers"
+    help = "Creates dummy superuser and user"
 
     def handle(self, *args, **options):
         Client.objects.create_superuser("sos@sos.com", "sos", "sos", password="1")
-        Client.objects.create_superuser("sas@sos.com", "sas", "sas", password="1")
+        c = Client.objects.create_user("sas@sas.com", "sas", "sas", password="1")
+        c.is_active = True
+        c.save()
