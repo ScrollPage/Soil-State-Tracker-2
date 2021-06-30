@@ -12,7 +12,7 @@ from backend.settings import (
     DETECTOR_TOPIC,
     DATA_COMMAND_ID,
     FREQUENCY_COMMAND_ID,
-    DEFAULT_SEND_FREQUENCY_MINUTES,
+    DEFAULT_SEND_DELAY_SECONDS,
 )
 from detector.models import DetectorCommand, Detector, ReceiveConfirmation
 from client.models import Client, SendSettings
@@ -68,37 +68,33 @@ def release():
         if command.category == FREQUENCY_COMMAND_ID:
             sett = command.user.settings
             sett.sleeping_time = timedelta(minutes=int(command.extra["sleeping_time"]))
-            sett.last_send = timezone.now() - timedelta(seconds=5)
+            sett.last_send = timezone.now() - timedelta(seconds=DEFAULT_SEND_DELAY_SECONDS)
+            command.wait_resp = True
+            command.save()
             sett.save()
 
     client.disconnect()
 
-    commands.update(wait_resp=True)
-    SendSettings.objects.filter(user__in=clients).update(last_send=timezone.now())
+    SendSettings.objects.filter(user__in=clients).update(
+        last_send=timezone.now() - timedelta(seconds=DEFAULT_SEND_DELAY_SECONDS)
+    )
 
 
 @celery_app.task
 def duplicate_send():
     confirms = (
-        ReceiveConfirmation.objects.select_related("user")
-        .select_related("user__settings")
-        .select_related("command")
+        ReceiveConfirmation.objects.select_related("command")
+        .select_related("command__user__settings")
         .prefetch_related(
             Prefetch("detectors", queryset=Detector.objects.all().only("token"))
         )
-        .annotate(
-            required_time=ExpressionWrapper(
-                F("user__settings__last_send") + 2 * F("user__settings__sleeping_time"),
-                output_field=DateTimeField(),
-            ),
-        )
-        .filter(required_time__lte=timezone.now())
+        .filter(command__wait_resp=True)
     )
 
     client = mqtt.Client()
     client.connect(MQTT_HOST, MQTT_PORT, 3600)
 
-    for confirm in confirms_to_send:
+    for confirm in confirms:
         for command in confirm.generate_commands():
             client.publish(DETECTOR_TOPIC, command)
 

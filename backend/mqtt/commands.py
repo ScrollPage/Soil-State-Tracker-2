@@ -2,6 +2,7 @@
 from django.utils import timezone
 
 from loguru import logger
+from datetime import timedelta
 
 from .pydantic_models import Message, Data
 from client.models import Client
@@ -11,6 +12,7 @@ from backend.settings import (
     DATA_COMMAND_ID,
     JOIN_COMMAND_ID,
     FREQUENCY_COMMAND_ID,
+    DEFAULT_SEND_DELAY_SECONDS,
 )
 
 
@@ -19,7 +21,7 @@ class DefaultCommandClass:
         self.message = message
         self.user = self.get_user()
 
-    def get_user(self):
+    def get_user(self) -> Client:
         return Client.objects.get(user_key__code=self.message.user_key)
 
 
@@ -47,6 +49,7 @@ class CommandJoin(DefaultCommandClass):
             rt=(
                 self.user.settings.last_send
                 + self.user.settings.sleeping_time
+                + timedelta(seconds=DEFAULT_SEND_DELAY_SECONDS)
                 - timezone.now()
             ).seconds,
         )
@@ -78,16 +81,19 @@ class CommandData(DefaultCommandClass):
 
 
 class CommandCurrency(DefaultCommandClass):
-    """Команда на изменения частоты включения датчика"""
+    """Команда на изменение частоты включения датчика"""
 
     UID = FREQUENCY_COMMAND_ID
 
-    def update_confirmation() -> None:
+    @staticmethod
+    def update_confirmation(user, message) -> None:
         confirm = ReceiveConfirmation.objects.get(
-            user=self.user, command__category=self.UID
+            command__user=user, command__category=message.cid
         )
 
-        confirm.remove(Detector.objects.get(user=self.user, token=data.data.token))
+        confirm.detectors.remove(
+            Detector.objects.get(user=user, token=message.data.token)
+        )
 
         if confirm.detectors.count() == 0:
             confirm.command.delete()
@@ -96,5 +102,4 @@ class CommandCurrency(DefaultCommandClass):
         return self.message.json(by_alias=True, exclude_none=True)
 
     def call_back(self) -> None:
-        data = self.message.dict(exclude_none=True)
-        self.update_confirmation()
+        self.update_confirmation(self.user, self.message)

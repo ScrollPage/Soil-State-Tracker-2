@@ -4,11 +4,11 @@ from django.utils import timezone
 from django.db.models.signals import post_save, pre_save, m2m_changed
 from django.dispatch import receiver
 
-import random
+from datetime import timedelta
 
 from client.models import Client
 from group.models import Cluster
-from backend.settings import FREQUENCY_COMMAND_ID
+from backend.settings import FREQUENCY_COMMAND_ID, DEFAULT_SEND_DELAY_SECONDS
 from mqtt.pydantic_models import Message, Data
 
 
@@ -126,6 +126,12 @@ class ReceiveConfirmation(models.Model):
 
         for detector in self.detectors.all().only("token"):
             pydantic_model.data.token = detector.token
+            pydantic_model.data.remaining_time = (
+                self.command.user.settings.last_send
+                + self.command.user.settings.sleeping_time
+                + timedelta(seconds=DEFAULT_SEND_DELAY_SECONDS)
+                - timezone.now()
+            ).seconds
             yield pydantic_model.json(by_alias=True, exclude_none=True)
 
 
