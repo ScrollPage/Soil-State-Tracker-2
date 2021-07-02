@@ -41,8 +41,8 @@ class DetectorData(models.Model):
     def create_random(cls, detector, days=None):
         data = cls.objects.create(
             detector=detector,
-            first_temp=round(uniform(0, 20), 2),
-            second_temp=round(uniform(0, 20), 2),
+            temp_soil=round(uniform(0, 20), 2),
+            temp_air=round(uniform(0, 20), 2),
             humidity=round(uniform(0, 20), 2),
             lightning=round(uniform(0, 20), 2),
         )

@@ -115,7 +115,3 @@ class TestViews(APITestCase):
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 1)
-        self.assertEqual(
-            float(response.data[0]["pH"]),
-            round((self.todays_data_first.pH + self.todays_data_second.pH) / 2, 2),
-        )

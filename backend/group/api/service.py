@@ -55,8 +55,8 @@ def get_aggregated_data(queryset, multiplier, begin_date):
             datapoints=1,
         )
         .annotate(
-            Avg("first_temp"),
-            Avg("second_temp"),
+            Avg("temp_air"),
+            Avg("temp_soil"),
             Avg("lightning"),
             Avg("humidity"),
         )
@@ -64,11 +64,11 @@ def get_aggregated_data(queryset, multiplier, begin_date):
 
     res = list()
     for data in detector_data_queryset:
-        if data["first_temp__avg"] is not None:
+        if data["temp_air__avg"] is not None:
             res.append(
                 dict(
-                    first_temp=data["first_temp__avg"],
-                    second_temp=data["second_temp__avg"],
+                    temp_air=data["temp_air__avg"],
+                    temp_soil=data["temp_soil__avg"],
                     humidity=data["humidity__avg"],
                     lightning=data["lightning__avg"],
                     timestamp=data["bucket"],

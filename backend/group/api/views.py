@@ -76,8 +76,8 @@ class ClusterViewSet(SListCreateUpdateViewSet):
             serializer = self.get_serializer(page, many=True)
             return self.get_paginated_response(serializer.data)
 
-        serializer = self.get_serializer(data=detectors)
-        return Response(serialzier.data, status=status.HTTP_200_OK)
+        serializer = self.get_serializer(data=queryset)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     @action(detail=False, methods=["post"])
     def remove_detector(self, request, *args, **kwargs):
