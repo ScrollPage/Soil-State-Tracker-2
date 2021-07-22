@@ -284,7 +284,7 @@ JOIN_COMMAND_ID = "100"
 # User sendable commands
 FREQUENCY_COMMAND_ID = "0"
 
-#
+# Repeat sending
 FREQUENCY_COMMAND_ID_DETAIL = "200"
 
 # Send settings

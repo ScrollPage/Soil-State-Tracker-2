@@ -2,7 +2,7 @@
 from django.utils import timezone
 
 from loguru import logger
-from datetime import timedelta
+from datetime import timedelta, datetime
 
 from .pydantic_models import Message, Data
 from client.models import Client
@@ -13,6 +13,7 @@ from backend.settings import (
     JOIN_COMMAND_ID,
     FREQUENCY_COMMAND_ID,
     DEFAULT_SEND_DELAY_SECONDS,
+    DEFAULT_SEND_FREQUENCY_MINUTES,
 )
 
 
@@ -39,8 +40,28 @@ class CommandJoin(DefaultCommandClass):
         detector, _ = Detector.objects.get_or_create(user=user, token=token)
         return detector.sensor_id
 
+    @staticmethod
+    def preprocess_send_settings(user) -> None:
+        if user.settings.last_send:
+            return
+
+        time = datetime.now()
+        minutes = (
+            time.minute // DEFAULT_SEND_FREQUENCY_MINUTES
+        ) * DEFAULT_SEND_FREQUENCY_MINUTES
+        
+        res_time = (
+            time.replace(minute=0, second=0, microsecond=0)
+            + timedelta(minutes=minutes)
+            - timedelta(seconds=DEFAULT_SEND_DELAY_SECONDS)
+        )
+
+        user.settings.last_send = res_time
+        user.settings.save()
+
     def call_back(self) -> str:
         sensor_id = self.create_detector(self.user, self.message.data.token)
+        self.preprocess_send_settings(self.user)
 
         data = Data(
             t=self.message.data.token,
@@ -58,7 +79,7 @@ class CommandJoin(DefaultCommandClass):
 
         return message.json(by_alias=True, exclude_none=True)
 
-    def create_data(self) -> None:
+    def create_data(self) -> str:
         return self.message.json(by_alias=True, exclude_none=True)
 
 
@@ -70,14 +91,15 @@ class CommandData(DefaultCommandClass):
     def create_data(self) -> str:
         return self.message.json(by_alias=True, exclude_none=True)
 
-    def create_data_in_db(self) -> None:
-        data = self.message.data.dict(exclude_none=True)
+    @staticmethod
+    def create_data_in_db(user, message) -> None:
+        data = message.data.dict(exclude_none=True)
         token = data.pop("token")
-        data["detector"] = Detector.objects.get(user=self.user, token=token)
+        data["detector"] = Detector.objects.get(user=user, token=token)
         DetectorData.objects.create(**data)
 
     def call_back(self) -> None:
-        self.create_data_in_db()
+        self.create_data_in_db(self.user, self.message)
 
 
 class CommandCurrency(DefaultCommandClass):

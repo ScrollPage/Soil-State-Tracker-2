@@ -8,7 +8,11 @@ from datetime import timedelta
 
 from client.models import Client
 from group.models import Cluster
-from backend.settings import FREQUENCY_COMMAND_ID, DEFAULT_SEND_DELAY_SECONDS, FREQUENCY_COMMAND_ID_DETAIL
+from backend.settings import (
+    FREQUENCY_COMMAND_ID,
+    DEFAULT_SEND_DELAY_SECONDS,
+    FREQUENCY_COMMAND_ID_DETAIL,
+)
 from mqtt.pydantic_models import Message, Data
 
 
@@ -123,9 +127,9 @@ class ReceiveConfirmation(models.Model):
 
     def generate_commands(self):
         pydantic_model = self.command.to_pydantic()
+        pydantic_model.cid = FREQUENCY_COMMAND_ID_DETAIL
 
         for detector in self.detectors.all().only("token"):
-            pydantic_model.cid = FREQUENCY_COMMAND_ID_DETAIL
             pydantic_model.data.token = detector.token
             pydantic_model.data.remaining_time = (
                 self.command.user.settings.last_send

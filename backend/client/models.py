@@ -106,7 +106,7 @@ class SendSettings(models.Model):
     user = models.OneToOneField(
         Client, verbose_name="Клиент", on_delete=models.CASCADE, related_name="settings"
     )
-    last_send = models.DateTimeField(default=datetime(1970, 1, 1, 0, 0, 0))
+    last_send = models.DateTimeField(null=True)
     sleeping_time = models.DurationField(
         default=timedelta(minutes=DEFAULT_SEND_FREQUENCY_MINUTES)
     )
