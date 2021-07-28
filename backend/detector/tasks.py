@@ -36,6 +36,7 @@ def release():
             ),
         )
         .filter(required_time__lte=timezone.now(), detectors__gt=0)
+        .distinct("id")
     )
 
     commands = (
@@ -68,7 +69,9 @@ def release():
         if command.category == FREQUENCY_COMMAND_ID:
             sett = command.user.settings
             sett.sleeping_time = timedelta(minutes=int(command.extra["sleeping_time"]))
-            sett.last_send = timezone.now() - timedelta(seconds=DEFAULT_SEND_DELAY_SECONDS)
+            sett.last_send = timezone.now() - timedelta(
+                seconds=DEFAULT_SEND_DELAY_SECONDS
+            )
             command.wait_resp = True
             command.save()
             sett.save()

@@ -2,11 +2,12 @@
 from django.utils import timezone
 
 from loguru import logger
-from datetime import timedelta, datetime
+from datetime import timedelta
 
 from .pydantic_models import Message, Data
 from client.models import Client
 from detector.models import DetectorCommand, Detector, ReceiveConfirmation
+from .utils import quote_decorator
 from detector_data.models import DetectorData
 from backend.settings import (
     DATA_COMMAND_ID,
@@ -45,11 +46,11 @@ class CommandJoin(DefaultCommandClass):
         if user.settings.last_send:
             return
 
-        time = datetime.now()
+        time = timezone.now()
         minutes = (
             time.minute // DEFAULT_SEND_FREQUENCY_MINUTES
         ) * DEFAULT_SEND_FREQUENCY_MINUTES
-        
+
         res_time = (
             time.replace(minute=0, second=0, microsecond=0)
             + timedelta(minutes=minutes)
@@ -59,13 +60,10 @@ class CommandJoin(DefaultCommandClass):
         user.settings.last_send = res_time
         user.settings.save()
 
-    def call_back(self) -> str:
-        sensor_id = self.create_detector(self.user, self.message.data.token)
-        self.preprocess_send_settings(self.user)
-
-        data = Data(
+    def make_message_data(self):
+        return Data(
             t=self.message.data.token,
-            si=sensor_id,
+            si=self.sensor_id,
             st=self.user.settings.sleeping_time.seconds,
             rt=(
                 self.user.settings.last_send
@@ -75,10 +73,17 @@ class CommandJoin(DefaultCommandClass):
             ).seconds,
         )
 
+    @quote_decorator
+    def call_back(self) -> str:
+        self.sensor_id = self.create_detector(self.user, self.message.data.token)
+        self.preprocess_send_settings(self.user)
+        data = self.make_message_data()
+
         message = Message(uk=self.message.user_key, c=self.message.cid, d=data)
 
         return message.json(by_alias=True, exclude_none=True)
 
+    @quote_decorator
     def create_data(self) -> str:
         return self.message.json(by_alias=True, exclude_none=True)
 
@@ -88,6 +93,7 @@ class CommandData(DefaultCommandClass):
 
     UID = DATA_COMMAND_ID
 
+    @quote_decorator
     def create_data(self) -> str:
         return self.message.json(by_alias=True, exclude_none=True)
 
@@ -120,6 +126,7 @@ class CommandCurrency(DefaultCommandClass):
         if confirm.detectors.count() == 0:
             confirm.command.delete()
 
+    @quote_decorator
     def create_data(self) -> str:
         return self.message.json(by_alias=True, exclude_none=True)
 
